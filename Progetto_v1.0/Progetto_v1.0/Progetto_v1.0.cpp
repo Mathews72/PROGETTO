@@ -134,7 +134,7 @@ int isOperator(char buffer[]) {
 
 int main() {
 	char ch, buffer[15], operators[] = "+-*/%=";
-	ifstream fin("program_2.2.txt");		//Apertura del file in lettura
+	ifstream fin("Circuiti_file.txt");		//Apertura del file in lettura
 	int i, j = 0;
 	string temp;
 	string tmp;
