@@ -1,0 +1,8 @@
+module {
+	input a, b
+	input c
+	output x, y
+	AnD OR NOT
+}
+assign xyyyyyyyyy = ((1AND (1OR(1 A     ND (NOT0))))
+endmodule
