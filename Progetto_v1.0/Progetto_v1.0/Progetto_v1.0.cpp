@@ -9,6 +9,7 @@
 #include <algorithm>
 
 using namespace std;
+//COMMENTO A CASO
 
 // Function to evaluate the logical expression 
 char logicalExpressionEvaluation(string str)
