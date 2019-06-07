@@ -19,11 +19,11 @@ char logicalExpressionEvaluation(string str)
 	cout << str << endl;
 
 	//BISOGNA METTERE LE PARENTESI ESTERNE
-	size_t found4 = str.find("=");
+	size_t foundEqual = str.find("=");
 	int operazioni = 1;
 	// traversing string from the end. 
-	cout << found4 << endl;
-	for (int i = str.length() - 1; i > found4 + 1; i--)//da perfezionare -- deve prendere il valore di output - si ferma all'uguale
+	cout << foundEqual << endl;
+	for (int i = str.length() - 1; i > foundEqual + 1; i--)//da perfezionare -- deve prendere il valore di output - si ferma all'uguale
 	{
 		int boolean_op_index = 0;
 		if (str[i] == '(')//Trova la parentesi aperta più interna
@@ -41,7 +41,6 @@ char logicalExpressionEvaluation(string str)
 			cout << "operaz" << operazioni << endl;
 			operazioni++;
 
-
 			string str1 = "AND";
 			size_t found = traparentesi.find(str1);
 
@@ -50,8 +49,6 @@ char logicalExpressionEvaluation(string str)
 
 			string str3 = "NOT";
 			size_t found3 = traparentesi.find(str3);
-
-
 
 			found = traparentesi.find(str1, found + boolean_op_index);
 			found2 = traparentesi.find(str2, found2 + boolean_op_index);
@@ -88,11 +85,6 @@ char logicalExpressionEvaluation(string str)
 				boolean_op_index++;
 			}
 
-
-
-
-
-
 		}
 		else
 		{
@@ -119,7 +111,7 @@ int isOperator(char buffer[]) {
 	char operators[3][5] = { "AND","OR","NOT" };
 	int i, flag = 0;
 
-	for (i = 0; i < 5; ++i) {
+	for (i = 0; i < 3; ++i) {
 		if (strcmp(operators[i], buffer) == 0) {
 			flag = 1;
 			break;
@@ -130,6 +122,18 @@ int isOperator(char buffer[]) {
 
 }
 
+int isFlipFlop(char buffer[]) {
+	int i, flag = 0;
+		if (buffer[0]=='F'&&buffer[1]== 'F'&&isdigit(buffer[2]))
+		{
+			flag = 1;
+			
+		}
+	
+
+	return flag;
+
+}
 
 
 int main() {
@@ -173,6 +177,11 @@ int main() {
 			}
 			else if (isOperator(buffer) == 1)
 				cout << buffer << " is operator\n";
+			else if (isFlipFlop(buffer) == 1) {
+				cout << "FlipFlop found: " << buffer <<endl;
+				//cout << "Numero FF: "<<ch1 << endl;
+			}
+				
 			else
 				cout << buffer << " is indentifier\n";
 		}

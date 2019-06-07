@@ -2,7 +2,10 @@ module {
 	input a, b
 	input c
 	output x, y
-	AnD OR NOT
+	ANDOR nOT AND
+	
 }
-assign xyyyyyyyyy = ((1AND (1OR(1 A     ND (NOT0))))
+FF1
+FFS4
+assign xyyyyyyyyy = ((1AND (1OR(1 AND (NOT0))))
 endmodule
