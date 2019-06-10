@@ -15,11 +15,12 @@ using namespace std;
 #define OPER_OR  'O'
 #define OPER_NOT 'N'
 #define OPER_XOR 'x'
+#define OPER_FF	 'F'
 
 #define DIGIT_0 '0'
 #define DIGIT_1 '1'
 
-
+// http://www.bo.cnr.it/corsi-di-informatica/corsoCstandard/Lezioni/24Alldinamica.html memoria dinamica
 ///  1 and 1 and 1 or 1 not 1 and not 0 or 1
 
 class ExpressionElementNode {
@@ -60,6 +61,7 @@ private:
 	char binary_op;
 	ExpressionElementNode *left;
 	ExpressionElementNode *right;
+	
 
 	BinaryOperationNode(const BinaryOperationNode& n);
 	BinaryOperationNode();
@@ -79,16 +81,19 @@ int BinaryOperationNode::value() {
 	int leftVal = left->value();
 	int rightVal = right->value();
 	int result;
-
-	//cout << "rightVal " << rightVal << " leftVal " << leftVal << " operator "<< binary_op <<endl;
+	int flip[5] = { 0,0,1,1,0 };
+	cout << "rightVal " << rightVal << " leftVal " << leftVal << " operator "<< binary_op <<endl;
+	
 	if (binary_op == OPER_NOT) {
 		result = !leftVal;
 	}
 	else {
-		//cout << "rightVal " << rightVal << " leftVal " << leftVal <<endl;
+	//	cout << "rightVal " << rightVal << " leftVal " << leftVal <<endl;
 		switch (binary_op) {
 		case OPER_AND:
 			result = leftVal && rightVal;
+			
+
 			break;
 		case OPER_OR:
 			result = leftVal || rightVal;
@@ -152,17 +157,20 @@ public:
 
 int BinaryExpressionBuilder::precedence(char op) {
 	enum {
-		lowest, mid, highest
+		lowest, mid, highest, super
 	};
 
 	// Operator    precedence
 	// ----------------------
+	//	  FF		Super
 	//    not        High 
 	//    and      Medium 
 	//    or         Low 
 
 
 	switch (op) {
+	case OPER_FF:
+		return super;
 	case OPER_NOT:
 		return highest;
 	case OPER_AND:
@@ -187,78 +195,65 @@ BinaryOperationNode *BinaryExpressionBuilder::parse(std::string& str) throw (Not
 	lstOpValid.push_back("AND");
 	lstOpValid.push_back("OR");
 	lstOpValid.push_back("NOT");
+	lstOpValid.push_back("FF");
 
 	int pnt = 0;
 	//while (istr >> token) {
-	while (pnt<str.size()) {
+	while (pnt < str.size()) {
 		//cout << "token  " << token <<endl;
 		if (pnt >= str.length()) return 0;
 		while ((pnt < str.length()) && (str[pnt] == ' ')) {
-			//cout << "----token: *" << str[pnt] << "*" << endl;
+			cout << "----token: *" << str[pnt] << "*" << endl;
 			++pnt;
 		}
 		if (pnt >= str.length()) return 0;
 		token = str[pnt];
-		//cout << "----char: " << str[pnt] << endl;
+		cout << "----char: " << str[pnt] << endl;
 		//throw NotWellFormed();
+		if ((token == 'F')) {			//il flipflop deve avere precedenza massima
+			cout << "Flip Flop" << endl;
+			str[pnt] = '0';
+
+
+		}
 		if ((token == OPER_AND) || (token == OPER_OR) ||
-			(token == OPER_NOT) || (token == OPER_XOR)) {
+			(token == OPER_NOT) || (token == OPER_XOR) ) {
 			string item;
 			while ((pnt < str.length()) && (str[pnt] != ' ') && (str[pnt] != '(') && (str[pnt] != ')')) {
 				item.push_back(str[pnt]);//Fa un append di caratteri
+				
 				++pnt;
 			}
 			//istr.putback(token);
 			//istr >> item;
 			cout << "item operator: *" << item << "*" << endl;
-//count resituisce il numero degli elementi nel range indicato
+			//count resituisce il numero degli elementi nel range indicato uguali a item
 			if (count(lstOpValid.begin(), lstOpValid.end(), item) > 0) {
+			
 				processOperator(token);
+
 			}
-			else {
+			else {//Ho trovato un operatore non valido come ANS
 				string msg = "item not valid: ";
 				msg.append(item);
 				throw NotWellFormed(msg);
 			}
 		}
 		else if (token == ')') {
-			//cout << "start  processRightParenthesis " <<endl;
+			cout << "start  processRightParenthesis " <<endl;
 			processRightParenthesis();
 			++pnt;
-			//cout << "end  processRightParenthesis " <<endl;
+			cout << "end  processRightParenthesis " <<endl;
 		}
 		else if (token == '(') {
 			operatorStack.push(token);
 			++pnt;
 		}
+		
 		else if ((token == '0') || (token == '1')) {
 			// If it is not an operator, it must be a number.
 			// Since token is only a char in width, we put it back,
 			// and get the complete number as a double.
-			//istr.putback(token);
-
-			/*//---------------THE BEST ---------------------------------
-			string item;
-			istr >> item;
-			cout << "item number: " << item << " "<< item.length()<< endl;
-			if ( (item.length() != 1) || ((token != DIGIT_0) && (token != DIGIT_1)) ) {
-				cout << "number '" << item << "' not valid!!" <<endl;
-				throw NotWellFormed();
-			}
-			int number = ((token == DIGIT_0) ? 0 : 1);
-			*///------------------------------------------------
-
-
-			//===================================================
-			//int item;
-			//istr >> item;
-			//cout << "item number: " << item << " " << token << endl;           
-			//if ( (item != 0) && (item != 1)  ) {
-			//    cout << "number '" << item << "' not valid!!" <<endl;
-			//    throw NotWellFormed();
-			//}
-			//int number = item;
-			//===================================================
 			string item;
 			while ((pnt < str.length()) && (str[pnt] != ' ') && (str[pnt] != '(') && (str[pnt] != ')')) {
 				item.push_back(str[pnt]);
@@ -270,7 +265,7 @@ BinaryOperationNode *BinaryExpressionBuilder::parse(std::string& str) throw (Not
 				throw NotWellFormed(msg);
 			}
 			int number = ((token == DIGIT_0) ? 0 : 1);
-			NumericElementNode *newNode = new NumericElementNode(number);//RICORSIONE
+			NumericElementNode *newNode = new NumericElementNode(number);//Definizione di memoria dinamica
 			operandStack.push(newNode);
 		}
 		else {
@@ -296,7 +291,8 @@ BinaryOperationNode *BinaryExpressionBuilder::parse(std::string& str) throw (Not
 		throw NotWellFormed("End eval expr --> operandStack not emty ... expression not valid!!");
 	}
 
-	ExpressionElementNode *p = operandStack.top();
+	ExpressionElementNode *p = operandStack.top();//Il puntatore p prende in ingresso il carattere puntato da p
+	// 1 AND 1 all inizio prende 1,poi prende a e comincia a fare i controlli
 	return static_cast<BinaryOperationNode *> (p);
 
 
@@ -349,7 +345,9 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	ExpressionElementNode *right = operandStack.top();
 	operandStack.pop();
+	
 	if (binary_op == OPER_NOT) {
+	
 		p = new BinaryOperationNode(operatorStack.top(), right, right);
 	}
 	else {
