@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parser_v1.0", "Parser_v1.0\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parser_v1.2_commentata", "Parser_v1.2_commentata\Parser_v1.2_commentata.vcxproj", "{2763D354-3A29-413A-8732-7E0D63FFBC44}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parser_v2.0", "Parser_v2.0\Parser_v2.0.vcxproj", "{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{2763D354-3A29-413A-8732-7E0D63FFBC44}.Release|x64.Build.0 = Release|x64
 		{2763D354-3A29-413A-8732-7E0D63FFBC44}.Release|x86.ActiveCfg = Release|Win32
 		{2763D354-3A29-413A-8732-7E0D63FFBC44}.Release|x86.Build.0 = Release|Win32
+		{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}.Debug|x64.ActiveCfg = Debug|x64
+		{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}.Debug|x64.Build.0 = Debug|x64
+		{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}.Debug|x86.ActiveCfg = Debug|Win32
+		{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}.Debug|x86.Build.0 = Debug|Win32
+		{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}.Release|x64.ActiveCfg = Release|x64
+		{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}.Release|x64.Build.0 = Release|x64
+		{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}.Release|x86.ActiveCfg = Release|Win32
+		{2F2B6352-C6DE-42AA-9EC5-84429B2ADED6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,34 +11,31 @@
 using namespace std;
 
 
-#define OPER_AND 'A'
-#define OPER_OR  'O'
-#define OPER_NOT 'N'
+#define OPER_AND 'a'
+#define OPER_OR  'o'
+#define OPER_NOT 'n'
 #define OPER_XOR 'x'
-#define OPER_FF	 'F'
 
 #define DIGIT_0 '0'
 #define DIGIT_1 '1'
 
-// http://www.bo.cnr.it/corsi-di-informatica/corsoCstandard/Lezioni/24Alldinamica.html memoria dinamica
-///  1 and 1 and 1 or 1 not 1 and not 0 or 1
-
+/*
 class ExpressionElementNode {
 
-public:
-	virtual int value() = 0; // Return the value of this node.
+	public:
+		virtual int value() = 0; // Return the value of this node.
 };
 
-class NumericElementNode : public ExpressionElementNode {
-private:
-	int number;
-	NumericElementNode(const NumericElementNode& n);
-	NumericElementNode();
-	NumericElementNode&operator=(const NumericElementNode& n);
+class NumericElementNode: public ExpressionElementNode {
+	private:
+		int number;
+		NumericElementNode(const NumericElementNode& n);
+		NumericElementNode();
+		NumericElementNode&operator=(const NumericElementNode& n);
 
-public:
-	NumericElementNode(int val);
-	virtual int value();
+	public:
+		NumericElementNode(int val);
+		virtual int value();
 };
 
 
@@ -52,23 +49,20 @@ inline int NumericElementNode::value() {
 	return number;
 }
 
+class BinaryOperationNode: public ExpressionElementNode {
 
+	private:
 
-class BinaryOperationNode : public ExpressionElementNode {
+		char binary_op;
+		ExpressionElementNode *left;
+		ExpressionElementNode *right;
 
-private:
-
-	char binary_op;
-	ExpressionElementNode *left;
-	ExpressionElementNode *right;
-	
-
-	BinaryOperationNode(const BinaryOperationNode& n);
-	BinaryOperationNode();
-	BinaryOperationNode &operator=(const BinaryOperationNode& n);
-public:
-	BinaryOperationNode(char op, ExpressionElementNode *l, ExpressionElementNode *r);
-	virtual int value();
+		BinaryOperationNode(const BinaryOperationNode& n);
+		BinaryOperationNode();
+		BinaryOperationNode &operator=(const BinaryOperationNode& n);
+	public:
+		BinaryOperationNode(char op, ExpressionElementNode *l, ExpressionElementNode *r);
+		virtual int value();
 };
 
 inline BinaryOperationNode::BinaryOperationNode(char op, ExpressionElementNode *l, ExpressionElementNode *r) :
@@ -81,28 +75,22 @@ int BinaryOperationNode::value() {
 	int leftVal = left->value();
 	int rightVal = right->value();
 	int result;
-	
-	cout << "rightVal " << rightVal << " leftVal " << leftVal << " operator "<< binary_op <<endl;
-	
+
+	//cout << "rightVal " << rightVal << " leftVal " << leftVal << " operator "<< binary_op <<endl;
 	if (binary_op == OPER_NOT) {
-		result = !leftVal;
-	}
-	else if (binary_op == OPER_FF) {
-		
-		result = 1;
-	}
-	else {
-	//	cout << "rightVal " << rightVal << " leftVal " << leftVal <<endl;
+			result = !leftVal;
+	} else {
+		//cout << "rightVal " << rightVal << " leftVal " << leftVal <<endl;
 		switch (binary_op) {
-		case OPER_AND:
-			result = leftVal && rightVal;
-			break;
-		case OPER_OR:
-			result = leftVal || rightVal;
-			break;
-		case OPER_XOR:
-			result = leftVal xor rightVal;
-			break;
+			case OPER_AND:
+				result = leftVal && rightVal;
+				break;
+			case OPER_OR:
+				result = leftVal || rightVal;
+				break;
+			case OPER_XOR:
+				result = leftVal xor rightVal;
+				break;
 		}
 	}
 
@@ -112,6 +100,8 @@ int BinaryOperationNode::value() {
 class ExpressionElementNode;
 
 class BinaryOperationNode;
+*/
+
 
 class BinaryExpressionBuilder {
 
@@ -119,7 +109,8 @@ private:
 	// operatorStack 
 	std::stack<char> operatorStack;
 	// operandStack is made up of BinaryOperationNodes and NumericElementNode
-	std::stack<ExpressionElementNode *> operandStack;
+	//std::stack<ExpressionElementNode *> operandStack;
+	std::stack<int> operandStack;
 
 	std::list<string> lstOpValid;
 
@@ -127,6 +118,7 @@ private:
 	void processRightParenthesis();
 	void doBinary(char op);
 	int precedence(char op);
+	int BinaryOperationNode(char op, int l, int r);
 
 public:
 	class NotWellFormed : public std::exception {
@@ -143,8 +135,7 @@ public:
 			msgout = "The expression is not valid !!! ";
 			//msgout.str(msg_.c_str());
 			msgout.append(msg_.c_str());
-			cout << msg_ << endl;
-			return msgout.c_str();			//da rivedere
+			return msgout.c_str();
 
 			//return "The expression is not valid !!!";
 		}
@@ -154,25 +145,22 @@ public:
 		std::string msg_;
 	};
 
-	BinaryOperationNode *parse(std::string& istr) throw (NotWellFormed);
+	int parse(std::string& istr) throw (NotWellFormed);
 };
 
 int BinaryExpressionBuilder::precedence(char op) {
 	enum {
-		lowest, mid, highest, super
+		lowest, mid, highest
 	};
 
 	// Operator    precedence
 	// ----------------------
-	//	  FF		Super
 	//    not        High 
 	//    and      Medium 
 	//    or         Low 
 
 
 	switch (op) {
-	case OPER_FF:
-		return super;
 	case OPER_NOT:
 		return highest;
 	case OPER_AND:
@@ -188,84 +176,102 @@ int BinaryExpressionBuilder::precedence(char op) {
 
 // creates BinaryOperationNode's from all preceding
 
-BinaryOperationNode *BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
+int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 	//istringstream istr(str);
 	char token;
 
-	//listOpValid è una lista
+	lstOpValid.push_back("and");
 	lstOpValid.push_back("AND");
+	lstOpValid.push_back("or");
 	lstOpValid.push_back("OR");
+	lstOpValid.push_back("not");
 	lstOpValid.push_back("NOT");
-	lstOpValid.push_back("FF");
 
 	int pnt = 0;
 	//while (istr >> token) {
-	while (pnt < str.size()) {
+	while (1) {
 		//cout << "token  " << token <<endl;
-		if (pnt >= str.length()) return 0;
-		while ((pnt < str.length()) && (str[pnt] == ' ')) {		//rimuove gli spazi
-			cout << "----token: *" << str[pnt] << "*" << endl;
+		if (pnt >= str.length()) break;
+		while ((pnt < str.length()) && (str[pnt] == ' ')) {
+			//cout << "----token: *" << str[pnt] << "*" << endl;
 			++pnt;
 		}
-
-		if (pnt >= str.length()) return 0;
-
+		if (pnt >= str.length()) break;
 		token = str[pnt];
-		cout << "----char: " << str[pnt] << endl;
+		//cout << "----char: " << str[pnt] << endl;
 		//throw NotWellFormed();
-		
 		if ((token == OPER_AND) || (token == OPER_OR) ||
-			(token == OPER_NOT) || (token == OPER_XOR) || (token == OPER_FF)) {
-			string item;		// prende l'operatore
+			(token == OPER_NOT) || (token == OPER_XOR)) {
+			string item;
 			while ((pnt < str.length()) && (str[pnt] != ' ') && (str[pnt] != '(') && (str[pnt] != ')')) {
-				item.push_back(str[pnt]);//meette in item i caratteri successivi a A
-				
+				item.push_back(str[pnt]);
 				++pnt;
 			}
 			//istr.putback(token);
 			//istr >> item;
 			cout << "item operator: *" << item << "*" << endl;
-			//count resituisce il numero degli elementi nel range indicato uguali a item
 			if (count(lstOpValid.begin(), lstOpValid.end(), item) > 0) {
-			
 				processOperator(token);
-
 			}
-			else {//Ho trovato un operatore non valido come ANS
+			else {
 				string msg = "item not valid: ";
 				msg.append(item);
 				throw NotWellFormed(msg);
 			}
 		}
 		else if (token == ')') {
-			cout << "start  processRightParenthesis " <<endl;
+			//cout << "start  processRightParenthesis " <<endl;
 			processRightParenthesis();
 			++pnt;
-			cout << "end  processRightParenthesis " <<endl;
+			//cout << "end  processRightParenthesis " <<endl;
 		}
 		else if (token == '(') {
 			operatorStack.push(token);
 			++pnt;
 		}
-		
 		else if ((token == '0') || (token == '1')) {
 			// If it is not an operator, it must be a number.
 			// Since token is only a char in width, we put it back,
 			// and get the complete number as a double.
+			//istr.putback(token);
+
+			/*//---------------THE BEST ---------------------------------
+			string item;
+			istr >> item;
+			cout << "item number: " << item << " "<< item.length()<< endl;
+			if ( (item.length() != 1) || ((token != DIGIT_0) && (token != DIGIT_1)) ) {
+				cout << "number '" << item << "' not valid!!" <<endl;
+				throw NotWellFormed();
+			}
+			int number = ((token == DIGIT_0) ? 0 : 1);
+			*///------------------------------------------------
+
+
+			//===================================================
+			//int item;
+			//istr >> item;
+			//cout << "item number: " << item << " " << token << endl;           
+			//if ( (item != 0) && (item != 1)  ) {
+			//    cout << "number '" << item << "' not valid!!" <<endl;
+			//    throw NotWellFormed();
+			//}
+			//int number = item;
+			//===================================================
 			string item;
 			while ((pnt < str.length()) && (str[pnt] != ' ') && (str[pnt] != '(') && (str[pnt] != ')')) {
-				item.push_back(str[pnt]);		//prende tutti i caratteri che seguono 0 o 1 e lo mette nella stringa temporanea iteam
-				++pnt;							//0 e 1 come ascii
+				item.push_back(str[pnt]);
+				++pnt;
 			}
 			if (item.length() != 1) {
 				string msg = "item not valid (type digit): ";
 				msg.append(item);
 				throw NotWellFormed(msg);
 			}
-			int number = ((token == DIGIT_0) ? 0 : 1); // attribuisco il valore 0 o 1  --> al token
-			NumericElementNode *newNode = new NumericElementNode(number);  //?  //Definizione di memoria dinamica
-			operandStack.push(newNode);			//metto il numero in operand
+			int number = ((token == DIGIT_0) ? 0 : 1);
+			//NumericElementNode *newNode = new NumericElementNode(number);
+			//operandStack.push(newNode);
+			operandStack.push(number);
 		}
 		else {
 			string msg = "token not recognized: ";
@@ -275,23 +281,24 @@ BinaryOperationNode *BinaryExpressionBuilder::parse(std::string& str) throw (Not
 	} // end while  
 
 
-	while (!operatorStack.empty()) {		//se l'operatore( 0,1) faccio operazioni
+	while (!operatorStack.empty()) {
 		doBinary(operatorStack.top());
 		operatorStack.pop();
 	}
-	cout << "Evaluationg ok....'" << endl;
-	
+	//cout << "Evaluationg ok....'" <<endl;
+
+
 	// Invariant: At this point the operandStack should have only one element
 	//     operandStack.size() == 1
 	// otherwise, the expression is not well formed.
 
-	if (operandStack.size() != 1) {			//verifico che non ci siano più and,or nello stack
+	if (operandStack.size() != 1) {
 		throw NotWellFormed("End eval expr --> operandStack not emty ... expression not valid!!");
 	}
 
-	ExpressionElementNode *p = operandStack.top();  //?    //Il puntatore p prende in ingresso il carattere puntato da p
-	// 1 AND 1 all inizio prende 1,poi prende a e comincia a fare i controlli
-	return static_cast<BinaryOperationNode *> (p);		//lo rende compatibile con il puntatore
+	//ExpressionElementNode *p = operandStack.top();
+	int p = operandStack.top();
+	return p;
 
 
 }
@@ -300,32 +307,61 @@ BinaryOperationNode *BinaryExpressionBuilder::parse(std::string& str) throw (Not
 void BinaryExpressionBuilder::processOperator(char op) {
 
 	// pop operators with higher precedence and create their BinaryOperationNode
-	// passo a alla funzione--> processo l'operatore
+
 	int opPrecedence = precedence(op);
-	while ((!operatorStack.empty()) && operatorStack.top() != '(' && (opPrecedence <= precedence(operatorStack.top()))) {
+	while ((!operatorStack.empty()) && (operatorStack.top() != '(' && (opPrecedence <= precedence(operatorStack.top())))) {
 		cout << " operatore " << op << " precedenza <= " << "operatore in " << operatorStack.top() << " stack " << precedence(operatorStack.top()) << endl;
-		doBinary(operatorStack.top());		//faccio l'operazione con l'operatore presente nello stack --> quindi la parte a sx dell'espressione
-		operatorStack.pop();			
+		doBinary(operatorStack.top());
+		operatorStack.pop();
 	}
 
 	// lastly push the operator passed onto the operatorStack
-	operatorStack.push(op);		//metto nello a nello stack operator
+	operatorStack.push(op);
 
 }
 
+int BinaryExpressionBuilder::BinaryOperationNode(char binary_op, int leftVal, int rightVal) {
+	// To get the value, compute the value of the left and
+	// right operands, and combine them with the operator.
+	//int leftVal = left->value();
+	//int rightVal = right->value();
+	int result;
+
+	//cout << "rightVal " << rightVal << " leftVal " << leftVal << " operator "<< binary_op <<endl;
+	if (binary_op == OPER_NOT) {
+		result = !leftVal;
+	}
+	else {
+		//cout << "rightVal " << rightVal << " leftVal " << leftVal <<endl;
+		switch (binary_op) {
+		case OPER_AND:
+			result = leftVal && rightVal;
+			break;
+		case OPER_OR:
+			result = leftVal || rightVal;
+			break;
+		case OPER_XOR:
+			result = leftVal xor rightVal;
+			break;
+		}
+	}
+
+	return result;
+}
 
 
 void BinaryExpressionBuilder::processRightParenthesis() {
 
 	cout << "processRightParenthesis running ....  " << endl;
 	if (operatorStack.empty()) {
-		throw NotWellFormed("espressione non cosistente parentesi  no match con ");
+		throw NotWellFormed("incosistent expression due )");
 	}
 	while (!operatorStack.empty() && operatorStack.top() != '(') {
+		//cout << "par  " << operatorStack.top() <<endl;
 		doBinary(operatorStack.top());
 		operatorStack.pop();
 	}
-	if ( operatorStack.empty() || (operandStack.top() != ')') ) {
+	if (operatorStack.empty() || (operandStack.top() != '(')) {
 		throw NotWellFormed("espressione non cosistente parentesi  ) ");
 	}
 	operatorStack.pop(); // remove '('
@@ -337,31 +373,24 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 
 void BinaryExpressionBuilder::doBinary(char binary_op) {
 
-	BinaryOperationNode *p;		//?
+	int p;
 
 	if (operandStack.empty()) {
-		cout << "espressione non cosistente '" << endl;
-		throw NotWellFormed();
+		throw NotWellFormed("incosistent expression due operand missing");
 	}
 
-	ExpressionElementNode *right = operandStack.top();
+	int  right = operandStack.top();
 	operandStack.pop();
-	
 	if (binary_op == OPER_NOT) {
-	
-		p = new BinaryOperationNode(operatorStack.top(), right, right);
-	}
-	else if(binary_op == OPER_FF){
-		p = new BinaryOperationNode(operatorStack.top(), 0, 0);
+		p = BinaryOperationNode(binary_op, right, right);
 	}
 	else {
 		if (operandStack.empty()) {
-		cout << "espressione non cosistente '" << endl;
-		throw NotWellFormed();
+			throw NotWellFormed("espressione non cosistente ");
 		}
-		ExpressionElementNode *left = operandStack.top();		//?
+		int left = operandStack.top();
 		operandStack.pop();
-		p = new BinaryOperationNode(operatorStack.top(), left, right);
+		p = BinaryOperationNode(binary_op, left, right);
 	}
 
 	operandStack.push(p);
@@ -375,11 +404,11 @@ int main(int argc, char** argv) {
 	getline(cin, expression);
 	BinaryExpressionBuilder b;
 	try {
-		BinaryOperationNode *root = b.parse(expression);		//?
-		cout << " result = " << root->value() << endl;
+		int value = b.parse(expression);
+		cout << " result = " << value << endl;
 	}
 	catch (std::exception& e) {
-		std::cout << "exception caught: " << e.what() << '\n';
+		std::cerr << "exception caught: " << e.what() << '\n';
 	}
 
 	system("pause");
