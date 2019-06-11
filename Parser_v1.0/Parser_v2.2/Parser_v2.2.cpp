@@ -2,22 +2,27 @@
 #include "InputFile.h"
 using namespace std;
 
-int main(int argc, char** argv)
+int main()
 {
 	InputFile file;
 	BinaryExpressionBuilder b;
 
-
+	//file.readFileValue("FileValue.txt");		//!! da rivedere ---> non prende i valori bene
+	cout << "Riga 11";
 	file.readFile("FileCircuito.txt");
+	
 
-	cout << "Enter expression" << endl;
+
+
+	/*cout << "Enter expression" << endl;
 	string expression;
 
 	getline(cin, expression);
 
-	
+
 	int value = b.parse(expression);
 	cout << " result = " << value << endl;
+	*/
 
 
 	system("pause");

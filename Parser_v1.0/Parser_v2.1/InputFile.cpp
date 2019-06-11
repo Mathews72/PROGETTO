@@ -48,11 +48,11 @@ int isOperator(char buffer[]) {
 	return flag;
 
 }
-void InputFile::readFile()
+void InputFile::readFile(string str)
 {
 	string temp;
 	string tmp;
-	_myfile.open("FileCircuito.txt");
+	_myfile.open(str);
 	if (!_myfile.is_open()) {			//controllo apertura file
 		cerr << "error while opening the file\n";
 		system("pause");
