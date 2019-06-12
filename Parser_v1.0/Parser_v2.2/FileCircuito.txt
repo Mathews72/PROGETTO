@@ -1,0 +1,10 @@
+module Circuito (
+0
+		input pippo
+		input b
+		input c
+		output x, y
+);
+	FF
+	assign x = c OR (pippo AND b)
+endmodule
