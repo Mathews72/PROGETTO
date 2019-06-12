@@ -1,10 +1,10 @@
 module Circuito (
 0
-		input pippo
-		input b
+		input pippo, b, e
 		input c
+		input d
 		output x, y
 );
 	FF
-	assign x = c OR (pippo AND b)
+	assign x = c OR (pippo AND NOT b OR e)
 endmodule

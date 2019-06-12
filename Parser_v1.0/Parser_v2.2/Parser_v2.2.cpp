@@ -8,7 +8,7 @@ int main()
 	BinaryExpressionBuilder b;
 
 	//file.readFileValue("FileValue.txt");		//!! da rivedere ---> non prende i valori bene
-	cout << "Riga 11";
+
 	file.readFile("FileCircuito.txt");
 	
 

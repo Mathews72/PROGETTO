@@ -8,6 +8,8 @@
 #include <vector>
 #include <algorithm>
 #include <list>
+
+
 using namespace std;
 #define OPER_AND 'A'
 #define OPER_OR  'O'

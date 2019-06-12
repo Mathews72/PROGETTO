@@ -129,37 +129,50 @@ string InputFile::capture(string tmp)
 	int pnt = 0;
 	int i = 0;
 	int value;
+
+	
 	string newString;
 	do {
-		pnt++;
+		tmp.erase(tmp.begin()+pnt);		//cancella fino a =
+		//pnt++;
+		
 	} while (tmp[pnt] != '=');
-	pnt++;
+	tmp.erase(tmp.begin() + pnt);
 
 	while (pnt < tmp.length()) {
 		string item;
-		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\n')) {
+		
+		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')')) {
 			item.push_back(tmp[pnt]);
 			++pnt;
+		
+
 		}
-		cout << "item operator: *" << item << "*" << endl;
+		//cout << "item operator: *" << item << "*" << endl;
 		if (count(inputChar.begin(), inputChar.end(), item) == 1) {
 
 			//la variabile esite--> la sostituisco con il valore 
 			//newString[k] sostituito con il corrispettivo valore dell'item
-			cout << "*value found.. Substituting *" << item << "*" << endl;
+			//cout << "*value found.. Substituting *" << item << "*" << endl;
 
 			auto match = find(inputChar.begin(), inputChar.end(), item);		//cerca il valore per restituire la pos
 
 			if (match != inputChar.end()) {
 				value = match - inputChar.begin();
-				cout << "Trovato alla pos: " << value << endl;
+				//cout << "Trovato alla pos: " << value << endl;
 
 			}
 
-			cout << "************valore numerico Corrispettivo: " << inputValue.at(value) << endl;
+			//cout << "************valore numerico Corrispettivo: " << inputValue.at(value) << endl;
 			//cout << "Size di InputVAlue " << inputValue.size()<<endl;
 			int val = inputValue.at(value);
-			newString.push_back(val);			//metto val nella newString
+			//newString.push_back(val);			//metto val nella newString
+
+			
+			string valore = to_string(val);		//converte il valore trovato in stringa
+		
+
+			tmp.replace(pnt - item.length(), item.length(), valore);
 
 
 
@@ -168,17 +181,17 @@ string InputFile::capture(string tmp)
 			cerr << "****ERROR Double inizialization: " << item << endl;
 			system("pause");
 		}
-		else {
-			newString = newString + item;
-			pnt++;
-		}
+		
+		pnt++;
+			
+		
 
 
 	}
 
 
-	
+	cout << "***Tmp sostituita*** " << tmp << endl;
 
 
-	return newString;
+	return tmp;
 }
