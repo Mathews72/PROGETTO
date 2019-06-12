@@ -1,8 +1,7 @@
 module Circuito (
-		input a,b
-		input c
-		output x, y
+		input a,b,c,d
+		output x,y,z,d,l,m,n,o,p,q,r,s,t
 );
 	FF
-	assign x = 1 OR (1 AND 0);
+	assign x = a AND (c OR            d);
 endmodule
