@@ -92,6 +92,8 @@ void InputFile::readFile(string str)
 		}
 
 	}
+
+	_myfile.close();
 }
 
 
@@ -120,8 +122,13 @@ void InputFile::readFileValue(string str) {
 			cerr << "*Input Value not valid!*" << endl;
 		
 		}
+		
 	}
+	_myfile.close();
+
+	
 }
+
 
 
 string InputFile::capture(string tmp)

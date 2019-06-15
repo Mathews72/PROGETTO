@@ -7,14 +7,14 @@ int main()
 	InputFile file;
 	BinaryExpressionBuilder b;
 
-	//file.readFileValue("FileValue.txt");		//!! da rivedere ---> non prende i valori bene
+	file.readFileValue("FileValue.txt");		//!! da rivedere ---> non prende i valori bene
 
-	file.readFile("FileCircuito.txt");
+	//file.readFile("FileCircuito.txt");
 	
 
 
 
-	/*cout << "Enter expression" << endl;
+ 	cout << "Enter expression" << endl;
 	string expression;
 
 	getline(cin, expression);
@@ -22,7 +22,7 @@ int main()
 
 	int value = b.parse(expression);
 	cout << " result = " << value << endl;
-	*/
+
 
 
 	system("pause");

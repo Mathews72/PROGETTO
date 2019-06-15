@@ -59,15 +59,17 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 
 	cout << "processRightParenthesis running ....  " << endl;
 	if (operatorStack.empty()) {
-		cerr<<"incosistent expression due )";
-		exit(1);
+		cerr << "incosistent expression due )"<<endl;
+		system("pause");			//da sistemare
 	}
 	while (!operatorStack.empty() && operatorStack.top() != '(') {
 		//cout << "par  " << operatorStack.top() <<endl;
 		doBinary(operatorStack.top());
 		operatorStack.pop();
+		
 	}
-	operatorStack.pop(); // remove '('
+	
+		operatorStack.pop(); // remove '('
 }
 
 // Creates a BinaryOperationNode from the top two operands on operandStack
@@ -77,9 +79,9 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	int p;
 
-	if (operandStack.empty()) 
-		cerr<<"incosistent expression due operand missing";
-	
+	if (operandStack.empty())
+		cerr << "incosistent expression due operand missing";
+
 
 	int  right = operandStack.top();
 	operandStack.pop();
@@ -87,9 +89,9 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		p = BinaryOperationNode(binary_op, right, right);
 	}
 	else {
-		if (operandStack.empty()) {
-			cerr<<"espressione non cosistente ";
-			exit(1);
+		if (operandStack.empty() || operatorStack.top() != '(') {
+			cerr << "espressione non cosistente ";
+			system("pause");
 		}
 		int left = operandStack.top();
 		operandStack.pop();
@@ -98,14 +100,14 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	operandStack.push(p);
 }
-int BinaryExpressionBuilder::parse(std::string& str)  {
+int BinaryExpressionBuilder::parse(std::string& str) {
 	char token;
 	lstOpValid.push_back("AND");
 	lstOpValid.push_back("OR");
 	lstOpValid.push_back("NOT");
 
 	int pnt = 0;
-	while (pnt<str.length()) {
+	while (pnt < str.length()) {
 		if (pnt >= str.length()) return 0;
 		while ((pnt < str.length()) && (str[pnt] == ' ')) {
 			//cout << "----token: *" << str[pnt] << "*" << endl;
@@ -127,8 +129,8 @@ int BinaryExpressionBuilder::parse(std::string& str)  {
 			else {
 				string msg = "item not valid: ";
 				msg.append(item);
-				cerr<<msg<<endl;
-				exit(1);
+				cerr << msg << endl;
+				return -1;
 			}
 		}
 		else if (token == ')') {
@@ -150,8 +152,8 @@ int BinaryExpressionBuilder::parse(std::string& str)  {
 			if (item.length() != 1) {
 				string msg = "item not valid (type digit): ";
 				msg.append(item);
-				cerr<<msg<<endl;
-				exit(1);
+				cerr << msg << endl;
+				return -1;
 			}
 			int number = ((token == DIGIT_0) ? 0 : 1);
 			operandStack.push(number);
@@ -159,8 +161,8 @@ int BinaryExpressionBuilder::parse(std::string& str)  {
 		else {
 			string msg = "token not recognized: ";
 			msg.push_back(token);
-			cerr<<msg<<endl;
-			exit(1);
+			cerr << msg << endl;
+			return -1;
 		}
 	} // end while  
 	while (!operatorStack.empty()) {
@@ -168,8 +170,8 @@ int BinaryExpressionBuilder::parse(std::string& str)  {
 		operatorStack.pop();
 	}
 	if (operandStack.size() != 1) {
-		cerr<<"End eval expr --> operandStack not emty ... expression not valid!!";
-		exit(1);
+		cerr << "End eval expr --> operandStack not emty ... expression not valid!!";
+		return -1;
 	}
 	int p = operandStack.top();
 	return p;
