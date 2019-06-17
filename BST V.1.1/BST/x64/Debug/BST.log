@@ -1,0 +1,8 @@
+﻿  BST.cpp
+  BinaryExpressionBuilder.cpp
+C:\Users\Luca\source\repos\Mathews72\PROGETTO\BST\BST\BinaryExpressionBuilder.h(51): warning C4290: specifica di una funzione C++ ignorata eccetto che per indicare che una funzione non è __declspec(nothrow)
+C:\Users\Luca\source\repos\Mathews72\PROGETTO\BST\BST\BinaryExpressionBuilder.cpp(27): warning C4290: specifica di una funzione C++ ignorata eccetto che per indicare che una funzione non è __declspec(nothrow)
+  main.cpp
+C:\Users\Luca\source\repos\Mathews72\PROGETTO\BST\BST\BinaryExpressionBuilder.h(51): warning C4290: specifica di una funzione C++ ignorata eccetto che per indicare che una funzione non è __declspec(nothrow)
+  Generazione del codice in corso...
+  BST.vcxproj -> C:\Users\Luca\source\repos\Mathews72\PROGETTO\BST\x64\Debug\BST.exe
