@@ -254,19 +254,23 @@ public:
 	public:
 		explicit NotWellFormed() {}
 
-		explicit NotWellFormed(const std::string& message) :
-			msg_(message)
-		{}
+		explicit NotWellFormed(const std::string& message) :msg_(message){}
+
+		
 		virtual ~NotWellFormed() throw () {}
 		virtual const char* what() const throw () {
 
 			string msgout;
 			msgout = "The expression is not valid";
 			msgout.append(msg_.c_str());
-			return msgout.c_str();
+			//return msgout.c_str();
+
+			return msg_.c_str();
 		
 
 		}
+
+
 	protected:
 		/**  Error message.  */
 		std::string msg_;
@@ -556,7 +560,7 @@ int main(int argc, char** argv) {
 
 	cout << "Enter expression" << endl;
 	string expression;
-	expression = " (1 andy 1 (and 1 or not (0 and 1) and 1 or not 0))";
+	expression = " (1 and 1 (and 1 or not (0 and 1) and 1 or not 0))";
 	//expression = "1 and 1 and 1 or 0 and 1 and 1 or 1";    
 	//getline(cin, expression);
 	BinaryExpressionBuilder b;

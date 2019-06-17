@@ -5,6 +5,7 @@ module Circuito (
 		input d
 		output x, y
 );
-	FF
+	FF1
 	assign x = c OR (pippo AND NOT b OR e)
+
 endmodule

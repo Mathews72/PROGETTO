@@ -1,8 +1,1 @@
-﻿  BST.cpp
-  BinaryExpressionBuilder.cpp
-C:\Users\Luca\source\repos\Mathews72\PROGETTO\BST\BST\BinaryExpressionBuilder.h(51): warning C4290: specifica di una funzione C++ ignorata eccetto che per indicare che una funzione non è __declspec(nothrow)
-C:\Users\Luca\source\repos\Mathews72\PROGETTO\BST\BST\BinaryExpressionBuilder.cpp(27): warning C4290: specifica di una funzione C++ ignorata eccetto che per indicare che una funzione non è __declspec(nothrow)
-  main.cpp
-C:\Users\Luca\source\repos\Mathews72\PROGETTO\BST\BST\BinaryExpressionBuilder.h(51): warning C4290: specifica di una funzione C++ ignorata eccetto che per indicare che una funzione non è __declspec(nothrow)
-  Generazione del codice in corso...
-  BST.vcxproj -> C:\Users\Luca\source\repos\Mathews72\PROGETTO\BST\x64\Debug\BST.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(67,5): error MSB8020: The build tools for v142 (Platform Toolset = 'v142') cannot be found. To build using the v142 build tools, please install v142 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
