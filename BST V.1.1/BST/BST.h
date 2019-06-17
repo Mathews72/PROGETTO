@@ -25,9 +25,9 @@
 
 using namespace std;
 
- static struct prova{}ciao;
+ 
 
-static struct node {
+ struct node {
 	char token;
 	char result;
 	int depthMin;
