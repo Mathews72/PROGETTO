@@ -61,6 +61,7 @@ void InputFile::readFile(string str)
 		}
 		else if(isalnum(ch)){
 			buffer[j++] = ch;
+			//cout << buffer << "/";
 		}
 		else if ((ch == ' ' || ch == '\n') && (j != 0)) {
 			buffer[j] = '\0';
@@ -74,8 +75,6 @@ void InputFile::readFile(string str)
 					cout <<"Espressione catturata: "<< tmp << endl;
 
 					cout << "******Clear expression: "<<capture(tmp)<<endl;
-
-
 				}
 				
 			}

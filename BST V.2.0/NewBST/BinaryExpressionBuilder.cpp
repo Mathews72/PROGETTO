@@ -1,279 +1,6 @@
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <stack>
-#include <exception>
-#include <vector>
-#include <algorithm>
-#include <list>
-#include <queue>
+#include "BinaryExpressionBuilder.h"
 
-using namespace std;
 
-#define DEBUG (0)
-
-#define OPER_AND 'a'
-#define OPER_OR  'o'
-#define OPER_NOT 'n'
-#define OPER_XOR 'x'
-
-#define DIGIT_0 '0'
-#define DIGIT_1 '1'
-
-#define NOTAPPLICABLE '-'
-
-#define RESULTTAG 100
-
-
-struct node {
-	char token;
-	char result;
-	int depthMin;
-	int depthMax;
-
-	node *left;
-	node *right;
-
-}*rootTree;
-
-
-struct Trunk {
-	Trunk *prev;
-	string str;
-
-	Trunk(Trunk *prev, string str) {
-		this->prev = prev;
-		this->str = str;
-	}
-};
-
-
-class BST {
-
-public:
-
-	BST() {
-		rootTree = NULL;
-	}
-
-	node *createNodeLeaf(char binary_op, int leftValue, int rightValue, int result);
-	node *createNodeLeafLeft(char binary_op, int leftValue, node *right, int result);
-	node *createNodeLeafRight(char binary_op, node *left, int rightValue, int result);
-	node *createNodeRoot(char binary_op, node *left, node *right, int result);
-	void printTree(node *root, Trunk *prev, bool isLeft);
-	void surfTree(node *root);
-
-private:
-
-	void showTrunks(Trunk *p);
-
-	bool isEmpty() const { return (rootTree == NULL); }
-	bool isleaf() const { return (rootTree->left == NULL && rootTree->right == NULL); }
-
-	node *createLeaf(char token, char result) {         //crea la foglia
-
-		node *nodeItem;
-
-		nodeItem = new node;
-		nodeItem->token = token;
-		nodeItem->result = result;
-		nodeItem->depthMin = nodeItem->depthMin = 0;
-		nodeItem->left = nodeItem->right = NULL;
-
-		return nodeItem;
-	}
-
-};
-
-node *BST::createNodeRoot(char binary_op, node *left, node *right, int result) {
-
-	char cresult;
-	node *t;
-
-	int ldmin;
-	int ldmax;
-	int rdmin;
-	int rdmax;
-
-	ldmin = ldmax = rdmin = rdmax = 1;
-
-	cresult = (result == 0 ? DIGIT_0 : DIGIT_1);
-
-	t = createLeaf(binary_op, cresult);
-	t->left = left;
-	t->right = right;
-
-	if (left != NULL) {
-		ldmin = left->depthMin;
-		ldmax = left->depthMax;
-	}
-	if (right != NULL) {
-		rdmin = right->depthMin;
-		rdmax = right->depthMax;
-	}
-	t->depthMin = min(ldmin, rdmin) + 1;
-	t->depthMax = max(ldmax, rdmax) + 1;
-
-	return t;
-}
-
-node *BST::createNodeLeafLeft(char binary_op, int leftValue, node *right, int result) {
-
-	char cleft;
-	node *left;
-	node *t;
-
-	cleft = (leftValue == 0 ? DIGIT_0 : DIGIT_1);
-	left = createLeaf(cleft, NOTAPPLICABLE);
-	left->left = left->right = NULL;
-
-	t = (right == NULL) ? left : createNodeRoot(binary_op, left, right, result);
-
-	t->depthMin = 1;
-	t->depthMax = (right == NULL) ? 1 : right->depthMax + 1;
-
-	return (t);
-}
-
-node *BST::createNodeLeafRight(char binary_op, node *left, int rightValue, int result) {
-
-	char cright;
-	node *right;
-	node *t;
-
-	cright = (rightValue == 0 ? DIGIT_0 : DIGIT_1);
-	right = createLeaf(cright, NOTAPPLICABLE);
-	right->left = right->right = NULL;
-
-	t = (left == NULL) ? right : createNodeRoot(binary_op, left, right, result);
-
-	t->depthMin = 1;
-	t->depthMax = (left == NULL) ? 1 : left->depthMax + 1;
-
-	return (t);
-}
-
-node *BST::createNodeLeaf(char binary_op, int leftValue, int rightValue, int result) {
-
-	node *left;
-	node *right;
-	node *t;
-
-	left = createNodeLeafLeft(binary_op, leftValue, NULL, result);
-	left->depthMin = left->depthMax = 0;
-	if DEBUG cout << " createNodeLeafLeft ok" << endl;
-	right = createNodeLeafRight(binary_op, NULL, rightValue, result);
-	right->depthMin = right->depthMax = 0;
-	if DEBUG cout << " createNodeLeafRight ok" << endl;
-
-	t = createNodeRoot(binary_op, left, right, result);
-	t->depthMin = t->depthMax = 1;
-
-	return t;
-}
-
-void BST::surfTree(node *root) {
-
-	if (root == NULL)
-		return;
-
-
-	surfTree(root->left);
-	surfTree(root->right);
-
-	// print token, result, depthMin, depthMax
-
-}
-
-void BST::showTrunks(Trunk *p) {
-	if (p == NULL)
-		return;
-
-	showTrunks(p->prev);
-	cout << p->str;
-}
-
-void BST::printTree(node *root, Trunk *prev, bool isLeft) {
-
-	if (root == NULL)
-		return;
-
-	string prev_str = "    ";
-	Trunk *trunk = new Trunk(prev, prev_str);
-
-	printTree(root->left, trunk, true);
-
-	if (!prev)
-		trunk->str = "---";
-	else if (isLeft) {
-		trunk->str = ".---";
-		prev_str = "   |";
-	}
-	else {
-		trunk->str = "`---";
-		prev->str = prev_str;
-	}
-
-	showTrunks(trunk);
-	//cout << root->token<<" ("<<root->result<<")"<< endl;
-	//cout << root->token<<root->result<< endl;
-	cout << root->token << root->result << root->depthMin << root->depthMax << endl;
-	//cout << root->token<< endl;
-
-	if (prev)
-		prev->str = prev_str;
-	trunk->str = "   |";
-
-	printTree(root->right, trunk, false);
-}
-
-
-class BinaryExpressionBuilder {
-
-private:
-	// operatorStack 
-	std::stack<char> operatorStack;
-	// operandStack is made up of BinaryOperationNodes and NumericElementNode
-	std::stack<int> operandStack;
-
-	std::stack<node *> TreeStack;
-
-	std::list<string> lstOpValid;
-
-	BST bst;
-
-	void processOperator(char op);
-	void processRightParenthesis();
-	void doBinary(char op);
-	int precedence(char op);
-	int BinaryOperationNode(char op, int l, int r);
-
-public:
-	class NotWellFormed : public std::exception {
-	public:
-		explicit NotWellFormed() {}
-
-		explicit NotWellFormed(const std::string& message) :
-			msg_(message)
-		{}
-		virtual ~NotWellFormed() throw () {}
-		virtual const char* what() const throw () {
-
-			string msgout;
-			msgout = "The expression is not valid";
-			msgout.append(msg_.c_str());
-			return msgout.c_str();
-		
-
-		}
-	protected:
-		/**  Error message.  */
-		std::string msg_;
-	};
-
-	int parse(std::string& istr) throw (NotWellFormed);
-};
 
 int BinaryExpressionBuilder::precedence(char op) {
 	enum {
@@ -380,7 +107,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 	cout << "---------------------------------------------------------------" << endl;
 	cout << "|| print Tree -- stack size " << TreeStack.size() << " |||||||||||||||||||||||||||" << endl;
-	node *t;
+	node* t;
 	t = TreeStack.top();
 	bst.printTree(t, NULL, false);
 
@@ -459,7 +186,7 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	int p;
-	node *t;
+	node* t;
 
 	if (operandStack.empty()) {
 		throw NotWellFormed("incosistent expression due operand missing");
@@ -470,7 +197,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 	if (binary_op == OPER_NOT) {
 		p = BinaryOperationNode(binary_op, rightValue, rightValue);
 		if (rightValue >= RESULTTAG) {
-			node *tright;
+			node* tright;
 			tright = TreeStack.top();
 			TreeStack.pop();
 			t = bst.createNodeRoot(binary_op, tright, tright, p);
@@ -500,8 +227,8 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		}
 		else if (leftValue >= RESULTTAG and rightValue >= RESULTTAG) {
 			// create node with leaf and rigth as pointers 
-			node *tleft;
-			node *tright;
+			node* tleft;
+			node* tright;
 			tright = TreeStack.top();
 			TreeStack.pop();
 			tleft = TreeStack.top();
@@ -514,7 +241,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		}
 		else if (leftValue < RESULTTAG and rightValue >= RESULTTAG) {
 			// create node with leaf as left and rigth as pointers 
-			node *tright;
+			node* tright;
 			tright = TreeStack.top();
 			TreeStack.pop();
 			t = bst.createNodeLeafLeft(binary_op, leftValue, tright, p);
@@ -523,7 +250,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		}
 		else if (leftValue >= RESULTTAG and rightValue < RESULTTAG) {
 			// create node with leaf as pointer and right as leaf
-			node *tleft;
+			node* tleft;
 			tleft = TreeStack.top();
 			TreeStack.pop();
 			t = bst.createNodeLeafRight(binary_op, tleft, rightValue, p);
@@ -538,8 +265,8 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 	}
 	if (!DEBUG) {
 		cout << "*Start Print stack ********************************************" << endl;
-		for (stack<node *> t = TreeStack; !t.empty(); t.pop()) {
-			node *subTree;
+		for (stack<node*> t = TreeStack; !t.empty(); t.pop()) {
+			node* subTree;
 			cout << "Item " << endl;
 			subTree = t.top();
 			bst.printTree(subTree, NULL, false);
@@ -550,28 +277,3 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 	operandStack.push(p + RESULTTAG);
 
 }
-
-int main(int argc, char** argv) {
-
-
-	cout << "Enter expression" << endl;
-	string expression;
-	expression = " (1 andy 1 (and 1 or not (0 and 1) and 1 or not 0))";
-	//expression = "1 and 1 and 1 or 0 and 1 and 1 or 1";    
-	//getline(cin, expression);
-	BinaryExpressionBuilder b;
-	//1 and 1 and 1 or 1 and 1 and 1 or 1
-	try {
-		int value = b.parse(expression);
-		cout << " expression = " << expression << endl;
-		cout << " result = " << value << endl;
-	}
-	catch (std::exception &e) {
-		cout  << "exception caught: " << e.what() << '\n';
-	}
-
-
-	system("pause");
-	return 0;
-}
-
