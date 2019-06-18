@@ -37,11 +37,11 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 	char token;
 
-	lstOpValid.push_back("and");
+
 	lstOpValid.push_back("AND");
-	lstOpValid.push_back("or");
+	
 	lstOpValid.push_back("OR");
-	lstOpValid.push_back("not");
+	
 	lstOpValid.push_back("NOT");
 	lstOpValid.push_back("NAND");
 	lstOpValid.push_back("NOR");

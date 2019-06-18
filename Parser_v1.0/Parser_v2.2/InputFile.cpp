@@ -1,4 +1,5 @@
 #include "InputFile.h"
+#include"BinaryExpressionBuilder.h"
 
 
 
@@ -34,7 +35,9 @@ int InputFile::isKeyword(char buffer[])
 			flag = 1;
 			break;
 		}
+		
 	}
+	
 
 	return flag;
 	
@@ -44,6 +47,7 @@ void InputFile::readFile(string str)
 {
 	string temp;
 	string tmp;
+	BinaryExpressionBuilder b;
 	_myfile.open(str);			//apertura file
 	if (!_myfile.is_open()) {			//controllo apertura file
 		cerr << "error while opening the file\n";
@@ -61,7 +65,7 @@ void InputFile::readFile(string str)
 		}
 		else if(isalnum(ch)){
 			buffer[j++] = ch;
-			//cout << buffer << "/";
+			cout << buffer << "/";
 		}
 		else if ((ch == ' ' || ch == '\n') && (j != 0)) {
 			buffer[j] = '\0';
@@ -74,7 +78,11 @@ void InputFile::readFile(string str)
 					getline(_myfile, tmp);
 					cout <<"Espressione catturata: "<< tmp << endl;
 
-					cout << "******Clear expression: "<<capture(tmp)<<endl;
+					cout << "******Clear expression: "<<capture(tmp)<<endl<<endl;
+					string nuova = capture(tmp);
+
+					
+					cout << "***Result: " << b.parse(nuova) << endl << endl;
 				}
 				
 			}
@@ -148,7 +156,7 @@ string InputFile::capture(string tmp)
 	while (pnt < tmp.length()) {
 		string item;
 		
-		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')')) {
+		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\0')) {
 			item.push_back(tmp[pnt]);
 			++pnt;
 		

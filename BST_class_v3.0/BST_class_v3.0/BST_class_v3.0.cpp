@@ -9,9 +9,9 @@ int main(int argc, char** argv) {
 
 	cout << "Enter expression" << endl;
 	string expression;
-	//expression = " (1 and 1 (and 1 or not (0 and 1) and 1 or not 0))";
+	expression = " (1 AND 1 (AND 1 OR NOT (0 AND 1) AND 1 OR 0))";
 	//expression = "1 and 1 and 1 or 0 and 1 and 1 or 1";    
-	getline(cin, expression);
+	//getline(cin, expression);
 	BinaryExpressionBuilder b;
 	//1 and 1 and 1 or 1 and 1 and 1 or 1
 	try {
