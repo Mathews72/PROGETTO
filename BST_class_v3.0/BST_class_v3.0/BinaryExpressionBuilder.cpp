@@ -1,4 +1,14 @@
 #include "BinaryExpressionBuilder.h"
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <stack>
+#include <exception>
+#include <vector>
+#include <algorithm>
+#include <list>
+#include <queue>
 
 
 
@@ -45,6 +55,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	lstOpValid.push_back("NOT");
 	lstOpValid.push_back("NAND");
 	lstOpValid.push_back("NOR");
+	lstOpValid.push_back("XOR");
 
 	int pnt = 0;
 	while (1) {
@@ -211,6 +222,7 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	int p;
+	
 	node* t;
 
 	if (operandStack.empty()) {
@@ -221,6 +233,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 	operandStack.pop();
 	if (binary_op == OPER_NOT) {
 		p = BinaryOperationNode(binary_op, rightValue, rightValue);
+		consume = bst.power(binary_op, p)+consume;
 		if (rightValue >= RESULTTAG) {
 			node* tright;
 			tright = TreeStack.top();
@@ -242,13 +255,14 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		int leftValue = operandStack.top();
 		operandStack.pop();
 		p = BinaryOperationNode(binary_op, leftValue, rightValue);
+		consume = bst.power(binary_op, p)+consume;			//calcola la potenza
 
 		//cout <<"=== Evaluated ....."<<leftValue<<" "<<binary_op<<" "<<rightValue<<" = "<<p<<endl;
 		if (leftValue < RESULTTAG and rightValue < RESULTTAG) {
 			// create node leaf and push in stack
 			t = bst.createNodeLeaf(binary_op, leftValue, rightValue, p);
 			TreeStack.push(t);
-			cout << "Created leaf node " << TreeStack.size() << endl;
+			//cout << "Created leaf node " << TreeStack.size() << endl;
 		}
 		else if (leftValue >= RESULTTAG and rightValue >= RESULTTAG) {
 			// create node with leaf and rigth as pointers 
@@ -288,7 +302,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		//bst.printTree(t, NULL, false);
 
 	}
-	if (!DEBUG) {
+	if (DEBUG) {
 		cout << "*Start Print stack ********************************************" << endl;
 		for (stack<node*> t = TreeStack; !t.empty(); t.pop()) {
 			node* subTree;

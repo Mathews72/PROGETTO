@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <list>
 #include <queue>
+#include"InputFile.h"
+#include"BinaryExpressionBuilder.h"
 #define DEBUG (0)
 
 #define OPER_AND 'A'
@@ -62,12 +64,18 @@ public:
 		rootTree = NULL;
 	}
 
+	vector<float> cons0to1 = { 0.1,0.2,0.3,0.9,0.4,0.56 };
+	vector<float> cons1to0 = { 1.2,1.5,3.2,0.5,0.22,0.7 };
+
 	node* createNodeLeaf(char binary_op, int leftValue, int rightValue, int result);
 	node* createNodeLeafLeft(char binary_op, int leftValue, node* right, int result);
 	node* createNodeLeafRight(char binary_op, node* left, int rightValue, int result);
 	node* createNodeRoot(char binary_op, node* left, node* right, int result);
 	void printTree(node* root, Trunk* prev, bool isLeft);
 	void surfTree(node* root);
+
+	float power(char binary_op, int result);
+	
 
 private:
 

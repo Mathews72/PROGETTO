@@ -1,5 +1,5 @@
 #include "BST.h"
-
+#include"BinaryExpressionBuilder.h"
 using namespace std;
 
 
@@ -80,10 +80,10 @@ node * BST::createNodeLeaf(char binary_op, int leftValue, int rightValue, int re
 
 	left = createNodeLeafLeft(binary_op, leftValue, NULL, result);
 	left->depthMin = left->depthMax = 0;
-	if DEBUG cout << " createNodeLeafLeft ok" << endl;
+	//if DEBUG cout << " createNodeLeafLeft ok" << endl;
 	right = createNodeLeafRight(binary_op, NULL, rightValue, result);
 	right->depthMin = right->depthMax = 0;
-	if DEBUG cout << " createNodeLeafRight ok" << endl;
+	//if DEBUG cout << " createNodeLeafRight ok" << endl;
 
 	t = createNodeRoot(binary_op, left, right, result);
 	t->depthMin = t->depthMax = 1;
@@ -102,6 +102,39 @@ void BST::surfTree(node * root) {
 
 	// print token, result, depthMin, depthMax
 
+}
+
+float BST::power(char binary_op, int result)
+{
+	enum {
+		
+		pnot,pand,pnand,por,pxor,pnor
+	};
+	float consume;
+
+	switch (binary_op) {
+	case OPER_NOT:
+		consume = ((result == 1) ? cons0to1[pnot] : cons1to0[pnot]);
+		break;
+	case OPER_AND:
+		consume = ((result == 1) ? cons0to1[pand] : cons1to0[pand]);
+		break;
+	case OPER_NAND:
+		consume = ((result == 1) ? cons0to1[pnand] : cons1to0[pnand]) ;
+		break;
+	case OPER_OR:
+		consume = ((result == 1) ? cons0to1[por] : cons1to0[por]);
+		break;
+	case OPER_XOR:
+		consume = ((result == 1) ? cons0to1[pxor] : cons1to0[pxor]);
+		break;
+	case OPER_NOR:
+		 consume = ((result == 1) ? cons0to1[pnor] : cons1to0[pnor]);
+		break;
+	}
+	cout << "**consume: " << binary_op << " " << consume<<endl ;
+	
+	 return consume;
 }
 
 void BST::showTrunks(Trunk * p) {
