@@ -74,6 +74,11 @@ void InputFile::readFile(string str)
 				string s = to_string(k);
 				 //cout << "**pos: " << s<<endl;
 				temp = elmVect + '[' +s + ']';
+				//temp deve essere un char...[]
+				//char convTemp[20];
+				//strcpy_s(convTemp, temp.c_str());
+
+
 				inputChar.push_back(temp);
 				cout <<  "**CaricoVett: " << temp << endl;
 			}
@@ -109,10 +114,12 @@ void InputFile::readFile(string str)
 			else
 			{
 				cout << buffer << " is indentifier\n";
-				inputChar.push_back(buffer);		//metto il carattere nel vettore di stringhe
+				string valoriInput(buffer);
+				cout << "**CaricoVett: " << valoriInput << endl;
+				inputChar.push_back(valoriInput);		//metto il carattere nel vettore di stringhe
 
 			}
-//svuoto bene il buffer
+
 			
 		}
 
@@ -301,7 +308,9 @@ string InputFile::capture(string tmp)
 {
 	int pnt = 0;
 	int i = 0;
+	int pos;
 	int value;
+	string valueString;
 
 
 	string newString;
@@ -312,21 +321,27 @@ string InputFile::capture(string tmp)
 	} while (tmp[pnt] != '=');
 	tmp.erase(tmp.begin() + pnt);
 
-	while (pnt < tmp.length()) {
+	
+
+
+
+	while (pnt <= tmp.length()) {
 		string item;
+
+		
 
 		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\0')) {
 			item.push_back(tmp[pnt]);
+			//cout << "****tmp; " << pnt<< endl;
 			++pnt;
-
-
 		}
-		//cout << "item operator: *" << item << "*" << endl;
+		cout << "item operator: *" << item << "*" << endl;
+		
 		if (count(inputChar.begin(), inputChar.end(), item) == 1) {
 
 			//la variabile esite--> la sostituisco con il valore 
 			//newString[k] sostituito con il corrispettivo valore dell'item
-			//cout << "*value found.. Substituting *" << item << "*" << endl;
+			//cout << "*value found.. Substituting *" << item<<" lengh; " <<item.length() << "*" << endl;
 
 			auto match = find(inputChar.begin(), inputChar.end(), item);		//cerca il valore per restituire la pos
 
@@ -344,17 +359,23 @@ string InputFile::capture(string tmp)
 
 			string valore = to_string(val);		//converte il valore trovato in stringa
 
+			pos = pnt - item.length();
+			tmp.replace(pos, item.length(), valore);//DA RIVEDEREEEE!! non prende le stringe lunghe!!!!
+			//cout << "Valore del pnt: " << pnt << endl;
+			pnt = pnt - item.length()+1;
 
-			tmp.replace(pnt - item.length(), item.length(), valore);
-
+			//valueString = valueString + valore;
 
 
 		}
-		else if (count(inputChar.begin(), inputChar.end(), item) > 1) {
-			cerr << "****ERROR Double inizialization: " << item << endl;
-			system("pause");
+		/*else if (count(inputChar.begin(), inputChar.end(), item) ==0) {
+			valueString = valueString +" "+item +" ";
 		}
+		else {
+			valueString.push_back(tmp[pnt]);
+		}*/
 
+		
 		pnt++;
 
 
