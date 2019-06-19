@@ -1,13 +1,20 @@
 module Circuito (
 0
-		input pippo, b, e
+		input pippo, b, e, f, g
 		input c
 		input d
 		output x, y
 );
-	FF
-	FF1
-	assign x = (c ANd e )
+	
+	 FF2222 = b AND e
+	 FF33s33 = pippo OR d
+	
+	
+	assign x = (c AND a )
+
+	
+	 FF333542 = f AND g
+	
 
 
 endmodule

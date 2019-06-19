@@ -26,21 +26,52 @@ int InputFile::isOperator(char buffer[])
 
 int InputFile::isKeyword(char buffer[])
 {
-	char keywords[32][10] = { "module","assign","input","output", "endmodule", "FF" };
+	char keywords[32][10] = { "module","assign","input","output", "endmodule" };
 	int i, flag = 0;
 
-	for (i = 0; i < 32; ++i) {
+	for (i = 0; i < 32; ++i) 
+	{
 		if (strcmp(keywords[i], buffer) == 0)
 		{
 			flag = 1;
 			break;
 		}
 		
+		
 	}
 	
 
 	return flag;
 	
+}
+
+int InputFile::isFlipFlop(char buffer[])
+{
+	
+	int flag = 0;
+	
+	if (buffer[0]=='F'&&buffer[1]=='F')
+	{
+		for (int i = 2; buffer[i] != '\0'; i++)
+		{
+			if (isdigit(buffer[i]))
+			{
+				flag = 1;
+			}
+			else {
+				flag = 0;
+				return flag;
+			}
+		}
+		_flipname = buffer;
+		cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
+		FlipNames.push_back(_flipname);
+	}
+	else
+	{
+		flag = 0;
+	}
+	return flag;
 }
 
 void InputFile::readFile(string str)
@@ -59,7 +90,11 @@ void InputFile::readFile(string str)
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
 
-		if ( ch == '0' || ch == '1') {
+		
+		
+
+
+	    if ( ch == '0' || ch == '1') {
 			cout << "*****numero: " << ch << endl;
 			
 		}
@@ -67,24 +102,43 @@ void InputFile::readFile(string str)
 			buffer[j++] = ch;
 			cout << buffer << "/";
 		}
+		
 		else if ((ch == ' ' || ch == '\n') && (j != 0)) {
 			buffer[j] = '\0';
 			j = 0;
 
+			if (isFlipFlop(buffer) == 1)
+			{
+				cout << buffer << " is FLIPFLOP! \n";
+				getline(_myfile, tmp);
+				
+				//Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
+				string wewe= _flipname+ tmp ;
+				cout << "Espressione catturata nel flipflop: " << wewe << endl;
+				cout << "********** FLiFlop Pulito : " << capture(wewe) << endl << endl;
+				string tmpconv = capture(wewe);
+				int ris = b.parse(tmpconv);
+				cout << "Risultato del flip flop vale     " << ris<<endl<<endl;
+				flipflopValue.push_back(ris);
+			}
+			
+
+			
+		
 			//Se trova una keyword,allora
-			if (isKeyword(buffer) == 1) {
+			 if (isKeyword(buffer) == 1) {
 				cout << buffer << " is keyword\n";
 				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
 					getline(_myfile, tmp);
-					cout <<"Espressione catturata: "<< tmp << endl;
+					cout << "Espressione catturata: " << tmp << endl;
 
-					cout << "******Clear expression: "<<capture(tmp)<<endl<<endl;
+					cout << "******Clear expression: " << capture(tmp) << endl << endl;
 					string nuova = capture(tmp);
 
-					
+
 					cout << "***Result: " << b.parse(nuova) << endl << endl;
 				}
-				
+
 			}
 			else if (isOperator(buffer) == 1)
 				cout << buffer << " is operator\n";
@@ -94,7 +148,8 @@ void InputFile::readFile(string str)
 				inputChar.push_back(buffer);		//metto il carattere nel vettore di stringhe
 
 			}
-				
+
+		
 
 		}
 
@@ -152,8 +207,11 @@ string InputFile::capture(string tmp)
 		
 	} while (tmp[pnt] != '=');
 	tmp.erase(tmp.begin() + pnt);
+	cout << "OK,eliminato fino all uguale" << endl;
 
-	while (pnt < tmp.length()) {
+
+	while (pnt < tmp.length()) 
+	{
 		string item;
 		
 		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\0')) {
@@ -167,7 +225,7 @@ string InputFile::capture(string tmp)
 
 			//la variabile esite--> la sostituisco con il valore 
 			//newString[k] sostituito con il corrispettivo valore dell'item
-			//cout << "*value found.. Substituting *" << item << "*" << endl;
+		//	cout << "*value found.. Substituting *" << item << "*" << endl;
 
 			auto match = find(inputChar.begin(), inputChar.end(), item);		//cerca il valore per restituire la pos
 
@@ -176,17 +234,19 @@ string InputFile::capture(string tmp)
 				//cout << "Trovato alla pos: " << value << endl;
 
 			}
-
 			//cout << "************valore numerico Corrispettivo: " << inputValue.at(value) << endl;
 			//cout << "Size di InputVAlue " << inputValue.size()<<endl;
 			int val = inputValue.at(value);
+		//	int flipval = flipflopValue.at(value);
 			//newString.push_back(val);			//metto val nella newString
 
 			
 			string valore = to_string(val);		//converte il valore trovato in stringa
+		//	string valore2 = to_string(flipval);
 		
 
 			tmp.replace(pnt - item.length(), item.length(), valore);
+		//	tmp.replace(pnt - item.length(), item.length(), valore2);
 
 
 
