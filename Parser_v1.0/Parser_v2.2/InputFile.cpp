@@ -100,7 +100,7 @@ void InputFile::readFile(string str)
 		}
 		else if(isalnum(ch)){
 			buffer[j++] = ch;
-			cout << buffer << "/";
+			//cout << buffer << "/";
 		}
 		
 		else if ((ch == ' ' || ch == '\n') && (j != 0)) {
