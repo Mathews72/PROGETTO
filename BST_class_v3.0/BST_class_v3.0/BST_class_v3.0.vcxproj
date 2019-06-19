@@ -154,10 +154,15 @@
     <ClCompile Include="BinaryExpressionBuilder.cpp" />
     <ClCompile Include="BST.cpp" />
     <ClCompile Include="BST_class_v3.0.cpp" />
+    <ClCompile Include="InputFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryExpressionBuilder.h" />
     <ClInclude Include="BST.h" />
+    <ClInclude Include="InputFile.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="FilePower.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

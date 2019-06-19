@@ -1,6 +1,8 @@
 #pragma once
 
 #include "BST.h"
+
+
 using namespace std;
 
 
@@ -13,7 +15,7 @@ private:
 	// operandStack is made up of BinaryOperationNodes and NumericElementNode
 	std::stack<int> operandStack;
 
-	std::stack<node*> TreeStack;
+	std::stack<node *> TreeStack;
 
 	std::list<string> lstOpValid;
 
@@ -24,6 +26,8 @@ private:
 	void doBinary(char op);
 	int precedence(char op);
 	int BinaryOperationNode(char op, int l, int r);
+	
+
 
 public:
 	class NotWellFormed : public std::exception {
@@ -47,6 +51,8 @@ public:
 		/**  Error message.  */
 		std::string msg_;
 	};
+
+	float consume = 0;
 
 	int parse(std::string& istr) throw (NotWellFormed);
 };
