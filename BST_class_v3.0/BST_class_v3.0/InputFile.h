@@ -4,7 +4,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include<list>
+#include <sstream>
+#include <list>
 #include"BST.h"
 #include"BinaryExpressionBuilder.h"
 

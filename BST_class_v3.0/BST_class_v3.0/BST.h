@@ -9,8 +9,7 @@
 #include <algorithm>
 #include <list>
 #include <queue>
-#include"InputFile.h"
-#include"BinaryExpressionBuilder.h"
+//#include"BinaryExpressionBuilder.h"
 #define DEBUG (0)
 
 #define OPER_AND 'A'
@@ -32,7 +31,7 @@ using namespace std;
 
 
 
-static struct node {
+ static struct node {
 	char token;
 	char result;
 	int depthMin;

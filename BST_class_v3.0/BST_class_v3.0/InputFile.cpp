@@ -138,9 +138,11 @@ void InputFile::readFileValue(string str) {
 
 void InputFile::readFilePower(string str)
 {
-	string temp;
-	string temp1;
+	string tmp;
+	string val01;
+	string val10;
 	string item;
+	istringstream stream;
 	char op;
 	_myfile.open(str);			//apertura file
 	if (!_myfile.is_open()) {			//controllo apertura file
@@ -150,19 +152,39 @@ void InputFile::readFilePower(string str)
 	}
 
 	lstOp.push_back("AND");
-
 	lstOp.push_back("OR");
-
 	lstOp.push_back("NOT");
 	lstOp.push_back("NAND");
 	lstOp.push_back("NOR");
 	lstOp.push_back("XOR");
 
 	int k = 0, i = 0, j = 0;
-	while (!_myfile.eof()) {
+	while (!(_myfile.eof()))
+	{	
+		getline(_myfile, tmp);
+		//**********DA RIVEDERE!!!!!!!!!
+		cout << "Riga letta " << item << endl;
+	
+	
+	/*	 cout << "item operator: *" << item << "*" << endl;		//controllo sull'operatore
+		 op = tmp[0];
+		if (count(lstOp.begin(), lstOp.end(), tmp) > 0) {
+			if (item.compare("NAND") == 0)
+				op = 'v';
 
+			if (item.compare("NOR") == 0)
+				op = 'z';
+
+		}
+		cout << "item operator: *" << op << "*" << endl;
+
+
+		
+		/*
 		while (ch != ';') {
+			cout << "loop" << endl;
 			op = ch;
+			ch++;
 			if ((ch == OPER_AND) || (ch == OPER_OR) ||
 				(ch == OPER_NOT) || (ch == OPER_XOR)) {
 				string item;
@@ -182,6 +204,7 @@ void InputFile::readFilePower(string str)
 
 
 			}
+			
 		}
 		ch++;
 
@@ -194,16 +217,19 @@ void InputFile::readFilePower(string str)
 			ch++;
 		}
 
-		chargeVectPower(op, stof(temp), stof(temp1));
-		cout << "****PoWER" << op << stof(temp) << stof(temp1) << endl;
+		//chargeVectPower(op, stof(temp), stof(temp1));
+		cout << "****PoWER" << op << temp << temp1 << endl;
 
 		item.clear();
 		temp.clear();
 		temp1.clear();
 
 
-
+		*/
+		i++;
 	}
+
+
 	_myfile.close();
 }
 
