@@ -7,13 +7,15 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	/*
+	
 	InputFile file;
 
-	file.readFilePower("FilePower.txt");
-	*/
+	//file.readFilePower("FilePower.txt");
+
+	file.readFile("FileCircuito.txt");
 	
 	
+	/*
 	cout << "Enter expression" << endl;
 	string expression;
 	expression = " (1 AND 1 (OR 1 OR NOT (0 OR 1) AND NOT 1))";
@@ -32,7 +34,7 @@ int main(int argc, char** argv) {
 	catch (std::exception & e) {
 		cout << "exception caught: " << e.what() << '\n';
 	}
-	
+	*/
 
 	system("pause");
 	return 0;

@@ -41,5 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="FilePower.txt" />
+    <Text Include="FileCircuito.txt" />
   </ItemGroup>
 </Project>

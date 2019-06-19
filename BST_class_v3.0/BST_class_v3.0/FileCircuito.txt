@@ -1,0 +1,13 @@
+module Circuito (
+
+		input a, pippo, b, e
+		input c
+		
+		input mario[2]
+		output x, y
+);
+	
+	assign x = (mario[1] OR a )
+	
+	
+endmodule 

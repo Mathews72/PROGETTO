@@ -47,6 +47,7 @@ void InputFile::readFile(string str)
 {
 	string temp;
 	string tmp;
+	string numVect;
 	BinaryExpressionBuilder b;
 	_myfile.open(str);			//apertura file
 	if (!_myfile.is_open()) {			//controllo apertura file
@@ -59,15 +60,32 @@ void InputFile::readFile(string str)
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
 
-		if (ch == '0' || ch == '1') {
-			cout << "*****numero: " << ch << endl;
+		if (ch == '[' ) {
+			buffer[j] = '\0';
+			j = 0;
+			getline(_myfile, numVect, ']');
+			//cout <<buffer << "*****numvect: " << numVect << endl;
+			int number = stoi(numVect);
+			
+			string elmVect(buffer);
+			//cout << elmVect << "*****numvect: " << number << endl;
+			for (k = 0; k != number; k++) {
 
+				string s = to_string(k);
+				 //cout << "**pos: " << s<<endl;
+				temp = elmVect + '[' +s + ']';
+				inputChar.push_back(temp);
+				cout <<  "**CaricoVett: " << temp << endl;
+			}
+			
+			
+			 
 		}
 		else if (isalnum(ch)) {
 			buffer[j++] = ch;
-			cout << buffer << "/";
+			
 		}
-		else if ((ch == ' ' || ch == '\n') && (j != 0)) {
+		else if ((ch == ' ' || ch == '\n') && (j != 0))  {
 			buffer[j] = '\0';
 			j = 0;
 
@@ -75,14 +93,14 @@ void InputFile::readFile(string str)
 			if (isKeyword(buffer) == 1) {
 				cout << buffer << " is keyword\n";
 				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
-					getline(_myfile, tmp);
+					getline(_myfile, tmp,'\n');
 					cout << "Espressione catturata: " << tmp << endl;
 
 					cout << "******Clear expression: " << capture(tmp) << endl << endl;
-					string nuova = capture(tmp);
+					//string nuova = capture(tmp);
 
 
-					cout << "***Result: " << b.parse(nuova) << endl << endl;
+					//cout << "***Result: " << b.parse(nuova) << endl << endl;
 				}
 
 			}
@@ -94,8 +112,8 @@ void InputFile::readFile(string str)
 				inputChar.push_back(buffer);		//metto il carattere nel vettore di stringhe
 
 			}
-
-
+//svuoto bene il buffer
+			
 		}
 
 	}
