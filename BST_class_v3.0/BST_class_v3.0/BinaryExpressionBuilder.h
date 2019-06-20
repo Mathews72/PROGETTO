@@ -1,7 +1,17 @@
 #pragma once
 
 #include "BST.h"
-
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <stack>
+#include <exception>
+#include <vector>
+#include <algorithm>
+#include <list>
+#include <queue>
+#include"InputFile.h"
 
 using namespace std;
 
@@ -15,7 +25,7 @@ private:
 	// operandStack is made up of BinaryOperationNodes and NumericElementNode
 	std::stack<int> operandStack;
 
-	std::stack<node *> TreeStack;
+	std::stack<node*> TreeStack;
 
 	std::list<string> lstOpValid;
 

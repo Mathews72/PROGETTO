@@ -1,14 +1,7 @@
+#pragma once
 #include "BinaryExpressionBuilder.h"
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <stack>
-#include <exception>
-#include <vector>
-#include <algorithm>
-#include <list>
-#include <queue>
+
+
 
 
 

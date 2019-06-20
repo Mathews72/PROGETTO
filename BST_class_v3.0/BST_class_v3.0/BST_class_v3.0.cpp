@@ -7,17 +7,18 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-
+	
 	InputFile file;
 
-	file.readFilePower("FilePower.txt");
+	//file.readFilePower("FilePower.txt");
 
-
-
+	file.readFile("FileCircuito.txt");
+	
+	
 	/*
 	cout << "Enter expression" << endl;
 	string expression;
-	expression = " (1 AND 1 (AND 1 OR NOT (0 AND 1) AND NOT 1))";
+	expression = " (1 AND 1 (OR 1 OR NOT (0 OR 1) AND NOT 1))";
 	//expression = "1 and 1 and 1 or 0 and 1 and 1 or 1";    
 	//getline(cin, expression);
 	BinaryExpressionBuilder b;

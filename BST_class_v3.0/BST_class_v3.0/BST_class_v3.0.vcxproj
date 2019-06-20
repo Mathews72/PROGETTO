@@ -162,6 +162,7 @@
     <ClInclude Include="InputFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="FileCircuito.txt" />
     <Text Include="FilePower.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -47,6 +47,7 @@ void InputFile::readFile(string str)
 {
 	string temp;
 	string tmp;
+	string numVect;
 	BinaryExpressionBuilder b;
 	_myfile.open(str);			//apertura file
 	if (!_myfile.is_open()) {			//controllo apertura file
@@ -59,15 +60,37 @@ void InputFile::readFile(string str)
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
 
-		if (ch == '0' || ch == '1') {
-			cout << "*****numero: " << ch << endl;
+		if (ch == '[' ) {
+			buffer[j] = '\0';
+			j = 0;
+			getline(_myfile, numVect, ']');
+			//cout <<buffer << "*****numvect: " << numVect << endl;
+			int number = stoi(numVect);
+			
+			string elmVect(buffer);
+			//cout << elmVect << "*****numvect: " << number << endl;
+			for (k = 0; k != number; k++) {
 
+				string s = to_string(k);
+				 //cout << "**pos: " << s<<endl;
+				temp = elmVect + '[' +s + ']';
+				//temp deve essere un char...[]
+				//char convTemp[20];
+				//strcpy_s(convTemp, temp.c_str());
+
+
+				inputChar.push_back(temp);
+				cout <<  "**CaricoVett: " << temp << endl;
+			}
+			
+			
+			 
 		}
 		else if (isalnum(ch)) {
 			buffer[j++] = ch;
-			cout << buffer << "/";
+			
 		}
-		else if ((ch == ' ' || ch == '\n') && (j != 0)) {
+		else if ((ch == ' ' || ch == '\n') && (j != 0))  {
 			buffer[j] = '\0';
 			j = 0;
 
@@ -75,14 +98,14 @@ void InputFile::readFile(string str)
 			if (isKeyword(buffer) == 1) {
 				cout << buffer << " is keyword\n";
 				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
-					getline(_myfile, tmp);
+					getline(_myfile, tmp,'\n');
 					cout << "Espressione catturata: " << tmp << endl;
 
 					cout << "******Clear expression: " << capture(tmp) << endl << endl;
-					string nuova = capture(tmp);
+					//string nuova = capture(tmp);
 
 
-					cout << "***Result: " << b.parse(nuova) << endl << endl;
+					//cout << "***Result: " << b.parse(nuova) << endl << endl;
 				}
 
 			}
@@ -91,11 +114,13 @@ void InputFile::readFile(string str)
 			else
 			{
 				cout << buffer << " is indentifier\n";
-				inputChar.push_back(buffer);		//metto il carattere nel vettore di stringhe
+				string valoriInput(buffer);
+				cout << "**CaricoVett: " << valoriInput << endl;
+				inputChar.push_back(valoriInput);		//metto il carattere nel vettore di stringhe
 
 			}
 
-
+			
 		}
 
 	}
@@ -138,9 +163,11 @@ void InputFile::readFileValue(string str) {
 
 void InputFile::readFilePower(string str)
 {
-	string temp;
-	string temp1;
+	string tmp;
+	string val01;
+	string val10;
 	string item;
+	istringstream stream;
 	char op;
 	_myfile.open(str);			//apertura file
 	if (!_myfile.is_open()) {			//controllo apertura file
@@ -150,19 +177,39 @@ void InputFile::readFilePower(string str)
 	}
 
 	lstOp.push_back("AND");
-
 	lstOp.push_back("OR");
-
 	lstOp.push_back("NOT");
 	lstOp.push_back("NAND");
 	lstOp.push_back("NOR");
 	lstOp.push_back("XOR");
 
 	int k = 0, i = 0, j = 0;
-	while (!_myfile.eof()) {
+	while (!(_myfile.eof()))
+	{	
+		getline(_myfile, tmp);
+		//**********DA RIVEDERE!!!!!!!!!
+		cout << "Riga letta " << item << endl;
+	
+	
+	/*	 cout << "item operator: *" << item << "*" << endl;		//controllo sull'operatore
+		 op = tmp[0];
+		if (count(lstOp.begin(), lstOp.end(), tmp) > 0) {
+			if (item.compare("NAND") == 0)
+				op = 'v';
 
+			if (item.compare("NOR") == 0)
+				op = 'z';
+
+		}
+		cout << "item operator: *" << op << "*" << endl;
+
+
+		
+		/*
 		while (ch != ';') {
+			cout << "loop" << endl;
 			op = ch;
+			ch++;
 			if ((ch == OPER_AND) || (ch == OPER_OR) ||
 				(ch == OPER_NOT) || (ch == OPER_XOR)) {
 				string item;
@@ -182,6 +229,7 @@ void InputFile::readFilePower(string str)
 
 
 			}
+			
 		}
 		ch++;
 
@@ -194,16 +242,19 @@ void InputFile::readFilePower(string str)
 			ch++;
 		}
 
-		chargeVectPower(op, stof(temp), stof(temp1));
-		cout << "****PoWER" << op << stof(temp) << stof(temp1) << endl;
+		//chargeVectPower(op, stof(temp), stof(temp1));
+		cout << "****PoWER" << op << temp << temp1 << endl;
 
 		item.clear();
 		temp.clear();
 		temp1.clear();
 
 
-
+		*/
+		i++;
 	}
+
+
 	_myfile.close();
 }
 
@@ -257,7 +308,9 @@ string InputFile::capture(string tmp)
 {
 	int pnt = 0;
 	int i = 0;
+	int pos;
 	int value;
+	string valueString;
 
 
 	string newString;
@@ -268,21 +321,27 @@ string InputFile::capture(string tmp)
 	} while (tmp[pnt] != '=');
 	tmp.erase(tmp.begin() + pnt);
 
-	while (pnt < tmp.length()) {
+	
+
+
+
+	while (pnt <= tmp.length()) {
 		string item;
+
+		
 
 		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\0')) {
 			item.push_back(tmp[pnt]);
+			//cout << "****tmp; " << pnt<< endl;
 			++pnt;
-
-
 		}
-		//cout << "item operator: *" << item << "*" << endl;
+		cout << "item operator: *" << item << "*" << endl;
+		
 		if (count(inputChar.begin(), inputChar.end(), item) == 1) {
 
 			//la variabile esite--> la sostituisco con il valore 
 			//newString[k] sostituito con il corrispettivo valore dell'item
-			//cout << "*value found.. Substituting *" << item << "*" << endl;
+			//cout << "*value found.. Substituting *" << item<<" lengh; " <<item.length() << "*" << endl;
 
 			auto match = find(inputChar.begin(), inputChar.end(), item);		//cerca il valore per restituire la pos
 
@@ -300,17 +359,23 @@ string InputFile::capture(string tmp)
 
 			string valore = to_string(val);		//converte il valore trovato in stringa
 
+			pos = pnt - item.length();
+			tmp.replace(pos, item.length(), valore);//DA RIVEDEREEEE!! non prende le stringe lunghe!!!!
+			//cout << "Valore del pnt: " << pnt << endl;
+			pnt = pnt - item.length()+1;
 
-			tmp.replace(pnt - item.length(), item.length(), valore);
-
+			//valueString = valueString + valore;
 
 
 		}
-		else if (count(inputChar.begin(), inputChar.end(), item) > 1) {
-			cerr << "****ERROR Double inizialization: " << item << endl;
-			system("pause");
+		/*else if (count(inputChar.begin(), inputChar.end(), item) ==0) {
+			valueString = valueString +" "+item +" ";
 		}
+		else {
+			valueString.push_back(tmp[pnt]);
+		}*/
 
+		
 		pnt++;
 
 
