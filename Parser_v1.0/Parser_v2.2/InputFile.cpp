@@ -26,7 +26,7 @@ int InputFile::isOperator(char buffer[])
 
 int InputFile::isKeyword(char buffer[])
 {
-	char keywords[32][10] = { "module","assign","input","output", "endmodule" };
+	char keywords[32][10] = { "module","assign","input","output", "endmodule","istance" };
 	int i, flag = 0;
 
 	for (i = 0; i < 32; ++i) 

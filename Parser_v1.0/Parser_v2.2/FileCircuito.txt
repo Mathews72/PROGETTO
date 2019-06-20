@@ -14,8 +14,16 @@ module Circuito (
 
 	FF12 = b OR b
 	
-	
-	
+endmodule
 
 
+module CircuitoComposto(
+
+input m, n
+input a, c
+output x
+);
+Circuito instance (.a = m, .b = n, .c = a, .x = FF1)
+FF2 = FF1 OR (NOT c)
+assign x = FF1 OR FF2
 endmodule
