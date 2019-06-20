@@ -98,8 +98,10 @@ void BST::surfTree(node * root) {
 		return;
 
 
-	surfTree(root->left);
-	surfTree(root->right);
+	//surfTree(root->left);
+	//surfTree(root->right);
+	cout <<"Path Max:"<< root->depthMax<<endl;
+	cout << "Path Min:" << root->depthMin << endl;
 
 	// print token, result, depthMin, depthMax
 
@@ -133,7 +135,7 @@ float BST::power(char binary_op, int result)
 		 consume = ((result == 1) ? cons0to1[pnor] : cons1to0[pnor]);
 		break;
 	}
-	cout << "**consume: " << binary_op << " " << consume<<endl ;
+	//cout << "**consume: " << binary_op << " " << consume<<endl ;
 	
 	 return consume;
 }

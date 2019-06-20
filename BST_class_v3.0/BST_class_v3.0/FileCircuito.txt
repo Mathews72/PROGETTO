@@ -6,8 +6,11 @@ module Circuito (
 		input mario[2]
 		output x, y
 );
-	
-	assign x = striingrrrrmolototrtot AND a (AND b OR mario[1] AND mario[0])
+	FF123 = a NAND b
+	assign x = striingrrrrmolototrtot AND NOT ( b OR mario[1] AND FF123)
+
+	assign y =  a NAND b
+	assign z = a XOR NOT mario[1] NAND e
 	
 	
 endmodule 

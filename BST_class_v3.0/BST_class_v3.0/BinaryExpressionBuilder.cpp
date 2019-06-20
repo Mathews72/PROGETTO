@@ -127,16 +127,23 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 		throw NotWellFormed("End eval expr --> operandStack not emty ... expression not valid!!");
 	}
 
-
+/* Stampa L'alber0
 	cout << "---------------------------------------------------------------" << endl;
 	cout << "|| print Tree -- stack size " << TreeStack.size() << " |||||||||||||||||||||||||||" << endl;
 	node* t;
 	t = TreeStack.top();
 	bst.printTree(t, NULL, false);
-
+	*/
 	int p = operandStack.top();
-	return (p >= RESULTTAG ? p - RESULTTAG : p);
+	node* t;
+	t = TreeStack.top();
+	bst.surfTree(t);
 
+	operandStack.pop();
+	
+
+	return (p >= RESULTTAG ? p - RESULTTAG : p);
+	
 
 }
 
@@ -189,7 +196,7 @@ int BinaryExpressionBuilder::BinaryOperationNode(char binary_op, int leftVal, in
 		}
 	}
 
-	cout << "=== BinaryOperationNode ....." << leftVal << " " << binary_op << " " << rightVal << " = " << result << endl;
+	//cout << "=== BinaryOperationNode ....." << leftVal << " " << binary_op << " " << rightVal << " = " << result << endl;
 
 	return result;
 }
@@ -197,7 +204,7 @@ int BinaryExpressionBuilder::BinaryOperationNode(char binary_op, int leftVal, in
 
 void BinaryExpressionBuilder::processRightParenthesis() {
 
-	cout << "processRightParenthesis running ....  " << endl;
+	//cout << "processRightParenthesis running ....  " << endl;
 	if (operatorStack.empty()) {
 		throw NotWellFormed("incosistent expression due )");
 	}
@@ -239,7 +246,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 			t->right = NULL;
 		}
 		TreeStack.push(t);
-		cout << "Created not node " << binary_op << " " << rightValue << endl;
+		//cout << "Created not node " << binary_op << " " << rightValue << endl;
 	}
 	else {
 		if (operandStack.empty()) {
@@ -269,7 +276,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 			//bst.printTree(tleft, NULL, false);
 			t = bst.createNodeRoot(binary_op, tleft, tright, p);
 			TreeStack.push(t);
-			cout << "Created root node " << TreeStack.size() << endl;
+			//cout << "Created root node " << TreeStack.size() << endl;
 		}
 		else if (leftValue < RESULTTAG and rightValue >= RESULTTAG) {
 			// create node with leaf as left and rigth as pointers 
@@ -278,7 +285,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 			TreeStack.pop();
 			t = bst.createNodeLeafLeft(binary_op, leftValue, tright, p);
 			TreeStack.push(t);
-			cout << "Created root node left as leaf " << TreeStack.size() << endl;
+			//cout << "Created root node left as leaf " << TreeStack.size() << endl;
 		}
 		else if (leftValue >= RESULTTAG and rightValue < RESULTTAG) {
 			// create node with leaf as pointer and right as leaf
