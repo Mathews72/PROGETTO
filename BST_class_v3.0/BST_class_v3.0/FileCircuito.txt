@@ -1,0 +1,13 @@
+module Circuito (
+
+		input a, striingrrrrmolototrtot, b, e, pippo
+		input c
+		
+		input mario[2]
+		output x, y
+);
+	
+	assign x = striingrrrrmolototrtot AND a (AND b OR mario[1] AND mario[0])
+	
+	
+endmodule 
