@@ -6,16 +6,15 @@ module Circuito (
 		output x, y
 );
 	
-	FF2222 = b OR e
-	
-	assign x = ( pippofddfafsa AND  FF2222)
-
-	
-
-	FF12 = b OR b
+	FF1213 = pippofddfafsa AND b
+	FF1214 = FF1213 OR c
 	
 	
+	assign x = ( FF1213 AND  FF1214)
 	
 
+	
+
+	
 
 endmodule

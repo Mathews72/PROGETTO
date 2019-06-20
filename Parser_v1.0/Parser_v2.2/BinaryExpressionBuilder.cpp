@@ -174,6 +174,7 @@ int BinaryExpressionBuilder::parse(std::string& str) {
 		return -1;
 	}
 	int p = operandStack.top();
+	operandStack.pop();
 	return p;
 
 }

@@ -64,7 +64,7 @@ int InputFile::isFlipFlop(char buffer[])
 			}
 		}
 		_flipname = buffer;
-		cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
+	//	cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
 		FlipNames.push_back(_flipname);
 	}
 	else
@@ -103,31 +103,16 @@ void InputFile::readFile(string str)
 			buffer[j] = '\0';
 			j = 0;
 
-			if (isFlipFlop(buffer) == 1)
-			{
-				cout << buffer << " is FLIPFLOP! \n";
-				getline(_myfile, tmp);
-				
-				//Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
-				string wewe= _flipname+ tmp ;
-				cout << "Espressione catturata nel flipflop: " << wewe << endl;
-				cout << "********** FLiFlop Pulito : " << capture(wewe) << endl << endl;
-				string tmpconv = capture(wewe);
-				cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
-				int ris = b.parse(tmpconv);
-				cout << "Risultato del flip flop vale     " << ris<<endl<<endl;
-				inputValue.push_back(ris);
-				cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
-			}
+			
 			
 
 			
 		
 			//Se trova una keyword,allora
 			 if (isKeyword(buffer) == 1) {
-				cout << buffer << " is keyword\n";
+				//cout << buffer << " is keyword\n";
 				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
-					getline(_myfile, tmp);
+					getline(_myfile, tmp,'\n');
 					cout << "Espressione catturata: " << tmp << endl;
 
 					cout << "******Clear expression: " << capture(tmp) << endl << endl;
@@ -138,11 +123,26 @@ void InputFile::readFile(string str)
 				}
 
 			}
-			else if (isOperator(buffer) == 1)
-				cout << buffer << " is operator\n";
+			else if (isFlipFlop(buffer) == 1)
+			 {
+				 cout << buffer << " is FLIPFLOP! \n";
+				 getline(_myfile, tmp);
+
+				 //Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
+				 string flip = _flipname + tmp;
+			//	 cout << "Espressione catturata nel flipflop: " << flip << endl;
+				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+				 string tmpconv = capture(flip);
+			//	 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
+				 int ris = b.parse(tmpconv);
+
+				 cout << "Risultato del flip flop vale     " << ris << endl << endl;
+				 flipflopValue.push_back(ris);
+				 //cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
+			 }
 			else
 			{
-				cout << buffer << " is indentifier\n";
+			//	cout << buffer << " is indentifier\n";
 				inputChar.push_back(buffer);		//metto il carattere nel vettore di stringhe
 
 			}
@@ -172,7 +172,7 @@ void InputFile::readFileValue(string str) {
 		ch = _myfile.get();			//prendere carattere per carattere
 
 		if (ch == '0' || ch == '1') {
-			cout << "*****numero: " << ch << endl;
+			//cout << "*****numero: " << ch << endl;
 			int number = ((ch == '0') ? 0 : 1);
 			inputValue.push_back(number);		//memorizza il numero preso nel vettore
 
@@ -205,7 +205,7 @@ string InputFile::capture(string tmp)
 		
 	} while (tmp[pnt] != '=');
 	tmp.erase(tmp.begin() + pnt);
-	cout << "OK,eliminato fino all uguale" << endl;
+	//cout << "OK,eliminato fino all uguale" << endl;
 
 
 	while (pnt < tmp.length()) 
@@ -218,7 +218,7 @@ string InputFile::capture(string tmp)
 		
 
 		}
-		cout << "stringa item:  " << item << "*" << endl;
+		//cout << "stringa item:  " << item << "*" << endl;
 		if (count(inputChar.begin(), inputChar.end(), item) == 1)
 		{
 
@@ -233,6 +233,7 @@ string InputFile::capture(string tmp)
 				//cout << "Trovato alla pos: " << value << endl;
 
 			}
+			//if(match !=.....)
 
 			//cout << "************valore numerico Corrispettivo: " << inputValue.at(value) << endl;
 			//cout << "Size di InputVAlue " << inputValue.size()<<endl;
@@ -245,11 +246,32 @@ string InputFile::capture(string tmp)
 			
 			tmp.replace(pnt - item.length(), item.length(), valore);
 		
-			pnt = pnt - item.length();
+			pnt = pnt - item.length()+1;
 			
 
 
 
+		}
+		else if (count(FlipNames.begin(), FlipNames.end(), item) == 1)
+		{
+			auto match = find(FlipNames.begin(), FlipNames.end(), item);		//cerca il valore per restituire la pos
+
+			if (match != FlipNames.end()) {
+				value = match - FlipNames.begin();
+				//cout << "Trovato alla pos: " << value << endl;
+
+			}
+		
+			int val = flipflopValue.at(value);
+			//	int val2 = flipflopValue.at(0);
+				//newString.push_back(val);			//metto val nella newString
+
+
+			string valore = to_string(val);		//converte il valore trovato in stringa
+
+			tmp.replace(pnt - item.length(), item.length(), valore);
+
+			pnt = pnt - item.length() + 1;
 		}
 		else if (count(inputChar.begin(), inputChar.end(), item) > 1) {
 			cerr << "****ERROR Double inizialization: " << item << endl;
@@ -264,7 +286,7 @@ string InputFile::capture(string tmp)
 	}
 
 
-	cout << "***Tmp sostituita*** " << tmp << endl;
+	//cout << "***Tmp sostituita*** " << tmp << endl;
 
 
 	return tmp;
