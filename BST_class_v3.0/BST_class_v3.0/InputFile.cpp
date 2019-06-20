@@ -43,6 +43,35 @@ int InputFile::isKeyword(char buffer[])
 
 }
 
+int InputFile::isFlipFlop(char buffer[])
+{
+
+	int flag = 0;
+
+	if (buffer[0] == 'F'&&buffer[1] == 'F')
+	{
+		for (int i = 2; buffer[i] != '\0'; i++)//Parte da int i=2 perchè gli altri sono F F
+		{
+			if (isdigit(buffer[i]))
+			{
+				flag = 1;
+			}
+			else {
+				flag = 0;
+				return flag;
+			}
+		}
+		_flipname = buffer;
+		//	cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
+		FlipNames.push_back(_flipname);
+	}
+	else
+	{
+		flag = 0;
+	}
+	return flag;
+}
+
 void InputFile::readFile(string str)
 {
 	string temp;
@@ -110,8 +139,23 @@ void InputFile::readFile(string str)
 				}
 
 			}
-			else if (isOperator(buffer) == 1)
-				cout << buffer << " is operator\n";
+			else if (isFlipFlop(buffer) == 1)
+			{
+				cout << buffer << " is FLIPFLOP! \n";
+				getline(_myfile, tmp);
+
+				//Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
+				string flip = _flipname + tmp;
+				//	 cout << "Espressione catturata nel flipflop: " << flip << endl;
+				cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+				string tmpconv = capture(flip);
+				//	 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
+				int ris = b.parse(tmpconv);
+
+				cout << "Risultato del flip flop vale     " << ris << endl << endl;
+				flipflopValue.push_back(ris);
+				//cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
+			}
 			else
 			{
 				//cout << buffer << " is indentifier\n";
@@ -369,12 +413,32 @@ string InputFile::capture(string tmp)
 
 
 		}
-		/*else if (count(inputChar.begin(), inputChar.end(), item) ==0) {
-			valueString = valueString +" "+item +" ";
+		
+		else if (count(FlipNames.begin(), FlipNames.end(), item) == 1)
+		{
+			auto match = find(FlipNames.begin(), FlipNames.end(), item);		//cerca il valore per restituire la pos
+
+			if (match != FlipNames.end()) {
+				value = match - FlipNames.begin();
+				//cout << "Trovato alla pos: " << value << endl;
+
+			}
+
+			int val = flipflopValue.at(value);
+			//	int val2 = flipflopValue.at(0);
+				//newString.push_back(val);			//metto val nella newString
+
+
+			string valore = to_string(val);		//converte il valore trovato in stringa
+
+			tmp.replace(pnt - item.length(), item.length(), valore);
+
+			pnt = pnt - item.length() + 1;
 		}
-		else {
-			valueString.push_back(tmp[pnt]);
-		}*/
+		else if (count(inputChar.begin(), inputChar.end(), item) > 1) {
+			cerr << "****ERROR Double inizialization: " << item << endl;
+			system("pause");
+		}
 
 		
 		pnt++;
@@ -385,7 +449,7 @@ string InputFile::capture(string tmp)
 	}
 
 
-	//cout << "***Tmp sostituita*** " << tmp << endl;
+	cout << "***Tmp sostituita*** " << tmp << endl;
 
 
 	return tmp;

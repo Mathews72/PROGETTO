@@ -246,7 +246,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 			t->right = NULL;
 		}
 		TreeStack.push(t);
-		cout << "Created not node " << binary_op << " " << rightValue << endl;
+		//cout << "Created not node " << binary_op << " " << rightValue << endl;
 	}
 	else {
 		if (operandStack.empty()) {

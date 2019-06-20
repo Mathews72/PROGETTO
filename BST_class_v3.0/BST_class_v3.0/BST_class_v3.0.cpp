@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
 
 	//file.readFilePower("FilePower.txt");
 
-	file.readFile("FileCircuito.txt");
+	
 	
 	
 	/*
@@ -41,6 +41,17 @@ int main(int argc, char** argv) {
 		cout << "exception caught: " << e.what() << '\n';
 	}
 	*/
+
+	try {
+		file.readFile("FileCircuito.txt");
+	}
+	catch (std::exception & e) {
+		cout << "exception caught: " << e.what() << '\n';
+		//cout << "exception caught: " << '\n';
+	}
+
+
+
 
 	system("pause");
 	return 0;

@@ -14,9 +14,8 @@
 
 #define OPER_AND 'A'
 #define OPER_OR  'O'
-#define OPER_NOT 'n'
 #define OPER_NOT 'N'
-#define OPER_XOR 'x'
+#define OPER_XOR 'X'
 #define OPER_NAND 'v'
 #define OPER_NOR 'z'
 
