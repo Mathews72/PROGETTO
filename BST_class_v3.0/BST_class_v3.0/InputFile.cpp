@@ -80,7 +80,7 @@ void InputFile::readFile(string str)
 
 
 				inputChar.push_back(temp);
-				cout <<  "**CaricoVett: " << temp << endl;
+				//cout <<  "**CaricoVett: " << temp << endl;
 			}
 			
 			
@@ -96,16 +96,17 @@ void InputFile::readFile(string str)
 
 			//Se trova una keyword,allora
 			if (isKeyword(buffer) == 1) {
-				cout << buffer << " is keyword\n";
+				//cout << buffer << " is keyword\n";
 				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
 					getline(_myfile, tmp,'\n');
 					cout << "Espressione catturata: " << tmp << endl;
 
-					cout << "******Clear expression: " << capture(tmp) << endl << endl;
-					//string nuova = capture(tmp);
+					//cout << "******Clear expression: " << capture(tmp) << endl << endl;
+					string nuova = capture(tmp);
 
 
-					//cout << "***Result: " << b.parse(nuova) << endl << endl;
+					cout << "***Result: " << b.parse(nuova) << endl ;
+					cout << " **Consumo totale = " << b.consume << endl<<endl;
 				}
 
 			}
@@ -113,9 +114,9 @@ void InputFile::readFile(string str)
 				cout << buffer << " is operator\n";
 			else
 			{
-				cout << buffer << " is indentifier\n";
+				//cout << buffer << " is indentifier\n";
 				string valoriInput(buffer);
-				cout << "**CaricoVett: " << valoriInput << endl;
+				//cout << "**CaricoVett: " << valoriInput << endl;
 				inputChar.push_back(valoriInput);		//metto il carattere nel vettore di stringhe
 
 			}
@@ -335,7 +336,7 @@ string InputFile::capture(string tmp)
 			//cout << "****tmp; " << pnt<< endl;
 			++pnt;
 		}
-		cout << "item operator: *" << item << "*" << endl;
+		//cout << "item operator: *" << item << "*" << endl;
 		
 		if (count(inputChar.begin(), inputChar.end(), item) == 1) {
 
@@ -384,7 +385,7 @@ string InputFile::capture(string tmp)
 	}
 
 
-	cout << "***Tmp sostituita*** " << tmp << endl;
+	//cout << "***Tmp sostituita*** " << tmp << endl;
 
 
 	return tmp;
