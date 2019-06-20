@@ -1,17 +1,18 @@
 module Circuito (
-
-		input a, pippo, b, e, f, g, d
+0
+		input a, pippofddfafsa, b, e, f, g
 		input c
-
+		input d
 		output x, y
 );
 	
-	 FF2222 = b AND e
-	 FF3333 = pippo AND c
+	FF2222 = b OR e
 	
-	
-	assign x = (c OR a )
+	assign x = ( pippofddfafsa AND  FF2222)
 
+	
+
+	FF12 = b OR b
 	
 	
 	

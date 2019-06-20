@@ -94,13 +94,9 @@ void InputFile::readFile(string str)
 		
 
 
-	    if ( ch == '0' || ch == '1') {
-			cout << "*****numero: " << ch << endl;
-			
-		}
-		else if(isalnum(ch)){
+	    if(isalnum(ch)){
 			buffer[j++] = ch;
-			//cout << buffer << "/";
+		//	cout << buffer << "/";
 		}
 		
 		else if ((ch == ' ' || ch == '\n') && (j != 0)) {
@@ -117,9 +113,11 @@ void InputFile::readFile(string str)
 				cout << "Espressione catturata nel flipflop: " << wewe << endl;
 				cout << "********** FLiFlop Pulito : " << capture(wewe) << endl << endl;
 				string tmpconv = capture(wewe);
+				cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
 				int ris = b.parse(tmpconv);
 				cout << "Risultato del flip flop vale     " << ris<<endl<<endl;
-				flipflopValue.push_back(ris);
+				inputValue.push_back(ris);
+				cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
 			}
 			
 
@@ -152,9 +150,9 @@ void InputFile::readFile(string str)
 		
 
 		}
-
+		
 	}
-
+	
 	_myfile.close();
 }
 
@@ -220,33 +218,35 @@ string InputFile::capture(string tmp)
 		
 
 		}
-		//cout << "item operator: *" << item << "*" << endl;
-		if (count(inputChar.begin(), inputChar.end(), item) == 1) {
+		cout << "stringa item:  " << item << "*" << endl;
+		if (count(inputChar.begin(), inputChar.end(), item) == 1)
+		{
 
 			//la variabile esite--> la sostituisco con il valore 
 			//newString[k] sostituito con il corrispettivo valore dell'item
-		//	cout << "*value found.. Substituting *" << item << "*" << endl;
+		//	cout << "*value found.. Substituting * " << item << "*" << endl;
 
 			auto match = find(inputChar.begin(), inputChar.end(), item);		//cerca il valore per restituire la pos
-
+			
 			if (match != inputChar.end()) {
 				value = match - inputChar.begin();
 				//cout << "Trovato alla pos: " << value << endl;
 
 			}
+
 			//cout << "************valore numerico Corrispettivo: " << inputValue.at(value) << endl;
 			//cout << "Size di InputVAlue " << inputValue.size()<<endl;
 			int val = inputValue.at(value);
-		//	int flipval = flipflopValue.at(value);
+		//	int val2 = flipflopValue.at(0);
 			//newString.push_back(val);			//metto val nella newString
 
 			
 			string valore = to_string(val);		//converte il valore trovato in stringa
-		//	string valore2 = to_string(flipval);
-		
-
+			
 			tmp.replace(pnt - item.length(), item.length(), valore);
-		//	tmp.replace(pnt - item.length(), item.length(), valore2);
+		
+			pnt = pnt - item.length();
+			
 
 
 
@@ -258,7 +258,7 @@ string InputFile::capture(string tmp)
 		
 		pnt++;
 			
-		
+		i++;
 
 
 	}
@@ -269,3 +269,4 @@ string InputFile::capture(string tmp)
 
 	return tmp;
 }
+
