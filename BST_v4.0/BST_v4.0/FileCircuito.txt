@@ -1,0 +1,15 @@
+module Circuito (
+
+		input a, b, e, pippo
+		input c, var
+		
+		input mario[2]
+		output x, y
+);
+	
+	assign x = NOT var
+	assign y = NOT var
+	assign z = NOT var
+
+	
+endmodule 
