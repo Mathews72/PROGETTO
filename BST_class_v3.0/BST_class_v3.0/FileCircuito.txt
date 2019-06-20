@@ -1,13 +1,13 @@
 module Circuito (
 
-		input a, striingrrrrmolototrtot, b, e, pippo
-		input c
+		input a, b, e, pippo
+		input c, var
 		
 		input mario[2]
 		output x, y
 );
 	FF123 = a NAND b
-	assign x = striingrrrrmolototrtot AND NOT ( b OR mario[1] AND FF123)
+	assign x = var AND NOT ( b OR mario[1] AND FF123)
 
 	assign y =  a NAND b
 	assign z = a XOR NOT mario[1] NAND e

@@ -294,7 +294,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 			TreeStack.pop();
 			t = bst.createNodeLeafRight(binary_op, tleft, rightValue, p);
 			TreeStack.push(t);
-			cout << "Created root node right as leaf " << TreeStack.size() << endl;
+			//cout << "Created root node right as leaf " << TreeStack.size() << endl;
 		}
 		else {
 			cout << "Error scenario not compliant  " << TreeStack.size() << endl;
