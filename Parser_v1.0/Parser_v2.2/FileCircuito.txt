@@ -6,8 +6,8 @@ module Circuito (
 		output x, y
 );
 	
-	FF1213 = pippofddfafsa AND b
-	FF1214 = FF1213 OR c
+	FF123 = pippofddfafsa AND b
+	FF1214 = FF123 OR c
 	
 	
 	assign x = ( FF1213 AND  FF1214)
