@@ -31,7 +31,6 @@ private:
 
 	BST bst;
 
-	
 	void processOperator(char op);
 	void processRightParenthesis();
 	void doBinary(char op);
@@ -63,9 +62,8 @@ public:
 		std::string msg_;
 	};
 
-	float consume;
+	float consume = 0;
 
 	int parse(std::string& istr) throw (NotWellFormed);
-	
 };
 

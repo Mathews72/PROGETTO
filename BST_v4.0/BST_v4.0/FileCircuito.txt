@@ -6,10 +6,9 @@ module Circuito (
 		input mario[2]
 		output x, y
 );
-	
-	assign x = NOT var
-	assign y = NOT var
-	assign z = NOT var
+	FF1234 = var AND b
+	assign x = a AND pippo XOR mario[1] OR NOT var OR (FF1234 AND c)
+
 
 	
 endmodule 

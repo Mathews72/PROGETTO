@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
+#include <sstream>
 #include <list>
 #include"BST.h"
 #include"BinaryExpressionBuilder.h"
@@ -19,13 +19,19 @@ public:
 	~InputFile();
 
 	vector<string> inputChar; //memorizzati tutti i caratteri da sostitire nell'exp
-	vector<int> inputValue = { 0,1,0,0,1,1,0,1,1,0 };		//deve leggere i valori dal file
+	vector<int> inputValue;		//deve leggere i valori dal file
 	vector<int> flipflopValue;  //Risultati ottenuti dal flip flop di prova
 	vector <string> FlipNames;
 
-	list<string> lstOp;
+	float cons0to1[10] = { 0.1,0.2,0.3,0.9,0.4,0.56 };
+	float cons1to0[10] = { 1.2,1.5,3.2,0.5,0.22,0.7 };
 
-	
+	float power(char binary_op, int result);
+
+	vector<float> test;
+
+
+	list<string> lstOp;
 
 	int isOperator(char buffer[]);
 	int isKeyword(char buffer[]);
@@ -47,5 +53,8 @@ private:
 	ifstream _myfile;
 	char ch, buffer[15];
 	string _flipname;
+
+
+
 };
 

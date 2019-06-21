@@ -1,5 +1,6 @@
 #pragma once
 #include "BinaryExpressionBuilder.h"
+#include"InputFile.h"
 
 
 
@@ -39,6 +40,7 @@ int BinaryExpressionBuilder::precedence(char op) {
 int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 	char token;
+	consume = 0;
 
 
 	lstOpValid.push_back("AND");
@@ -138,7 +140,6 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	node* t;
 	t = TreeStack.top();
 	bst.surfTree(t);
-	
 
 	operandStack.pop();
 
@@ -223,7 +224,7 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	int p;
-
+	InputFile file;
 
 	node* t;
 
@@ -235,8 +236,9 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 	operandStack.pop();
 	if (binary_op == OPER_NOT) {
 		p = BinaryOperationNode(binary_op, rightValue, rightValue);
-		consume = bst.power(binary_op, p) + consume;
-		
+		//consume = bst.power(binary_op, p) + consume;//**********************************************
+		consume = file.power(binary_op, p) + consume;
+
 		if (rightValue >= RESULTTAG) {
 			node* tright;
 			tright = TreeStack.top();
@@ -258,7 +260,9 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		int leftValue = operandStack.top();
 		operandStack.pop();
 		p = BinaryOperationNode(binary_op, leftValue, rightValue);
-		consume = bst.power(binary_op, p) + consume;			//calcola la potenza
+		//consume = bst.power(binary_op, p) + consume;			//********************************************
+		consume = file.power(binary_op, p) + consume;
+		
 
 		//cout <<"=== Evaluated ....."<<leftValue<<" "<<binary_op<<" "<<rightValue<<" = "<<p<<endl;
 		if (leftValue < RESULTTAG and rightValue < RESULTTAG) {

@@ -9,6 +9,43 @@ InputFile::~InputFile()
 }
 
 
+float InputFile::power(char binary_op, int result)
+{
+	enum {
+
+		pnot, pand, pnand, por, pxor, pnor,ff
+	};
+	float consume;
+	readFilePower("FilePower.txt");
+
+	switch (binary_op) {
+	case OPER_NOT:
+		consume = ((result == 0) ? cons0to1[pnot] : cons1to0[pnot]);
+		break;
+	case OPER_AND:
+		consume = ((result == 0) ? cons0to1[pand] : cons1to0[pand]);
+		break;
+	case OPER_NAND:
+		consume = ((result == 0) ? cons0to1[pnand] : cons1to0[pnand]);
+		break;
+	case OPER_OR:
+		consume = ((result == 0) ? cons0to1[por] : cons1to0[por]);
+		break;
+	case OPER_XOR:
+		consume = ((result == 0) ? cons0to1[pxor] : cons1to0[pxor]);
+		break;
+	case OPER_NOR:
+		consume = ((result == 0) ? cons0to1[pnor] : cons1to0[pnor]);
+		break;
+	default:
+		consume = ((result == 0) ? cons0to1[ff] : cons1to0[ff]);
+		break;
+	}
+	cout << "**consumo op: " << binary_op << " " << consume << endl;
+
+	return consume;
+}
+
 int InputFile::isOperator(char buffer[])
 {
 	char operators[3][5] = { "AND","OR","NOT" };
@@ -133,9 +170,13 @@ void InputFile::readFile(string str)
 					//cout << "******Clear expression: " << capture(tmp) << endl << endl;
 					string nuova = capture(tmp);
 
-					
+
+
+
 					cout << "***Result: " << b.parse(nuova) << endl;
 					cout << " **Consumo totale = " << b.consume << endl << endl;
+					
+				
 				}
 
 			}
@@ -188,17 +229,18 @@ void InputFile::readFileValue(string str) {
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
 
-		if (ch == '0' || ch == '1') {
-			cout << "*****numero: " << ch << endl;
-			int number = ((ch == '0') ? 0 : 1);
-			inputValue.push_back(number);		//memorizza il numero preso nel vettore
+			if (ch == '0' || ch == '1') {
+				//cout << "*****numero: " << ch << endl;
+				int number = ((ch == '0') ? 0 : 1);
+				inputValue.push_back(number);		//memorizza il numero preso nel vettore
 
-		}
-		else
-		{
-			cerr << "*Input Value not valid!*" << endl;
+			}
+			else
+			{
+				cerr << "*Input Value not valid!*" << endl;
 
-		}
+			}
+		
 
 	}
 	_myfile.close();
@@ -212,7 +254,7 @@ void InputFile::readFilePower(string str)
 	float val01;
 	float val10;
 	string item;
-	int ch=0;
+	int ch = 0;
 	char op;
 	BST b;
 
@@ -230,102 +272,104 @@ void InputFile::readFilePower(string str)
 	lstOp.push_back("NOR");
 	lstOp.push_back("XOR");
 
-	
-	while (!(_myfile.eof()))
+
+	while (!_myfile.eof())
 	{
 
 		getline(_myfile, tmp, ';');
 
-		cout << "PowerOP: " << tmp<<endl;
+		//cout << "PowerOP: " << tmp << endl;
 
-			
+
 		op = tmp[ch];
-		
+
 		while (ch < tmp.length()) {
 			item.push_back(tmp[ch]);
-			
+
 			++ch;
 		}
-				//cout << "//////////////item operator: *" << item << "*" << endl;
-				if (count(lstOp.begin(), lstOp.end(), item) > 0) {
-					if (item.compare("NAND") == 0)
-						op = 'v';
+		//cout << "//////////////item operator: *" << item << "*" << endl;
+		if (count(lstOp.begin(), lstOp.end(), item) > 0) {
+			if (item.compare("NAND") == 0)
+				op = 'v';
 
-					if (item.compare("NOR") == 0)
-						op = 'z';
+			if (item.compare("NOR") == 0)
+				op = 'z';
 
-				}
-				//cout << "Value_op *" << op << "*" << endl;
-				ch = 0;
-				item.clear();
-
-
-
-			getline(_myfile, tmp, ';');
-			
-			val01 = strtof((tmp).c_str(), 0);		//converte la stringa in numero
-			cout << "////Numero: *" << val01 << "*" << endl;
-			
-
-			getline(_myfile, tmp, '\n');
-			val10 = strtof((tmp).c_str(), 0);
-			cout << "////Numero: *" << val10 << "*" << endl;
+		}
+		//cout << "Value_op *" << op << "*" << endl;
+		ch = 0;
+		item.clear();
 
 
-			chargeVectPower(op, val01, val10);
-		
-			
-			
-		
+
+		getline(_myfile, tmp, ';');
+		//val01 = 700;
+		val01 = strtof((tmp).c_str(), 0);		//converte la stringa in numero
+		//cout << "////Numero: *" << val01 << "*" << endl;
 
 
-		
+		getline(_myfile, tmp, '\n');
+		val10 = strtof((tmp).c_str(), 0);
+		//val10 = 500;
+		//cout << "////Numero: *" << val10 << "*" << endl;
+
+
+		chargeVectPower(op, val01, val10);
+
+
+		test.push_back(36478);
+
+
+
+
 	}
-
 
 	_myfile.close();
 }
 
 void InputFile::chargeVectPower(char binary_op, float val0to1, float val1to0)
 {
-
-	cout << "Funzione charge: " << binary_op << " " << val0to1 << " " << val1to0 << endl;
-	BST b;
+	
 	enum {
 
-		pnot, pand, pnand, por, pxor, pnor
+		pnot, pand, pnand, por, pxor, pnor, ff
 	};
 	float consume;
 
 	switch (binary_op) {
 	case OPER_NOT:
-		b.cons0to1[pnot] = val0to1;
-		b.cons1to0[pnot] = val1to0;
+		cons0to1[pnot] = val0to1;
+		cons1to0[pnot] = val1to0;
 		break;
 	case OPER_AND:
-		b.cons0to1[pand] = val0to1;
-		b.cons1to0[pand] = val1to0;
+		cons0to1[pand] = val0to1;
+		cons1to0[pand] = val1to0;
 		break;
 	case OPER_NAND:
-		b.cons0to1[pnand] = val0to1;
-		b.cons1to0[pnand] = val1to0;
+		cons0to1[pnand] = val0to1;
+		cons1to0[pnand] = val1to0;
 		break;
 	case OPER_OR:
-		b.cons0to1[por] = val0to1;
-		b.cons1to0[por] = val1to0;
+		cons0to1[por] = val0to1;
+		cons1to0[por] = val1to0;
 		break;
 	case OPER_XOR:
-		b.cons0to1[pxor] = val0to1;
-		b.cons1to0[pxor] = val1to0;
+		cons0to1[pxor] = val0to1;
+		cons1to0[pxor] = val1to0;
 		break;
 	case OPER_NOR:
-		b.cons0to1[pnor] = val0to1;
-		b.cons1to0[pnor] = val1to0;
+		cons0to1[pnor] = val0to1;
+		cons1to0[pnor] = val1to0;
+		break;
+	default:
+		cons0to1[ff] = val0to1;
+		cons1to0[ff] = val1to0;
 		break;
 	}
 
 
-	//cout << "Funzione charge: " << binary_op << " " << b.cons0to1.at(pnot) << " " <<b.cons1to0.at(pnot) << endl;
+
 
 
 
@@ -432,7 +476,7 @@ string InputFile::capture(string tmp)
 
 	}
 
-
+	
 	cout << "***Tmp sostituita*** " << tmp << endl;
 
 
