@@ -26,7 +26,7 @@ int InputFile::isOperator(char buffer[])
 
 int InputFile::isKeyword(char buffer[])
 {
-	char keywords[32][10] = { "module","assign","input","output", "endmodule","istance" };
+	char keywords[32][10] = { "module","assign","input","output", "endmodule"};
 	int i, flag = 0;
 
 	for (i = 0; i < 32; ++i) 
@@ -109,6 +109,21 @@ void InputFile::readFile(string str)
 			
 		
 			//Se trova una keyword,allora
+			/* da inserire nel isKewywork(buffer)=1
+				if (strcmp("module", buffer) == 0) {		//trova il module
+					getline(_myfile, tmp,'\n');					//Prendo il nome del circuito
+					cout << "Espressione catturata: " << tmp << endl; //Lo inserisco solo se non è presente
+					for(int i=0;i<CircuitNames.size();i++)
+						if(strcmp(tmp,CircuitNames(i)!=0)
+							empty=1;
+					if(empty==1) CircuitNames.push_back(tmp);
+					else cout<<"Nome del circuito già presente"<<endl;
+			
+			*/
+			
+
+
+
 			 if (isKeyword(buffer) == 1) {
 				//cout << buffer << " is keyword\n";
 				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
@@ -121,8 +136,19 @@ void InputFile::readFile(string str)
 
 					cout << "***Result: " << b.parse(nuova) << endl << endl;
 				}
+				/*if (strcmp("istance", buffer) == 0) {		//trova l'espressione da prendere
+					getline(_myfile, tmp, '\n');
+					cout << "Espressione catturata: " << tmp << endl;
+				/*
+					for(int i=0;i<CircuitNames.size();i++)
+						if(strcmp(tmp,CircuitNames(i)!=0)
+
+
+					cout << "***Result: " << b.parse(nuova) << endl << endl;*/
+				
 
 			}
+		
 			else if (isFlipFlop(buffer) == 1)
 			 {
 				 cout << buffer << " is FLIPFLOP! \n";
@@ -290,5 +316,12 @@ string InputFile::capture(string tmp)
 
 
 	return tmp;
+}
+
+string InputFile::captureIstance(string tmp)
+{
+	//Qui gli devo passare l espressione tra parentesi
+	//e fare getline(_myfile,tmp,',');
+	return string();
 }
 
