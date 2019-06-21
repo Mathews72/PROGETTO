@@ -26,7 +26,7 @@ int InputFile::isOperator(char buffer[])
 
 int InputFile::isKeyword(char buffer[])
 {
-	char keywords[32][10] = { "module","assign","input","output", "endmodule"};
+	char keywords[32][10] = { "module","assign","input","output", "endmodule","instance"};
 	int i, flag = 0;
 
 	for (i = 0; i < 32; ++i) 
@@ -89,7 +89,7 @@ void InputFile::readFile(string str)
 	int k = 0,i = 0,j=0;
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
-
+		
 		
 		
 
@@ -124,21 +124,30 @@ void InputFile::readFile(string str)
 
 
 
-			 if (isKeyword(buffer) == 1) {
-				//cout << buffer << " is keyword\n";
+			 if (isKeyword(buffer) == 1)
+			 {
+				 if (strcmp("module", buffer) == 0) {		//trova il module
+					 getline(_myfile, tmp, '\n');					//Prendo il nome del circuito
+					 cout << "Espressione catturata: " << tmp << endl; //Lo inserisco solo se non è presente
+					 string cleantmp= moduleCleaner(tmp);
+					  CircuitNames.push_back(cleantmp);
+					 cout << "Nome circuito inserito  : " << cleantmp << endl;
+					 
+				 }//cout << buffer << " is keyword\n";
 				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
 					getline(_myfile, tmp,'\n');
 					cout << "Espressione catturata: " << tmp << endl;
 
-					cout << "******Clear expression: " << capture(tmp) << endl << endl;
-					string nuova = capture(tmp);
+				//	cout << "******Clear expression: " << capture(tmp) << endl << endl;
+				//	string nuova = capture(tmp);
 
 
-					cout << "***Result: " << b.parse(nuova) << endl << endl;
+				//	cout << "***Result: " << b.parse(nuova) << endl << endl;
 				}
-				/*if (strcmp("istance", buffer) == 0) {		//trova l'espressione da prendere
+				if (strcmp("instance", buffer) == 0) {		//trova l'espressione da prendere
 					getline(_myfile, tmp, '\n');
-					cout << "Espressione catturata: " << tmp << endl;
+					cout << "Espressione catturata nell istance : " << tmp << endl;
+				}
 				/*
 					for(int i=0;i<CircuitNames.size();i++)
 						if(strcmp(tmp,CircuitNames(i)!=0)
@@ -156,14 +165,14 @@ void InputFile::readFile(string str)
 
 				 //Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
 				 string flip = _flipname + tmp;
-			//	 cout << "Espressione catturata nel flipflop: " << flip << endl;
-				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
-				 string tmpconv = capture(flip);
+				 cout << "Espressione catturata nel flipflop: " << flip << endl;
+			//	 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+			//	 string tmpconv = capture(flip);
 			//	 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
-				 int ris = b.parse(tmpconv);
+			//	 int ris = b.parse(tmpconv);
 
-				 cout << "Risultato del flip flop vale     " << ris << endl << endl;
-				 flipflopValue.push_back(ris);
+			//	 cout << "Risultato del flip flop vale     " << ris << endl << endl;
+			//	 flipflopValue.push_back(ris);
 				 //cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
 			 }
 			else
@@ -315,6 +324,16 @@ string InputFile::capture(string tmp)
 	//cout << "***Tmp sostituita*** " << tmp << endl;
 
 
+	return tmp;
+}
+
+string InputFile::moduleCleaner(string tmp)
+{
+	for (int i = 0; i < tmp.size(); i++)
+	{
+		if (tmp[i] == '(')
+			tmp.erase(tmp.begin() + i);
+	}
 	return tmp;
 }
 

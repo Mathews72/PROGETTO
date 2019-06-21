@@ -1,5 +1,5 @@
 module Circuito (
-0
+
 		input a, pippofddfafsa, b, e, f, g
 		input c
 		input d
@@ -19,7 +19,7 @@ input m, n
 input a, c
 output x
 );
-Circuito instance (.a = m, .b = n, .c = a, .x = FF1)
+Cirtcuito instance (.a = m, .b = n, .c = a, .x = FF1)
 FF2 = FF1 OR (NOT c)
 assign y = FF1 OR FF2
 endmodule

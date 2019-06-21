@@ -19,6 +19,7 @@ public:
 	void readFileValue(string str);
 	
 	string capture(string tmp);
+	string moduleCleaner(string tmp);
 	string captureIstance(string tmp);
 	
 
