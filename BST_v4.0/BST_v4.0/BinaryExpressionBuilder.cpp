@@ -42,9 +42,9 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 
 	lstOpValid.push_back("AND");
-	
+
 	lstOpValid.push_back("OR");
-	
+
 	lstOpValid.push_back("NOT");
 	lstOpValid.push_back("NAND");
 	lstOpValid.push_back("NOR");
@@ -127,23 +127,24 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 		throw NotWellFormed("End eval expr --> operandStack not emty ... expression not valid!!");
 	}
 
-/* Stampa L'alber0
-	cout << "---------------------------------------------------------------" << endl;
-	cout << "|| print Tree -- stack size " << TreeStack.size() << " |||||||||||||||||||||||||||" << endl;
-	node* t;
-	t = TreeStack.top();
-	bst.printTree(t, NULL, false);
-	*/
+	/* Stampa L'alber0
+		cout << "---------------------------------------------------------------" << endl;
+		cout << "|| print Tree -- stack size " << TreeStack.size() << " |||||||||||||||||||||||||||" << endl;
+		node* t;
+		t = TreeStack.top();
+		bst.printTree(t, NULL, false);
+		*/
 	int p = operandStack.top();
 	node* t;
 	t = TreeStack.top();
 	bst.surfTree(t);
+	
 
 	operandStack.pop();
-	
+
 
 	return (p >= RESULTTAG ? p - RESULTTAG : p);
-	
+
 
 }
 
@@ -222,7 +223,8 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	int p;
-	
+
+
 	node* t;
 
 	if (operandStack.empty()) {
@@ -233,7 +235,8 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 	operandStack.pop();
 	if (binary_op == OPER_NOT) {
 		p = BinaryOperationNode(binary_op, rightValue, rightValue);
-		consume = bst.power(binary_op, p)+consume;
+		consume = bst.power(binary_op, p) + consume;
+		
 		if (rightValue >= RESULTTAG) {
 			node* tright;
 			tright = TreeStack.top();
@@ -255,7 +258,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		int leftValue = operandStack.top();
 		operandStack.pop();
 		p = BinaryOperationNode(binary_op, leftValue, rightValue);
-		consume = bst.power(binary_op, p)+consume;			//calcola la potenza
+		consume = bst.power(binary_op, p) + consume;			//calcola la potenza
 
 		//cout <<"=== Evaluated ....."<<leftValue<<" "<<binary_op<<" "<<rightValue<<" = "<<p<<endl;
 		if (leftValue < RESULTTAG and rightValue < RESULTTAG) {
