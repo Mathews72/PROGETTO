@@ -3,7 +3,7 @@ module Circuito (
 		input a, pippofddfafsa, b, e, f, g
 		input c
 		input d
-		output x, y
+		output x
 );
 	
 	FF2222 = b OR e
@@ -20,6 +20,6 @@ input a, c
 output x
 );
 Cirtcuito instance (.a = m, .b = n, .c = a, .x = FF1)
-FF2 = FF1 OR (NOT c)
+FF2 = d OR (NOT n)
 assign y = FF1 OR FF2
 endmodule

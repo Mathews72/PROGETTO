@@ -20,7 +20,7 @@ public:
 	
 	string capture(string tmp);
 	string moduleCleaner(string tmp);
-	string captureIstance(string tmp);
+	string captureIstance(string tmp);//Deve pulire l instance(.a=m,) effettuandone i controlli
 	
 
 

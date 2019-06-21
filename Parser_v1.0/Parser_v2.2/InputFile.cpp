@@ -138,11 +138,11 @@ void InputFile::readFile(string str)
 					getline(_myfile, tmp,'\n');
 					cout << "Espressione catturata: " << tmp << endl;
 
-				//	cout << "******Clear expression: " << capture(tmp) << endl << endl;
-				//	string nuova = capture(tmp);
+					cout << "******Clear expression: " << capture(tmp) << endl << endl;
+					string nuova = capture(tmp);
 
 
-				//	cout << "***Result: " << b.parse(nuova) << endl << endl;
+					cout << "***Result: " << b.parse(nuova) << endl << endl;
 				}
 				if (strcmp("instance", buffer) == 0) {		//trova l'espressione da prendere
 					getline(_myfile, tmp, '\n');
@@ -166,13 +166,13 @@ void InputFile::readFile(string str)
 				 //Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
 				 string flip = _flipname + tmp;
 				 cout << "Espressione catturata nel flipflop: " << flip << endl;
-			//	 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
-			//	 string tmpconv = capture(flip);
-			//	 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
-			//	 int ris = b.parse(tmpconv);
+				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+				 string tmpconv = capture(flip);
+				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
+				 int ris = b.parse(tmpconv);
 
-			//	 cout << "Risultato del flip flop vale     " << ris << endl << endl;
-			//	 flipflopValue.push_back(ris);
+				 cout << "Risultato del flip flop vale     " << ris << endl << endl;
+				 flipflopValue.push_back(ris);
 				 //cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
 			 }
 			else
