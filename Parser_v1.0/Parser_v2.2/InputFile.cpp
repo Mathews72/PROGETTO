@@ -1,7 +1,7 @@
 #include "InputFile.h"
 #include"BinaryExpressionBuilder.h"
 
-
+//Tiene anche traccia di tutti gli output del circuito
 
 InputFile::InputFile()
 {

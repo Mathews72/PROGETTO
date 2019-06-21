@@ -5,7 +5,7 @@ int BinaryExpressionBuilder::precedence(char op) {
 		lowest, mid, highest
 	};
 
-	// Operator    precedence
+	// Operator  precedence
 	// ----------------------
 	//    not        Highest
 	//    and      Medium 

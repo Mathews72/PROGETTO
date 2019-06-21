@@ -11,6 +11,18 @@ module Circuito (
 	assign x = ( pippofddfafsa AND  FF2222)
 	
 endmodule
+module Circuito2 (
+
+		
+		input h
+		output l
+);
+	
+	FF22223 = h OR h
+	
+	assign l = ( h AND  FF2222)
+	
+endmodule
 
 
 module CircuitoComposto(

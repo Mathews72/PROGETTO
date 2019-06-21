@@ -23,7 +23,7 @@ class BinaryExpressionBuilder {
 private:
 	// operatorStack 
 	stack<char> operatorStack;
-	// operandStack is made up of BinaryOperationNodes and NumericElementNode
+	// operandStack is made up of BinaryOperationNodes and  NumericElementNode
 	stack<int> operandStack;
 
 	list<string> lstOpValid;
