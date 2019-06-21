@@ -20,21 +20,52 @@ if(isIstance==1)
 
 */
 
-
-
-
-
+void Menu()
+{
+	cout << "Selezionare un' opzione:" << endl;
+	cout << "1)Simulazione" << endl;
+	cout << "2)Analisi" << endl;
+	cout << "3)Esci" << endl;
+}
 
 int main()
 {
 	InputFile file;
 	BinaryExpressionBuilder b;
-
-	file.readFileValue("FileValue.txt");		//!! da rivedere ---> non prende i valori bene
-
-	file.readFile("FileCircuito.txt");
+	int scelta;
 	
-	
+		do {
+			Menu();
+			cin >> scelta;
+			switch (scelta)
+			{
+			case 1:
+			{
+				//Inserire qui comandi di pulizia
+				cout << "Verra' avviata la simulazione" << endl;
+				file.readFileValue("FileValue.txt");		//!! da rivedere ---> non prende i valori bene
+				file.readFile("FileCircuito.txt");
+				break;
+			}
+			case 2:
+				cout << "Verra' avviata l analisi" << endl;
+				break;
+			case 3:
+				cout << "Uscita" << endl;
+				exit(1);
+				break;
+			default:
+				cout << "Scelta non prevista" << endl;
+			}
+
+		} while (scelta != 4);
+
+
+
+
+		return 0;
+
+	}
 
 
 
@@ -49,8 +80,6 @@ int main()
 
 	*/
 
-	system("pause");
-	return 0;
+	
 
-}
 
