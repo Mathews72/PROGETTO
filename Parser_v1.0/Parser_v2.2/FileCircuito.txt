@@ -3,7 +3,7 @@ module Circuito (
 		input a, pippofddfafsa, b, e, f, g
 		input c
 		input d
-		output x
+		output x   
 );
 	
 	FF2222 = b OR e

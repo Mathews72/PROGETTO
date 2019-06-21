@@ -60,26 +60,11 @@ int main()
 			}
 
 		} while (scelta != 4);
-
-
-
-
 		return 0;
 
 	}
 
 
-
- 	/*cout << "Enter expression" << endl;
-	string expression;
-
-	getline(cin, expression);
-
-
-	int value = b.parse(expression);
-	cout << " result = " << value << endl;
-
-	*/
 
 	
 
