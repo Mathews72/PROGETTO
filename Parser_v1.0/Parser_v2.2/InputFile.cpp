@@ -20,7 +20,6 @@ int InputFile::isOperator(char buffer[])
 			break;
 		}
 	}
-
 	return flag;
 }
 
@@ -342,5 +341,14 @@ string InputFile::captureIstance(string tmp)
 	//Qui gli devo passare l espressione tra parentesi
 	//e fare getline(_myfile,tmp,',');
 	return string();
+}
+
+void InputFile::clear()
+{
+	inputChar.clear();
+	inputValue.clear();
+	flipflopValue.clear();
+	FlipNames.clear();
+	CircuitNames.clear();
 }
 

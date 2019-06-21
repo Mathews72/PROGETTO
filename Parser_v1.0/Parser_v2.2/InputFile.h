@@ -21,9 +21,10 @@ public:
 	string capture(string tmp);
 	string moduleCleaner(string tmp);//Toglie il ( dopo il nome del circuito
 	string captureIstance(string tmp);//Deve pulire l instance(.a=m,) effettuandone i controlli
+	void clear();
 	
 
-
+	
 
 private:
 	ifstream _myfile;

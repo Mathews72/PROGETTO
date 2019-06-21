@@ -42,6 +42,7 @@ int main()
 			case 1:
 			{
 				//Inserire qui comandi di pulizia
+				file.clear();
 				cout << "Verra' avviata la simulazione" << endl;
 				file.readFileValue("FileValue.txt");		//!! da rivedere ---> non prende i valori bene
 				file.readFile("FileCircuito.txt");
