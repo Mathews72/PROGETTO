@@ -6,32 +6,20 @@ module Circuito (
 		output x   
 );
 	
-	FF2222 = b OR e
+	FF1 = b OR e
 	
-	assign x = ( pippofddfafsa AND  FF2222)
-	
-endmodule
-module Circuito2 (
-
-		
-		input h
-		output l
-);
-	
-	FF22223 = h OR h
-	
-	assign l = ( h AND  FF2222)
+	assign x = ( pippofddfafsa AND  FF1)
 	
 endmodule
 
 
-module CircuitoComposto(
+module CircuitoComposto (
 
 input m, n
 input a, c
-output x
+output y
 );
-Cirtcuito instance (.a = m, .b = n, .c = a, .x = FF1)
+Cirtcuito instance (.a = m, .b = n, .c = a, FF1=.x)
 FF2 = d OR (NOT n)
 assign y = FF1 OR FF2
 endmodule

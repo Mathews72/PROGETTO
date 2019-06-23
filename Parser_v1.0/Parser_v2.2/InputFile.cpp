@@ -85,7 +85,7 @@ void InputFile::readFile(string str)
 		exit(1);
 	}
 
-	int k = 0,i = 0,j=0;
+	int k = 0,i = 0,j=0,j2=0;
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
 		
@@ -125,15 +125,40 @@ void InputFile::readFile(string str)
 
 			 if (isKeyword(buffer) == 1)
 			 {
-				 if (strcmp("module", buffer) == 0) {		//trova il module
+				 if (strcmp("module", buffer) == 0) 
+				 {		//trova il module
 					 getline(_myfile, tmp, '\n');					//Prendo il nome del circuito
 					 cout << "Espressione catturata: " << tmp << endl; //Lo inserisco solo se non è presente
 					 string cleantmp= moduleCleaner(tmp);
 					  CircuitNames.push_back(cleantmp);
 					 cout << "Nome circuito inserito  : " << cleantmp << endl;
 					 
+					 
+					 do
+					 {
+						 cout << "LOOP2" << endl;
+						 ch2 = _myfile.get();
+						 cout << "ho preso questo: " <<ch2<<endl;
+						 if (j=0&&isalnum(ch2)&&(ch2=='\n' ||  ch2==' '  )) {
+							 buffer2[j2++] = ch2;
+							 cout << buffer2 << "/";
+						 }
+						 else if ((ch2 == ' ' || ch2 == '\n') && (j2 != 0)) {
+							 
+							 buffer[j2] = '\0';
+							 j2 = 0;
+						 }
+						 if (strcmp("instance", buffer2) == 0)
+						 {
+							 composto = 1;
+							 cout << "HO TROVATO IL CIRCUITO COMPOSTO!!!!!" << endl;
+
+						 }
+						 
+					 } while (_myfile.eof());
+					 
 				 }//cout << buffer << " is keyword\n";
-				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
+				if (strcmp("assign", buffer) == 0 ) {		//trova l'espressione da prendere
 					getline(_myfile, tmp,'\n');
 					cout << "Espressione catturata: " << tmp << endl;
 
@@ -143,10 +168,7 @@ void InputFile::readFile(string str)
 
 					cout << "***Result: " << b.parse(nuova) << endl << endl;
 				}
-				if (strcmp("instance", buffer) == 0) {		//trova l'espressione da prendere
-					getline(_myfile, tmp, '\n');
-					cout << "Espressione catturata nell istance : " << tmp << endl;
-				}
+				
 				/*
 					for(int i=0;i<CircuitNames.size();i++)
 						if(strcmp(tmp,CircuitNames(i)!=0)
@@ -338,9 +360,9 @@ string InputFile::moduleCleaner(string tmp)
 
 string InputFile::captureIstance(string tmp)
 {
-	//Qui gli devo passare l espressione tra parentesi
-	//e fare getline(_myfile,tmp,',');
-	return string();
+	
+	getline(_myfile,tmp,',');
+	return tmp;
 }
 
 void InputFile::clear()
