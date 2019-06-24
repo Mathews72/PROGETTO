@@ -75,6 +75,7 @@ int InputFile::isFlipFlop(char buffer[])
 
 void InputFile::readFile(string str)
 {
+	flipnum = 0;
 	string temp;
 	string tmp;
 	BinaryExpressionBuilder b;
@@ -184,7 +185,7 @@ void InputFile::readFile(string str)
 				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 				 string tmpconv = capture(flip);
 
-				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
+				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << " Numero flip =  "<<flipnum<< endl << endl;
 				 if (clock == 0)
 				 {
 					 cout << "Errore! clock non trovato" << endl;
@@ -194,7 +195,7 @@ void InputFile::readFile(string str)
 				 else if(flipnum<=clock)
 				 {
 					 
-					 cout << "Flip Flop Eseguito semplice" << endl;
+					 cout << "Colpi di clock verificati. Eseguo l espressione  " << endl;
 					 ris.result = b.parse(tmpconv);
 					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
 					 flipflopValue.push_back(ris.result);
