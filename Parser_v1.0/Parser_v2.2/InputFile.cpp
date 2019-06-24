@@ -200,7 +200,7 @@ void InputFile::readFile(string str)
 					 b.parse(ris.X);
 					 cout << "Risultato del del circuito vale " << ris.X << endl << endl;
 					 cout << "Verrà riletto il file " << endl;
-					 _myfile.clear();
+					 clear();
 					 _myfile.seekg(0);
 					 
 				 }
