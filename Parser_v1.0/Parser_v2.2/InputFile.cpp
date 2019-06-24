@@ -199,6 +199,9 @@ void InputFile::readFile(string str)
 					 cout << "Devi dargli un altro colpo di clock!!! " << endl;
 					 b.parse(ris.X);
 					 cout << "Risultato del del circuito vale " << ris.X << endl << endl;
+					 cout << "Verrà riletto il file " << endl;
+					 _myfile.clear();
+					 _myfile.seekg(0);
 					 
 				 }
 					
