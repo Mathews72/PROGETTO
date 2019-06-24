@@ -207,11 +207,12 @@ void InputFile::readFile(string str)
 					 cout << "Verrà riletto il file " << endl;
 
 					
-					 cout << "Fplinum vale" << endl;
+					 flipnum = 0;
 					 flipflopValue.clear();
 					 inputChar.clear();
 					 _myfile.clear();
 					 _myfile.seekg(0);
+					 
 					 
 				 }
 					

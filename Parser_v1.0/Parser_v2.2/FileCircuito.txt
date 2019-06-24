@@ -8,7 +8,7 @@ module Circuito (
 );
 	
 	FF1 = b OR e
-	FF2 = FF1 AND a
+	FF2 = c AND a
 	
 	
 	assign x = ( pippofddfafsa AND  FF2)
