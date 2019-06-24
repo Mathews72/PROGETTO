@@ -191,7 +191,7 @@ void InputFile::readFile(string str)
 					 exit(1);
 
 				 }
-				 else if(flipnum==clock)
+				 else if(flipnum<=clock)
 				 {
 					 
 					 cout << "Flip Flop Eseguito semplice" << endl;
@@ -207,8 +207,9 @@ void InputFile::readFile(string str)
 					 cout << "Verrà riletto il file " << endl;
 
 					
-					 
-					 inputChar.clear();
+					 flipnum = 0;
+				//	 inputChar.clear();
+					 _myfile.clear();
 					 _myfile.seekg(0);
 					 
 				 }
