@@ -165,20 +165,25 @@ void InputFile::readFile(string str)
 			else if (isFlipFlop(buffer) == 1)
 			 {
 				
-				 struct risultati
+				 struct FlipFlop
 				 {
 					 int result;
 					 string X="X";
+					 int pos;
 				 }ris;
 				 flipnum++;
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
+				 
+				 ris.pos=_myfile.tellg();//Indica la posizione del flipflop
 
+				 cout << "Posizione del flip flop :  " << ris.pos << endl;
 				 //Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
 				 string flip = _flipname + tmp;
 				 cout << "Espressione catturata nel flipflop: " << flip << endl;
 				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 				 string tmpconv = capture(flip);
+
 				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
 				 if (clock == 0)
 				 {
@@ -200,7 +205,10 @@ void InputFile::readFile(string str)
 					 b.parse(ris.X);
 					 cout << "Risultato del del circuito vale " << ris.X << endl << endl;
 					 cout << "Verrà riletto il file " << endl;
-					 clear();
+
+					
+					 
+					 inputChar.clear();
 					 _myfile.seekg(0);
 					 
 				 }
