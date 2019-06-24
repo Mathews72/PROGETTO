@@ -183,10 +183,12 @@ void InputFile::readFile(string str)
 				 }
 				 else if(flipnum==clock)
 				 {
+					 cout << "Flip Flop Eseguito semplice" << endl;
 					 ris = b.parse(tmpconv);
 				 }
 				 else 
 				 {
+					 cout << "Devi dargli un altro colpo di clock!!! " << endl;
 					 to_string(ris);
 					 string ris = "X";
 					 
