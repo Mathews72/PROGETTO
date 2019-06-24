@@ -164,7 +164,12 @@ void InputFile::readFile(string str)
 		
 			else if (isFlipFlop(buffer) == 1)
 			 {
-				 int ris=2;
+				
+				 struct risultati
+				 {
+					 int result;
+					 string X="X";
+				 }ris;
 				 flipnum++;
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
@@ -183,20 +188,22 @@ void InputFile::readFile(string str)
 				 }
 				 else if(flipnum==clock)
 				 {
+					 
 					 cout << "Flip Flop Eseguito semplice" << endl;
-					 ris = b.parse(tmpconv);
+					 ris.result = b.parse(tmpconv);
+					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
+					 flipflopValue.push_back(ris.result);
 				 }
 				 else 
 				 {
 					 cout << "Devi dargli un altro colpo di clock!!! " << endl;
-					 to_string(ris);
-					 string ris = "X";
+					 b.parse(ris.X);
+					 cout << "Risultato del del circuito vale " << ris.X << endl << endl;
 					 
 				 }
 					
 
-				 cout << "Risultato del flip flop vale     " << ris << endl << endl;
-				 flipflopValue.push_back(ris);
+				
 				 //cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
 			 }  
 			else
