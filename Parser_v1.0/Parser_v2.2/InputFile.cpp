@@ -178,7 +178,7 @@ void InputFile::readFile(string str)
 				 if (clock == 1)
 					  ris = b.parse(tmpconv);
 				 else
-				 {
+				 { 
 					 cout << "Errore! clock non trovato" << endl;
 
 					 exit(1);
