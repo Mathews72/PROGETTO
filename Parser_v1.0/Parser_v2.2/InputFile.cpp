@@ -202,12 +202,12 @@ void InputFile::readFile(string str)
 				 else 
 				 {
 					 cout << "Devi dargli un altro colpo di clock!!! " << endl;
-					 b.parse(ris.X);
+				     b.parse(ris.X);
 					 cout << "Risultato del del circuito vale " << ris.X << endl << endl;
 					 cout << "Verrà riletto il file " << endl;
 
 					
-					 flipnum = 0;
+					 cout << "Fplinum vale" << endl;
 					 flipflopValue.clear();
 					 inputChar.clear();
 					 _myfile.clear();
