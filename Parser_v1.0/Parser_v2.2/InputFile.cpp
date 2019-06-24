@@ -209,6 +209,7 @@ void InputFile::readFile(string str)
 
 					
 					 flipnum = 0;
+					 FlipNames.clear();
 					 flipflopValue.clear();
 					 inputChar.clear();
 					 _myfile.clear();

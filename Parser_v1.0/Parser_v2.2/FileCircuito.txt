@@ -9,7 +9,7 @@ module Circuito (
 	
 	
 	FF1 = a AND b
-	FF2 = FF1 OR d
+	FF2 = c OR d
 	
 	assign x = ( pippofddfafsa AND  FF2)
 	
