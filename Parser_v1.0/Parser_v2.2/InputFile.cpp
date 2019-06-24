@@ -177,7 +177,7 @@ void InputFile::readFile(string str)
 				 cout << "Risultato del flip flop vale     " << ris << endl << endl;
 				 flipflopValue.push_back(ris);
 				 //cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
-			 }
+			 }  
 			else
 			{
 			//	cout << buffer << " is indentifier\n";
