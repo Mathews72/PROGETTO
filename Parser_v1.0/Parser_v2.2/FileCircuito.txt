@@ -1,7 +1,7 @@
 module Circuito (
 
 		input a, pippofddfafsa, b, e, f, g
-		
+		clk
 		input c
 		input d
 		output x   

@@ -165,7 +165,7 @@ void InputFile::readFile(string str)
 			else if (isFlipFlop(buffer) == 1)
 			 {
 				 int ris=2;
-				 
+				 flipnum++;
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
 
@@ -181,9 +181,15 @@ void InputFile::readFile(string str)
 					 exit(1);
 
 				 }
-				 else
-				 { 
+				 else if(flipnum==clock)
+				 {
 					 ris = b.parse(tmpconv);
+				 }
+				 else 
+				 {
+					 to_string(ris);
+					 string ris = "X";
+					 
 				 }
 					
 

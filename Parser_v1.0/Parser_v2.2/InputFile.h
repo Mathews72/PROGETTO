@@ -35,6 +35,9 @@ private:
 	vector<int> flipflopValue ;  //Risultati ottenuti dal flip flop di prova
 	vector <string> FlipNames;
 	vector <string> CircuitNames;
+	int flipnum = 0;
+
+
 
 	int isOperator(char buffer[]);
 	int isKeyword(char buffer[]);
