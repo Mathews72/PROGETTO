@@ -175,13 +175,15 @@ void InputFile::readFile(string str)
 				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 				 string tmpconv = capture(flip);
 				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
-				 if (clock == 1)
-					  ris = b.parse(tmpconv);
+				 if (clock == 0)
+				 {
+					 cout << "Errore! clock non trovato" << endl;
+					 exit(1);
+
+				 }
 				 else
 				 { 
-					 cout << "Errore! clock non trovato" << endl;
-
-					 exit(1);
+					 ris = b.parse(tmpconv);
 				 }
 					
 
