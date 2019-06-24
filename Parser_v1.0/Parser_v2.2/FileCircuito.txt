@@ -11,7 +11,7 @@ module Circuito (
 	FF1 = a AND b
 	FF2 = FF1 OR d
 	FF3 = FF2 OR f
-	
+	 
 	assign x = ( pippofddfafsa AND  FF3)
 	
 endmodule
