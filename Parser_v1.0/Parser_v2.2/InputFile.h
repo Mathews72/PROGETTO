@@ -28,8 +28,7 @@ public:
 
 private:
 	ifstream _myfile;
-	int composto = 0;
-	char ch, buffer[15],ch2,buffer2[15];
+	char ch, buffer[15];
 	string _flipname;
 	vector<string> inputChar; //memorizzati tutti i caratteri da sostitire nell'exp
 	vector<int> inputValue ;		//deve leggere i valori dal file

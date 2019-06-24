@@ -1,6 +1,7 @@
 module Circuito (
 
 		input a, pippofddfafsa, b, e, f, g
+		clk
 		input c
 		input d
 		output x   
@@ -13,13 +14,3 @@ module Circuito (
 endmodule
 
 
-module CircuitoComposto (
-
-input m, n
-input a, c
-output y
-);
-Cirtcuito instance (.a = m, .b = n, .c = a, FF1=.x)
-FF2 = d OR (NOT n)
-assign y = FF1 OR FF2
-endmodule
