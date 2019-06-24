@@ -208,7 +208,8 @@ void InputFile::readFile(string str)
 
 					
 					 flipnum = 0;
-				//	 inputChar.clear();
+					 flipflopValue.clear();
+					 inputChar.clear();
 					 _myfile.clear();
 					 _myfile.seekg(0);
 					 
