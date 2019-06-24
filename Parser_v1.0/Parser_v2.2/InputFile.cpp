@@ -148,7 +148,8 @@ void InputFile::readFile(string str)
 					cout << "Espressione catturata nell istance : " << tmp << endl;
 				}
 				if (strcmp("clk", buffer) == 0) {
-					cout << "Trovato il colpo di CLOCK!" << endl;
+					clock++;
+					cout << "Trovato il colpo di CLOCK! Ora vale : " << clock<<endl;
 
 				}
 				/*
@@ -163,6 +164,8 @@ void InputFile::readFile(string str)
 		
 			else if (isFlipFlop(buffer) == 1)
 			 {
+				 int ris=2;
+				 
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
 
@@ -172,7 +175,15 @@ void InputFile::readFile(string str)
 				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 				 string tmpconv = capture(flip);
 				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
-				 int ris = b.parse(tmpconv);
+				 if (clock == 1)
+					  ris = b.parse(tmpconv);
+				 else
+				 {
+					 cout << "Errore! clock non trovato" << endl;
+
+					 exit(1);
+				 }
+					
 
 				 cout << "Risultato del flip flop vale     " << ris << endl << endl;
 				 flipflopValue.push_back(ris);
