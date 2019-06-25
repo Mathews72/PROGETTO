@@ -172,7 +172,7 @@ void InputFile::readFile(string str)
 					 string X="X";
 					 int pos;
 				 }ris;
-				//1flipnum++;
+				// flipnum++;
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
 				 
