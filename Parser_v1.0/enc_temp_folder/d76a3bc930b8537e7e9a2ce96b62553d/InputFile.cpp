@@ -251,7 +251,7 @@ void InputFile::readFileValue(string str) {
 		system("pause");
 		exit(1);
 	}
-	 
+
 	int k = 0, i = 0, j = 0;
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
