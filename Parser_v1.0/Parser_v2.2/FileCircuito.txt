@@ -9,6 +9,7 @@ module Circuito (
 	
 	
 	FF1 = a AND b
+	FF4 = c OR g
 	FF2 = FF1 OR d
 	FF3 = FF2 OR f
 	 
