@@ -75,7 +75,7 @@ int InputFile::isFlipFlop(char buffer[])
 
 void InputFile::readFile(string str)
 {
-	flipnum = -1;
+	
 	string temp;
 	string tmp;
 	BinaryExpressionBuilder b;
@@ -165,7 +165,7 @@ void InputFile::readFile(string str)
 		
 			else if (isFlipFlop(buffer) == 1)
 			 {
-				
+				 flipnum = 0;
 				 struct FlipFlop
 				 {
 					 int result;
@@ -183,10 +183,10 @@ void InputFile::readFile(string str)
 				 string flip = _flipname + tmp;
 				 cout << "Espressione catturata nel flipflop: " << flip << endl;
 
-				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+				// cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 				 string tmpconv = capture(flip);
 
-				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << " Numero flip =  "<<flipnum+1<< endl << endl;
+				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << " Numero flip nell espressione =  "<<flipnum<< endl << endl;
 				 if (clock == -1)
 				 {
 					 cout << "Errore! clock non trovato" << endl;
@@ -210,7 +210,7 @@ void InputFile::readFile(string str)
 					 cout << "Verrà riletto il file " << endl;
 
 					
-					 flipnum = -1;
+					 flipnum = 0;
 					 flipGrades.clear();
 					 FlipNames.clear();
 					 flipflopValue.clear();
