@@ -347,7 +347,7 @@ string InputFile::capture(string tmp)
 				flipnum++;
 
 			}
-		 
+		
 			int val = flipflopValue.at(value);
 			int grade = flipGrades.at(0);
 			//	int val2 = flipflopValue.at(0);
