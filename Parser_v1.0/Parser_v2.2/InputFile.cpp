@@ -200,7 +200,7 @@ void InputFile::readFile(string str)
 					 ris.result = b.parse(tmpconv);
 					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
 					 flipflopValue.push_back(ris.result);
-					 flipGrades.push_back(clock);
+					 flipGrades.push_back(flipnum);
 				 }
 				 else 
 				 {
