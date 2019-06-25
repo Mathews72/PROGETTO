@@ -75,7 +75,7 @@ int InputFile::isFlipFlop(char buffer[])
 
 void InputFile::readFile(string str)
 {
-	flipnum = 0;
+	flipnum = -1;
 	string temp;
 	string tmp;
 	BinaryExpressionBuilder b;
@@ -172,7 +172,7 @@ void InputFile::readFile(string str)
 					 string X="X";
 					 int pos;
 				 }ris;
-				//1flipnum++;
+				//flipnum++;
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
 				 
@@ -186,7 +186,7 @@ void InputFile::readFile(string str)
 				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 				 string tmpconv = capture(flip);
 
-				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << " Numero flip =  "<<flipnum<< endl << endl;
+				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << " Numero flip =  "<<flipnum+1<< endl << endl;
 				 if (clock == -1)
 				 {
 					 cout << "Errore! clock non trovato" << endl;
@@ -200,6 +200,7 @@ void InputFile::readFile(string str)
 					 ris.result = b.parse(tmpconv);
 					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
 					 flipflopValue.push_back(ris.result);
+					 flipGrades.push_back(clock);
 				 }
 				 else 
 				 {
@@ -209,7 +210,8 @@ void InputFile::readFile(string str)
 					 cout << "Verrà riletto il file " << endl;
 
 					
-					 flipnum = 0;
+					 flipnum = -1;
+					 flipGrades.clear();
 					 FlipNames.clear();
 					 flipflopValue.clear();
 					 inputChar.clear();
@@ -343,9 +345,11 @@ string InputFile::capture(string tmp)
 				value = match - FlipNames.begin();
 				//cout << "Trovato alla pos: " << value << endl;
 				flipnum++;
+
 			}
 		
 			int val = flipflopValue.at(value);
+			int grade = flipGrades.at(0);
 			//	int val2 = flipflopValue.at(0);
 				//newString.push_back(val);			//metto val nella newString
 
@@ -398,6 +402,7 @@ void InputFile::clear()
 	inputValue.clear();
 	flipflopValue.clear();
 	FlipNames.clear();
+	flipGrades.clear();
 	CircuitNames.clear();
 }
 

@@ -1,6 +1,6 @@
 module Circuito (
 
-		input a, pippofddfafsa, b, e, f, g
+		input a, pippofddfafsa, b, e, f, g, k, l, o
 		clk
 		input c
 		input d
@@ -10,6 +10,8 @@ module Circuito (
 	
 	FF1 = a AND b
 	FF4 = c OR g
+	FF5 = e OR k
+	FF6 = l OR o
 	FF2 = FF1 OR d
 	FF3 = FF2 OR f
 	 

@@ -33,6 +33,7 @@ private:
 	vector<string> inputChar; //memorizzati tutti i caratteri da sostitire nell'exp
 	vector<int> inputValue ;		//deve leggere i valori dal file
 	vector<int> flipflopValue ;  //Risultati ottenuti dal flip flop di prova
+	vector <int> flipGrades;
 	vector <string> FlipNames;
 	vector <string> CircuitNames;
 	int flipnum = 0;
