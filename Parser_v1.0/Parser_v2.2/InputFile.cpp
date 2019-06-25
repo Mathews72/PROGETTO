@@ -178,7 +178,7 @@ void InputFile::readFile(string str)
 				 
 				 ris.pos=_myfile.tellg();//Indica la posizione del flipflop
 
-				 cout << "Posizione del flip flop :  " << ris.pos << endl;
+				// cout << "Posizione del flip flop :  " << ris.pos << endl;
 				 //Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
 				 string flip = _flipname + tmp;
 				 cout << "Espressione catturata nel flipflop: " << flip << endl;
@@ -186,21 +186,30 @@ void InputFile::readFile(string str)
 				// cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 				 string tmpconv = capture(flip);
 
-				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << " Numero flip nell espressione =  "<<flipnum<< endl << endl;
+				 cout << "Sto passando al parser   " << tmpconv << " Numero flip nell espressione =  "<<flipnum<< endl << endl;
+				 flipGrades.push_back(flipnum);
 				 if (clock == -1)
 				 {
 					 cout << "Errore! clock non trovato" << endl;
 					 exit(1);
 					     
 				 }
-				 else if(flipnum<=clock)
+				 if (flipnum == 0)
+				 {
+					 cout << "Eseguo un flipflop semplice." << endl;
+					 ris.result = b.parse(tmpconv);
+					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
+					 flipflopValue.push_back(ris.result);
+				 }
+				 else if(flipnum>0 )
 				 {
 					   
 					 cout << "Colpi di clock verificati. Eseguo l espressione  " << endl;
 					 ris.result = b.parse(tmpconv);
 					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
 					 flipflopValue.push_back(ris.result);
-					 flipGrades.push_back(0+flipnum);
+					 flipGrades.push_back(0);
+					 
 				 }
 				 else 
 				 {
@@ -349,7 +358,7 @@ string InputFile::capture(string tmp)
 			}
 		 
 			int val = flipflopValue.at(value);
-			int grade = flipGrades.at(0);
+			//int grade = flipGrades.at(0);
 			//	int val2 = flipflopValue.at(0);
 				//newString.push_back(val);			//metto val nella newString
 
