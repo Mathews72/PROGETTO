@@ -12,7 +12,7 @@ module Circuito (
 	FF2 = FF1 OR d
 	FF3 = FF2 OR f
 	
-	 
+	  
 	assign x = ( pippofddfafsa AND  FF3)
 	
 endmodule
