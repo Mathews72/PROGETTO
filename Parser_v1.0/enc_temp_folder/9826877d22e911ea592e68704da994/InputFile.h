@@ -26,7 +26,7 @@ public:
 
 	
 
-private: 
+private:
 	ifstream _myfile;
 	char ch, buffer[15];
 	string _flipname;

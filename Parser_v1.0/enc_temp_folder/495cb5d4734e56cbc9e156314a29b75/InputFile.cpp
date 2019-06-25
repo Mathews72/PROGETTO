@@ -191,11 +191,11 @@ void InputFile::readFile(string str)
 				 {
 					 cout << "Errore! clock non trovato" << endl;
 					 exit(1);
-					     
+
 				 }
 				 else if(flipnum<=clock)
 				 {
-					   
+					 
 					 cout << "Colpi di clock verificati. Eseguo l espressione  " << endl;
 					 ris.result = b.parse(tmpconv);
 					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;

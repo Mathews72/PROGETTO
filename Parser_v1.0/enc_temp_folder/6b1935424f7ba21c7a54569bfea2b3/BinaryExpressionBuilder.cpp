@@ -4,7 +4,7 @@ int BinaryExpressionBuilder::precedence(char op) {
 	enum {
 		lowest, mid, highest
 	};
-	 
+
 	// Operator  precedence
 	// ----------------------
 	//    not        Highest
