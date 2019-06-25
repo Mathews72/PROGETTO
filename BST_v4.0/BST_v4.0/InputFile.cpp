@@ -41,7 +41,7 @@ float InputFile::power(char binary_op, int result)
 		consume = ((result == 0) ? cons0to1[ff] : cons1to0[ff]);
 		break;
 	}
-	cout << "**consumo op: " << binary_op << " " << consume << endl;
+	//cout << "**consumo op: " << binary_op << " " << consume << endl;
 
 	return consume;
 }
@@ -63,7 +63,7 @@ int InputFile::isOperator(char buffer[])
 
 int InputFile::isKeyword(char buffer[])
 {
-	char keywords[32][10] = { "module","assign","input","output", "endmodule", "FF" };
+	char keywords[32][10] = { "module","assign","input","output", "endmodule", "FF", "instance" };
 	int i, flag = 0;
 
 	for (i = 0; i < 32; ++i) {
@@ -124,91 +124,177 @@ void InputFile::readFile(string str)
 
 	int k = 0, i = 0, j = 0;
 	while (!_myfile.eof()) {
-		ch = _myfile.get();			//prendere carattere per carattere
 
-		if (ch == '[') {
-			buffer[j] = '\0';
-			j = 0;
-			getline(_myfile, numVect, ']');
-			//cout <<buffer << "*****numvect: " << numVect << endl;
-			int number = stoi(numVect);
+		
 
-			string elmVect(buffer);
-			//cout << elmVect << "*****numvect: " << number << endl;
-			for (k = 0; k != number; k++) {
+			ch = _myfile.get();			//prendere carattere per carattere
 
-				string s = to_string(k);
-				//cout << "**pos: " << s<<endl;
-				temp = elmVect + '[' + s + ']';
-				//temp deve essere un char...[]
-				//char convTemp[20];
-				//strcpy_s(convTemp, temp.c_str());
+			if (ch == '[') {
+				buffer[j] = '\0';
+				j = 0;
+				getline(_myfile, numVect, ']');
+				//cout <<buffer << "*****numvect: " << numVect << endl;
+				int number = stoi(numVect);
 
+				string elmVect(buffer);
+				//cout << elmVect << "*****numvect: " << number << endl;
+				for (k = 0; k != number; k++) {
 
-				inputChar.push_back(temp);
-				//cout <<  "**CaricoVett: " << temp << endl;
-			}
+					string s = to_string(k);
+					//cout << "**pos: " << s<<endl;
+					temp = elmVect + '[' + s + ']';
+					//temp deve essere un char...[]
+					//char convTemp[20];
+					//strcpy_s(convTemp, temp.c_str());
 
 
-
-		}
-		else if (isalnum(ch)) {
-			buffer[j++] = ch;
-
-		}
-		else if ((ch == ' ' || ch == '\n') && (j != 0)) {
-			buffer[j] = '\0';
-			j = 0;
-
-			//Se trova una keyword,allora
-			if (isKeyword(buffer) == 1) {
-				//cout << buffer << " is keyword\n";
-				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
-					getline(_myfile, tmp, '\n');
-					cout << "Espressione catturata: " << tmp << endl;
-
-					//cout << "******Clear expression: " << capture(tmp) << endl << endl;
-					string nuova = capture(tmp);
-
-
-
-
-					cout << "***Result: " << b.parse(nuova) << endl;
-					cout << " **Consumo totale = " << b.consume << endl << endl;
-					
-				
+					inputChar.push_back(temp);
+					//cout <<  "**CaricoVett: " << temp << endl;
 				}
 
-			}
-			else if (isFlipFlop(buffer) == 1)
-			{
-				cout << buffer << " is FLIPFLOP! \n";
-				getline(_myfile, tmp);
 
-				//Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
-				string flip = _flipname + tmp;
-				//	 cout << "Espressione catturata nel flipflop: " << flip << endl;
-				cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
-				string tmpconv = capture(flip);
-				//	 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
-				int ris = b.parse(tmpconv);
-
-				cout << "Risultato del flip flop vale     " << ris << endl << endl;
-				flipflopValue.push_back(ris);
-				//cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
-			}
-			else
-			{
-				//cout << buffer << " is indentifier\n";
-				string valoriInput(buffer);
-				//cout << "**CaricoVett: " << valoriInput << endl;
-				inputChar.push_back(valoriInput);		//metto il carattere nel vettore di stringhe
 
 			}
+			else if (isalnum(ch)) {
+				buffer[j++] = ch;
+
+			}
+			else if ((ch == ' ' || ch == '\n') && (j != 0)) {
+				buffer[j] = '\0';
+				j = 0;
+
+				//Se trova una keyword,allora
+				if (isKeyword(buffer) == 1) {
+					//cout << buffer << " is keyword\n";
+					if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
+						//readFileValue("FileValue.txt");
+
+						getline(_myfile, tmp, '\n');
+						cout << "Espressione catturata: " << tmp << endl;
+
+						ExprCircutit.push_back(tmp);		// memorizzo l' expr nel vettore
+
+						//cout << "******Clear expression: " << capture(tmp) << endl << endl;
+						string nuova = capture(tmp);
+
+						cout << "***Result: " << b.parse(nuova) << endl;
+
+						cout << " **Consumo totale = " << b.consume << endl << endl;
+
+					}
+					
+					if (strcmp("endmodule", buffer) == 0) {
+
+						//cout << "Pulisco**" << endl;
+						inputChar.clear();
+						inputInstance.clear();
+					}
+
+					if (strcmp("module", buffer) == 0) {
+
+						//cout << "**Nuovo circuito****" << endl;
+						string nameCircuit;
+						getline(_myfile, nameCircuit, '(');
+
+						cout << "Nome Circuito:" << nameCircuit << endl;
+						CircuitName.push_back(nameCircuit);
+						
+					}
+
+					if (strcmp("instance", buffer) == 0) {
+						int pnt = 0;
+						string SimpleCircuit;
+						string name;
+						getline(_myfile, name, '(');
+						
+
+						NameCirctuit(name);		//ritorno l'espressione del circuito corrispondente
 
 
-		}
+						getline(_myfile, SimpleCircuit, ')');
 
+
+
+						while (pnt < SimpleCircuit.length()) {
+							string inputdaSostituire;
+							string ouputdaCercare;
+
+							
+							while (SimpleCircuit[pnt] != '=') {
+								
+								if(isalnum(SimpleCircuit[pnt]))
+								inputdaSostituire.push_back(SimpleCircuit[pnt]);
+								//cout << "****tmp; " << SimpleCircuit[pnt]<< endl;
+								++pnt;
+							}
+							++pnt;
+							while ((SimpleCircuit[pnt] != '=') && (SimpleCircuit[pnt] != ',') && (SimpleCircuit[pnt] != ')') && (SimpleCircuit[pnt] != '\0')) {
+							
+								if (isalnum(SimpleCircuit[pnt]))
+								ouputdaCercare.push_back(SimpleCircuit[pnt]);
+								//cout << "****tmp; " << SimpleCircuit[pnt] << endl;
+								++pnt;
+							}
+							pnt++;
+
+							AssegnaVal(ouputdaCercare, inputdaSostituire);
+
+
+
+
+
+
+
+
+						}
+
+
+
+
+
+					}
+
+
+
+
+
+
+				}
+				else if (isFlipFlop(buffer) == 1)
+				{
+					cout << buffer << " is FLIPFLOP! \n";
+					getline(_myfile, tmp);
+
+					//Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
+					string flip = _flipname + tmp;
+					//	 cout << "Espressione catturata nel flipflop: " << flip << endl;
+					cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+					string tmpconv = capture(flip);
+					//	 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
+					int ris = b.parse(tmpconv);
+
+					cout << "Risultato del flip flop vale     " << ris << endl << endl;
+					flipflopValue.push_back(ris);
+					//cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
+				}
+				else
+				{
+					//cout << buffer << " is indentifier\n";
+					string valoriInput(buffer);
+					//cout << "**CaricoVett: " << valoriInput << endl;
+					inputChar.push_back(valoriInput);		//metto il carattere nel vettore di stringhe
+					inputInstance.push_back(valoriInput);
+				}
+
+
+			}
+
+		
+
+	
+
+
+		
 	}
 
 	_myfile.close();
@@ -384,14 +470,20 @@ string InputFile::capture(string tmp)
 	int pos;
 	int value;
 	string valueString;
+	string tmpPass;
 
 
 	string newString;
 	do {
+	
+		tmpPass.push_back(tmp[pnt]);
+		
 		tmp.erase(tmp.begin() + pnt);		//cancella fino a =
 		//pnt++;
 
 	} while (tmp[pnt] != '=');
+
+	outputChar.push_back(tmpPass);
 	tmp.erase(tmp.begin() + pnt);
 
 
@@ -405,6 +497,7 @@ string InputFile::capture(string tmp)
 
 		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\0')) {
 			item.push_back(tmp[pnt]);
+			
 			//cout << "****tmp; " << pnt<< endl;
 			++pnt;
 		}
@@ -481,4 +574,67 @@ string InputFile::capture(string tmp)
 
 
 	return tmp;
+}
+
+string InputFile::NameCirctuit(string name)
+{
+	int value;
+	auto match = find(CircuitName.begin(), CircuitName.end(), name);		//cerca il valore per restituire la pos
+
+	if (match != CircuitName.end()) {
+		value = match - CircuitName.begin();
+		//cout << "Trovato alla pos: " << value << endl;
+
+	}
+	
+
+	
+	string expr = ExprCircutit.at(value);
+
+	cout << "Espressione corrisspondente: " << name << " -- " << expr <<endl;
+
+
+
+	return expr;
+}
+
+void InputFile::AssegnaVal(string tofind, string tosub)
+{
+	int value;
+
+	auto match = find(inputChar.begin(), inputChar.end(), tofind);		//cerca il valore per restituire la pos
+
+	if (match != inputChar.end()) {
+		value = match - inputChar.begin();
+		cout << "Trovato alla pos: " << value << endl;
+
+	}
+
+
+
+		
+
+		
+	
+
+		
+
+		auto itPos = inputInstance.begin() + value;
+		//inputInstance.erase(itPos);
+
+		// Insert element with value 9 at 4th Position in vector
+		auto newIt = inputInstance.insert(itPos, tosub);
+		inputInstance.erase(inputInstance.begin()+value+1);
+	//inputInstance.insert(value, tosub);// da Rivedere
+
+	//cout <<"valori inseriti"<< inputInstance << endl;
+
+		/*for (std::vector<string>::const_iterator i = inputInstance.begin(); i != inputInstance.end(); ++i)
+			std::cout << *i <<endl;
+			*/
+
+
+
+
+
 }

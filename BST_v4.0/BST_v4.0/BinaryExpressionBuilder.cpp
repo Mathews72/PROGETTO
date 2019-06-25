@@ -42,7 +42,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	char token;
 	consume = 0;
 
-
+	
 	lstOpValid.push_back("AND");
 
 	lstOpValid.push_back("OR");
@@ -142,9 +142,11 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	bst.surfTree(t);
 
 	operandStack.pop();
+	int ret = p >= RESULTTAG ? p - RESULTTAG : p;
+	
+	//file.outputValue.push_back(ret);		//metto il risultato nel vettore
 
-
-	return (p >= RESULTTAG ? p - RESULTTAG : p);
+	return (ret);
 
 
 }

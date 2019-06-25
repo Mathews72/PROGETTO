@@ -30,6 +30,7 @@ private:
 	std::list<string> lstOpValid;
 
 	BST bst;
+	
 
 	void processOperator(char op);
 	void processRightParenthesis();
@@ -40,6 +41,7 @@ private:
 
 
 public:
+	
 	class NotWellFormed : public std::exception {
 	public:
 		explicit NotWellFormed() {}

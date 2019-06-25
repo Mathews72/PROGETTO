@@ -6,9 +6,41 @@ module Circuito (
 		input mario[2]
 		output x, y
 );
-	FF1234 = var AND b
-	assign x = a AND pippo XOR mario[1] OR NOT var OR (FF1234 AND c)
-
+	
+	assign x = a AND pippo XOR mario[1] OR NOT var OR (var AND c)
+	
 
 	
 endmodule 
+
+module Circuito2 (
+
+		input a, b, e, pippo
+		input c, var
+		
+		input mario[2]
+		output x, y
+);
+	
+	
+	assign y = var NAND var
+
+	
+endmodule 
+
+module Circuito3 (
+
+		input f, g
+		input m, n
+		
+		
+		
+);
+	
+	
+	instance Circuito (.a = n, .b = m)
+
+	
+endmodule 
+
+

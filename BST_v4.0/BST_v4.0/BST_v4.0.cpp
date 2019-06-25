@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
 
 	InputFile file;
 
+
 	//file.readFilePower("FilePower.txt");
 
 	/*
@@ -42,12 +43,17 @@ int main(int argc, char** argv) {
 	try {
 		//file.readFilePower("FilePower.txt");
 		file.readFileValue("FileValue.txt");
-		/*for (int i = 0; i < 10; i++) {
-			cout <<"********"<< file.cons0to1[i]<<" -- "<< file.cons1to0[i] << endl;
-		}*/
+		
 
 
 		file.readFile("FileCircuito.txt");
+
+
+
+		
+		
+			
+
 		
 	}
 	catch (std::exception & e) {
