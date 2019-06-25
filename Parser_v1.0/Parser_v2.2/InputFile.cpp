@@ -354,11 +354,11 @@ string InputFile::capture(string tmp)
 				value = match - FlipNames.begin();
 				//cout << "Trovato alla pos: " << value << endl;
 				flipnum++;
-
+			    
 			}
 		 
 			int val = flipflopValue.at(value);
-			//int grade = flipGrades.at(0);
+			int grade = flipGrades.at(value);
 			//	int val2 = flipflopValue.at(0);
 				//newString.push_back(val);			//metto val nella newString
 
