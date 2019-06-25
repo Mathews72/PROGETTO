@@ -23,7 +23,7 @@ module Circuito2 (
 );
 	
 	
-	assign y = var NAND var
+	assign y = a NAND c
 
 	
 endmodule 
@@ -32,14 +32,16 @@ module Circuito3 (
 
 		input f, g
 		input m, n
-		
+	
+		input pino[2]
 		
 		
 );
 	
 	
-	instance Circuito (.a = n, .b = m)
+	instance Circuito2 (.a = n, .c = m)
 
+	assign z = pino[0] OR pino[1]
 	
 endmodule 
 

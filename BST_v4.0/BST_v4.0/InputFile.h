@@ -58,6 +58,8 @@ public:
 
 	string capture(string tmp);
 
+	string captureInstance(string tmp);
+
 	string NameCirctuit(string name);
 
 	void AssegnaVal(string tofind, string tosub);

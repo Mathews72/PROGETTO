@@ -208,7 +208,7 @@ void InputFile::readFile(string str)
 						getline(_myfile, name, '(');
 						
 
-						NameCirctuit(name);		//ritorno l'espressione del circuito corrispondente
+						string expression = NameCirctuit(name);		//ritorno l'espressione del circuito corrispondente
 
 
 						getline(_myfile, SimpleCircuit, ')');
@@ -239,7 +239,7 @@ void InputFile::readFile(string str)
 
 							AssegnaVal(ouputdaCercare, inputdaSostituire);
 
-
+							
 
 
 
@@ -247,7 +247,10 @@ void InputFile::readFile(string str)
 
 
 						}
-
+						cout << "Espressione Sostituita" << captureInstance(expression) << endl;
+						string newExpr = captureInstance(expression);
+						cout << "Result "<<b.parse(newExpr)<<endl;
+						cout << " **Consumo totale = " << b.consume << endl << endl;
 
 
 
@@ -576,6 +579,122 @@ string InputFile::capture(string tmp)
 	return tmp;
 }
 
+string InputFile::captureInstance(string tmp)
+{
+
+	
+		int pnt = 0;
+		int i = 0;
+		int pos;
+		int value;
+		string valueString;
+		string tmpPass;
+
+
+		string newString;
+		do {
+
+			tmpPass.push_back(tmp[pnt]);
+
+			tmp.erase(tmp.begin() + pnt);		//cancella fino a =
+			//pnt++;
+
+		} while (tmp[pnt] != '=');
+
+		outputChar.push_back(tmpPass);
+		tmp.erase(tmp.begin() + pnt);
+
+
+
+
+
+		while (pnt <= tmp.length()) {
+			string item;
+
+
+
+			while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\0')) {
+				item.push_back(tmp[pnt]);
+
+				//cout << "****tmp; " << pnt<< endl;
+				++pnt;
+			}
+			//cout << "item operator: *" << item << "*" << endl;
+
+			if (count(inputInstance.begin(), inputInstance.end(), item) == 1) {
+
+				//la variabile esite--> la sostituisco con il valore 
+				//newString[k] sostituito con il corrispettivo valore dell'item
+				//cout << "*value found.. Substituting *" << item<<" lengh; " <<item.length() << "*" << endl;
+
+				auto match = find(inputInstance.begin(), inputInstance.end(), item);		//cerca il valore per restituire la pos
+
+				if (match != inputInstance.end()) {
+					value = match - inputInstance.begin();
+					//cout << "Trovato alla pos: " << value << endl;
+
+				}
+
+				//cout << "************valore numerico Corrispettivo: " << inputValue.at(value) << endl;
+				//cout << "Size di InputVAlue " << inputValue.size()<<endl;
+				int val = inputValue.at(value);
+				//newString.push_back(val);			//metto val nella newString
+
+
+				string valore = to_string(val);		//converte il valore trovato in stringa
+
+				pos = pnt - item.length();
+				tmp.replace(pos, item.length(), valore);//DA RIVEDEREEEE!! non prende le stringe lunghe!!!!
+				//cout << "Valore del pnt: " << pnt << endl;
+				pnt = pnt - item.length() + 1;
+
+				//valueString = valueString + valore;
+
+
+			}
+
+			else if (count(FlipNames.begin(), FlipNames.end(), item) == 1)
+			{
+				auto match = find(FlipNames.begin(), FlipNames.end(), item);		//cerca il valore per restituire la pos
+
+				if (match != FlipNames.end()) {
+					value = match - FlipNames.begin();
+					//cout << "Trovato alla pos: " << value << endl;
+
+				}
+
+				int val = flipflopValue.at(value);
+				//	int val2 = flipflopValue.at(0);
+					//newString.push_back(val);			//metto val nella newString
+
+
+				string valore = to_string(val);		//converte il valore trovato in stringa
+
+				tmp.replace(pnt - item.length(), item.length(), valore);
+
+				pnt = pnt - item.length() + 1;
+			}
+			else if (count(inputInstance.begin(), inputInstance.end(), item) > 1) {
+				cerr << "****ERROR Double inizialization: " << item << endl;
+				system("pause");
+			}
+
+
+			pnt++;
+
+
+
+
+		}
+
+
+		cout << "***Tmp sostituita*** " << tmp << endl;
+
+
+		return tmp;
+	
+}
+
 string InputFile::NameCirctuit(string name)
 {
 	int value;
@@ -606,7 +725,7 @@ void InputFile::AssegnaVal(string tofind, string tosub)
 
 	if (match != inputChar.end()) {
 		value = match - inputChar.begin();
-		cout << "Trovato alla pos: " << value << endl;
+		//cout << "Trovato alla pos: " << value << endl;
 
 	}
 
