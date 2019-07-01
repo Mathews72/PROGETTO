@@ -9,8 +9,6 @@
 #include <algorithm>
 #include <list>
 #include <queue>
-#include <fstream>
-
 //#include"BinaryExpressionBuilder.h"
 #define DEBUG (0)
 
@@ -64,14 +62,8 @@ public:
 		rootTree = NULL;
 	}
 
-	/*float cons0to1[10] = { 0.1,0.2,0.3 };
-	float cons1to0[10] = { 0.9,0.8,0.7 };*/
-	list<string> lstOp;
-	
 	
 
-
-	
 	node* createNodeLeaf(char binary_op, int leftValue, int rightValue, int result);
 	node* createNodeLeafLeft(char binary_op, int leftValue, node* right, int result);
 	node* createNodeLeafRight(char binary_op, node* left, int rightValue, int result);
@@ -79,12 +71,11 @@ public:
 	void printTree(node* root, Trunk* prev, bool isLeft);
 	void surfTree(node* root);
 
-	float power(char binary_op, int result);
+	//float power(char binary_op, int result);
 
-	
 
 private:
-	ifstream _myfile;
+
 	void showTrunks(Trunk* p);
 
 	bool isEmpty() const { return (rootTree == NULL); }

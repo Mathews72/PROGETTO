@@ -25,7 +25,7 @@ int InputFile::isOperator(char buffer[])
 
 int InputFile::isKeyword(char buffer[])
 {
-	char keywords[32][10] = { "module","assign","input","output", "endmodule","instance"};
+	char keywords[32][10] = { "module","assign","input","output", "endmodule","instance","clk"};
 	int i, flag = 0;
 
 	for (i = 0; i < 32; ++i) 
@@ -75,6 +75,7 @@ int InputFile::isFlipFlop(char buffer[])
 
 void InputFile::readFile(string str)
 {
+	
 	string temp;
 	string tmp;
 	BinaryExpressionBuilder b;
@@ -85,7 +86,7 @@ void InputFile::readFile(string str)
 		exit(1);
 	}
 
-	int k = 0,i = 0,j=0;
+	int k = 0, i = 0, j = 0, clock = -1;
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
 		
@@ -147,6 +148,11 @@ void InputFile::readFile(string str)
 					getline(_myfile, tmp, '\n');
 					cout << "Espressione catturata nell istance : " << tmp << endl;
 				}
+				if (strcmp("clk", buffer) == 0) {
+					clock++;
+					cout << "Trovato il colpo di CLOCK! Ora vale : " << clock<<endl;
+
+				}
 				/*
 					for(int i=0;i<CircuitNames.size();i++)
 						if(strcmp(tmp,CircuitNames(i)!=0)
@@ -159,21 +165,75 @@ void InputFile::readFile(string str)
 		
 			else if (isFlipFlop(buffer) == 1)
 			 {
+				 flipnum = 0;
+				 struct FlipFlop
+				 {
+					 int result;
+					 string X="X";
+					 int pos;
+				 }ris;
+				//flipnum++;
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
+				 
+				 ris.pos=_myfile.tellg();//Indica la posizione del flipflop
 
+				// cout << "Posizione del flip flop :  " << ris.pos << endl;
 				 //Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
 				 string flip = _flipname + tmp;
 				 cout << "Espressione catturata nel flipflop: " << flip << endl;
-				 cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
-				 string tmpconv = capture(flip);
-				 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
-				 int ris = b.parse(tmpconv);
 
-				 cout << "Risultato del flip flop vale     " << ris << endl << endl;
-				 flipflopValue.push_back(ris);
+				// cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+				 string tmpconv = capture(flip);
+
+				 cout << "Sto passando al parser   " << tmpconv << " Numero flip nell espressione =  "<<flipnum<< endl << endl;
+				 flipGrades.push_back(flipnum);
+				 if (clock == -1)
+				 {
+					 cout << "Errore! clock non trovato" << endl;
+					 exit(1);
+					     
+				 }
+				 if (flipnum == 0)
+				 {
+					 cout << "Eseguo un flipflop semplice." << endl;
+					 ris.result = b.parse(tmpconv);
+					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
+					 flipflopValue.push_back(ris.result);
+				 }
+				 else if(flipnum>0 )
+				 {
+					   
+					 cout << "Colpi di clock verificati. Eseguo l espressione  " << endl;
+					 ris.result = b.parse(tmpconv);
+					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
+					 flipflopValue.push_back(ris.result);
+					 flipGrades.push_back(0);
+					 
+				 }
+				 else 
+				 {
+					 cout << "Devi dargli un altro colpo di clock!!! " << endl;
+				     b.parse(ris.X);
+					 cout << "Risultato del del circuito vale " << ris.X << endl << endl;
+					 cout << "Verrà riletto il file " << endl;
+
+					
+					 flipnum = 0;
+					 flipGrades.clear();
+					 FlipNames.clear();
+					 flipflopValue.clear();
+					 inputChar.clear();
+					 _myfile.clear();
+					 _myfile.seekg(0);
+					 
+					 
+				 }
+					
+
+				
 				 //cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
-			 }
+			 }  
 			else
 			{
 			//	cout << buffer << " is indentifier\n";
@@ -200,7 +260,7 @@ void InputFile::readFileValue(string str) {
 		system("pause");
 		exit(1);
 	}
-
+	 
 	int k = 0, i = 0, j = 0;
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
@@ -293,10 +353,12 @@ string InputFile::capture(string tmp)
 			if (match != FlipNames.end()) {
 				value = match - FlipNames.begin();
 				//cout << "Trovato alla pos: " << value << endl;
-
+				flipnum++;
+			    
 			}
-		
+		 
 			int val = flipflopValue.at(value);
+			int grade = flipGrades.at(value);
 			//	int val2 = flipflopValue.at(0);
 				//newString.push_back(val);			//metto val nella newString
 
@@ -338,9 +400,9 @@ string InputFile::moduleCleaner(string tmp)
 
 string InputFile::captureIstance(string tmp)
 {
-	//Qui gli devo passare l espressione tra parentesi
-	//e fare getline(_myfile,tmp,',');
-	return string();
+	
+	getline(_myfile,tmp,',');
+	return tmp;
 }
 
 void InputFile::clear()
@@ -349,6 +411,7 @@ void InputFile::clear()
 	inputValue.clear();
 	flipflopValue.clear();
 	FlipNames.clear();
+	flipGrades.clear();
 	CircuitNames.clear();
 }
 

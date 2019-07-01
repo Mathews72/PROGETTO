@@ -1,5 +1,6 @@
 #include "BST.h"
-#include "InputFile.h"
+#include"InputFile.h"
+
 
 using namespace std;
 
@@ -106,38 +107,40 @@ void BST::surfTree(node * root) {
 	// print token, result, depthMin, depthMax
 
 }
-
+/*
 float BST::power(char binary_op, int result)
 {
+	InputFile file;
 	enum {
 
 		pnot, pand, pnand, por, pxor, pnor
 	};
+	float consume;
 
-	float cons;
-	InputFile inp;
-	cout << "ATTENZIONE DIMENSIONE DEL VETTORE " << inp.Cons0to1.size()<<endl;
-	inp.Cons0to1.push_back(10);
-	cout << "ATTENZIONE DIMENSIONE DEL VETTORE " << inp.Cons0to1.size() << endl;
 	switch (binary_op) {
-
-		/*
-			case OPER_NOT:
-		cons = ((result == 1)  ? inp.Cons0to1.at(0) : inp.Cons1to0.at(0));
+	case OPER_NOT:
+		consume = ((result == 1) ? file.cons0to1[pnot] : file.cons1to0[pnot]);
 		break;
 	case OPER_AND:
-		cons = ((result == 1) ? inp.Cons0to1.at(1) : inp.Cons1to0.at(1));
+		consume = ((result == 1) ? file.cons0to1[pand] : file.cons1to0[pand]);
 		break;
-		
-		
-		*/
-	
+	case OPER_NAND:
+		consume = ((result == 1) ? file.cons0to1[pnand] : file.cons1to0[pnand]);
+		break;
+	case OPER_OR:
+		consume = ((result == 1) ? file.cons0to1[por] : file.cons1to0[por]);
+		break;
+	case OPER_XOR:
+		consume = ((result == 1) ? file.cons0to1[pxor] : file.cons1to0[pxor]);
+		break;
+	case OPER_NOR:
+		consume = ((result == 1) ? file.cons0to1[pnor] : file.cons1to0[pnor]);
+		break;
 	}
-//	cout << "**consum OP: " << binary_op << " " << cons<<endl ;
-
-	return 0;
-}
-
+	cout << "**consumo op: " << binary_op << " " << consume<<endl ;
+	
+	return consume;
+}*/
 
 void BST::showTrunks(Trunk * p) {
 	if (p == NULL)

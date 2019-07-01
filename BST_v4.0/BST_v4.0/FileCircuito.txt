@@ -7,9 +7,42 @@ module Circuito (
 		output x, y
 );
 	
-	assign x = NOT NOT var
-	assign y = NOT var
-	assign z = NOT var
+	assign x = a AND pippo XOR mario[1] OR NOT var OR (var AND c)
+	
 
 	
 endmodule 
+
+module Circuito2 (
+
+		input a, b, e, pippo
+		input c, var
+		
+		input mario[2]
+		output x, y
+);
+	
+	
+	assign y = a NAND c
+	
+	
+endmodule 
+
+module Circuito3 (
+
+		input f, g
+		input m, n
+	
+		input pino[2]
+		
+		
+);
+	
+	
+	instance Circuito2 (.a = n, .c = m)
+
+	assign z = pino[0] OR pino[1]
+	
+endmodule 
+
+

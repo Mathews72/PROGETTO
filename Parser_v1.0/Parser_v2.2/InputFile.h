@@ -26,15 +26,19 @@ public:
 
 	
 
-private:
+private: 
 	ifstream _myfile;
 	char ch, buffer[15];
 	string _flipname;
 	vector<string> inputChar; //memorizzati tutti i caratteri da sostitire nell'exp
 	vector<int> inputValue ;		//deve leggere i valori dal file
 	vector<int> flipflopValue ;  //Risultati ottenuti dal flip flop di prova
+	vector <int> flipGrades;
 	vector <string> FlipNames;
 	vector <string> CircuitNames;
+	int flipnum = 0;
+
+
 
 	int isOperator(char buffer[]);
 	int isKeyword(char buffer[]);

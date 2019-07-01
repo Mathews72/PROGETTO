@@ -30,8 +30,8 @@ private:
 	std::list<string> lstOpValid;
 
 	BST bst;
-
 	
+
 	void processOperator(char op);
 	void processRightParenthesis();
 	void doBinary(char op);
@@ -41,6 +41,7 @@ private:
 
 
 public:
+	
 	class NotWellFormed : public std::exception {
 	public:
 		explicit NotWellFormed() {}
@@ -63,9 +64,8 @@ public:
 		std::string msg_;
 	};
 
-	float consume=0;
+	float consume = 0;
 
 	int parse(std::string& istr) throw (NotWellFormed);
-	
 };
 
