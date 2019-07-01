@@ -17,7 +17,8 @@ public:
 	
 	void readFile(string str);
 	void readFileValue(string str);
-	
+
+	int gradeGetter(string tmp);
 	string capture(string tmp);
 	string moduleCleaner(string tmp);//Toglie il ( dopo il nome del circuito
 	string captureIstance(string tmp);//Deve pulire l instance(.a=m,) effettuandone i controlli
@@ -38,10 +39,12 @@ private:
 	vector <string> CircuitNames;
 	int flipnum = 0;
 
-
+	int extractIntegerWordsMax(string str);
 
 	int isOperator(char buffer[]);
 	int isKeyword(char buffer[]);
 	int isFlipFlop(char buffer[]);
+
+
 };
 
