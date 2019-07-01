@@ -398,8 +398,8 @@ int InputFile::gradeGetter(string tmp)
 	cout << tmp<<endl<<endl<<endl;
 	
 	
-		grade = extractIntegerWordsMax(tmp) + 1;
-	
+    grade = extractIntegerWordsMax(tmp) + 1;
+	 
 
 	cout << "Il massimo della stringa ricevuta in ingresso e' " << grade << endl;
 
