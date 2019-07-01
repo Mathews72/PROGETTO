@@ -208,6 +208,7 @@ void InputFile::readFileValue(string str) {
 
 void InputFile::readFilePower(string str)
 {
+	
 	string tmp;
 	float val01;
 	float val10;
@@ -259,7 +260,7 @@ void InputFile::readFilePower(string str)
 				ch = 0;
 				item.clear();
 
-
+				
 
 			getline(_myfile, tmp, ';');
 			
@@ -272,11 +273,18 @@ void InputFile::readFilePower(string str)
 			cout << "////Numero: *" << val10 << "*" << endl;
 
 
-			chargeVectPower(op, val01, val10);
+		//	chargeVectPower(op, val01, val10);
 		
 			
 			
-		
+				Cons0to1.push_back(10);
+				Cons1to0.push_back(15);
+				
+			
+				Cons0to1.push_back(13);
+				Cons1to0.push_back(12);
+			
+				cout << "Ho trovato questo " << Cons0to1.at(0);
 
 
 		
@@ -285,11 +293,11 @@ void InputFile::readFilePower(string str)
 
 	_myfile.close();
 }
-
+/*
 void InputFile::chargeVectPower(char binary_op, float val0to1, float val1to0)
 {
 
-	cout << "Funzione charge: " << binary_op << " " << val0to1 << " " << val1to0 << endl;
+	cout << "Parametri arrivati in ingresso : " << binary_op << " " << val0to1 << " " << val1to0 << endl;
 	BST b;
 	enum {
 
@@ -325,12 +333,12 @@ void InputFile::chargeVectPower(char binary_op, float val0to1, float val1to0)
 	}
 
 
-	//cout << "Funzione charge: " << binary_op << " " << b.cons0to1.at(pnot) << " " <<b.cons1to0.at(pnot) << endl;
-
+	//cout << "Funzione charge: " << binary_op << " " << b.cons0to1[0] << " " <<b.cons1to0[0] << endl;
+	
 
 
 }
-
+*/
 
 
 string InputFile::capture(string tmp)

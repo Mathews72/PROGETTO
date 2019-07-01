@@ -64,10 +64,12 @@ public:
 		rootTree = NULL;
 	}
 
-	float cons0to1[10];
-	
-	float cons1to0[10];
+	/*float cons0to1[10] = { 0.1,0.2,0.3 };
+	float cons1to0[10] = { 0.9,0.8,0.7 };*/
 	list<string> lstOp;
+	
+	
+
 
 	
 	node* createNodeLeaf(char binary_op, int leftValue, int rightValue, int result);
@@ -79,10 +81,7 @@ public:
 
 	float power(char binary_op, int result);
 
-	void readFilePower(string str);
-
-	void chargeVectPower(char binary_op, float val0to1, float val1to0);
-
+	
 
 private:
 	ifstream _myfile;

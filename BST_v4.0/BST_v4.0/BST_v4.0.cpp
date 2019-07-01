@@ -9,6 +9,7 @@ using namespace std;
 int main(int argc, char** argv) {
 
 	InputFile file;
+	BST b;
 
 	//file.readFilePower("FilePower.txt");
 
@@ -41,12 +42,13 @@ int main(int argc, char** argv) {
 		cout << "exception caught: " << e.what() << '\n';
 	}
 	*/
+	
+	file.readFilePower("FilePower.txt");
 
+
+	file.readFile("FileCircuito.txt");
 	try {
-		file.readFilePower("FilePower.txt");
-
-
-		file.readFile("FileCircuito.txt");
+		
 		
 	}
 	catch (std::exception & e) {

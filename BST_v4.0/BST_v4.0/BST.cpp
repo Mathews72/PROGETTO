@@ -1,5 +1,5 @@
 #include "BST.h"
-
+#include "InputFile.h"
 
 using namespace std;
 
@@ -115,149 +115,29 @@ float BST::power(char binary_op, int result)
 	};
 
 	float cons;
-
+	InputFile inp;
+	cout << "ATTENZIONE DIMENSIONE DEL VETTORE " << inp.Cons0to1.size()<<endl;
+	inp.Cons0to1.push_back(10);
+	cout << "ATTENZIONE DIMENSIONE DEL VETTORE " << inp.Cons0to1.size() << endl;
 	switch (binary_op) {
-	case OPER_NOT:
-		cons = ((result == 1) ? cons0to1[0] : cons1to0[0]);
+
+		/*
+			case OPER_NOT:
+		cons = ((result == 1)  ? inp.Cons0to1.at(0) : inp.Cons1to0.at(0));
 		break;
 	case OPER_AND:
-		cons = ((result == 1) ? cons0to1[pand] : cons1to0[pand]);
+		cons = ((result == 1) ? inp.Cons0to1.at(1) : inp.Cons1to0.at(1));
 		break;
-	case OPER_NAND:
-		cons = ((result == 1) ? cons0to1[pnand] : cons1to0[pnand]);
-		break;
-	case OPER_OR:
-		cons = ((result == 1) ? cons0to1[por] : cons1to0[por]);
-		break;
-	case OPER_XOR:
-		cons = ((result == 1) ? cons0to1[pxor] : cons1to0[pxor]);
-		break;
-	case OPER_NOR:
-		cons = ((result == 1) ? cons0to1[pnor] : cons1to0[pnor]);
-		break;
-	}
-	cout << "**consum OP: " << binary_op << " " << cons<<endl ;
-
-	return cons;
-}
-
-void BST::readFilePower(string str)
-{
-	string tmp;
-	float val01;
-	float val10;
-	string item;
-	int ch = 0;
-	char op;
-	BST b;
-
-	_myfile.open(str);			//apertura file
-	if (!_myfile.is_open()) {			//controllo apertura file
-		cerr << "error while opening the file\n" << str << endl;
-		system("pause");
-		exit(1);
-	}
-
-	lstOp.push_back("AND");
-	lstOp.push_back("OR");
-	lstOp.push_back("NOT");
-	lstOp.push_back("NAND");
-	lstOp.push_back("NOR");
-	lstOp.push_back("XOR");
-
-
-	while (!(_myfile.eof()))
-	{
-
-		getline(_myfile, tmp, ';');
-
-		cout << "PowerOP: " << tmp << endl;
-
-
-		op = tmp[ch];
-
-		while (ch < tmp.length()) {
-			item.push_back(tmp[ch]);
-
-			++ch;
-		}
-		//cout << "//////////////item operator: *" << item << "*" << endl;
-		if (count(lstOp.begin(), lstOp.end(), item) > 0) {
-			if (item.compare("NAND") == 0)
-				op = 'v';
-
-			if (item.compare("NOR") == 0)
-				op = 'z';
-
-		}
-		//cout << "Value_op *" << op << "*" << endl;
-		ch = 0;
-		item.clear();
-
-
-
-		getline(_myfile, tmp, ';');
-
-		val01 = strtof((tmp).c_str(), 0);		//converte la stringa in numero
-		cout << "////Numero: *" << val01 << "*" << endl;
-
-
-		getline(_myfile, tmp, '\n');
-		val10 = strtof((tmp).c_str(), 0);
-		cout << "////Numero: *" << val10 << "*" << endl;
-
-
-		chargeVectPower(op, val01, val10);
-
-
+		
+		
+		*/
 	
-
-
-
-
 	}
+//	cout << "**consum OP: " << binary_op << " " << cons<<endl ;
 
-
-	_myfile.close();
+	return 0;
 }
 
-void BST::chargeVectPower(char binary_op, float val0to1, float val1to0)
-{
-	cout << "Funzione charge: " << binary_op << " " << val0to1 << " " << val1to0 << endl;
-	BST b;
-	enum {
-
-		pnot, pand, pnand, por, pxor, pnor
-	};
-	float consume;
-
-	switch (binary_op) {
-	case OPER_NOT:
-		cons0to1[pnot] = val0to1;
-		cons1to0[pnot] = val1to0;
-		break;
-	case OPER_AND:
-		cons0to1[pand] = val0to1;
-		cons1to0[pand] = val1to0;
-		break;
-	case OPER_NAND:
-		cons0to1[pnand] = val0to1;
-		cons1to0[pnand] = val1to0;
-		break;
-	case OPER_OR:
-		cons0to1[por] = val0to1;
-		cons1to0[por] = val1to0;
-		break;
-	case OPER_XOR:
-		cons0to1[pxor] = val0to1;
-		cons1to0[pxor] = val1to0;
-		break;
-	case OPER_NOR:
-		cons0to1[pnor] = val0to1;
-		cons1to0[pnor] = val1to0;
-		break;
-	}
-}
 
 void BST::showTrunks(Trunk * p) {
 	if (p == NULL)

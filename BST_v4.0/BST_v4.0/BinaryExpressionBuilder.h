@@ -63,7 +63,7 @@ public:
 		std::string msg_;
 	};
 
-	float consume;
+	float consume=0;
 
 	int parse(std::string& istr) throw (NotWellFormed);
 	

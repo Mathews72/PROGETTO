@@ -7,7 +7,7 @@ module Circuito (
 		output x, y
 );
 	
-	assign x = NOT var
+	assign x = NOT NOT var
 	assign y = NOT var
 	assign z = NOT var
 
