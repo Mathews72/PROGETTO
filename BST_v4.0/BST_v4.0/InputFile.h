@@ -63,7 +63,7 @@ public:
 	string NameCirctuit(string name);
 
 	void AssegnaVal(string tofind, string tosub);
-
+	void Menu();
 
 
 private:

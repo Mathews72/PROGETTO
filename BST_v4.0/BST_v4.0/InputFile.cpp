@@ -9,6 +9,15 @@ InputFile::~InputFile()
 }
 
 
+void InputFile::Menu()
+{
+	cout << "Selezionare un' opzione:" << endl;
+	cout << "1)Simulazione" << endl;
+	cout << "2)Analisi" << endl;
+	cout << "4)Prossimo Circuito" << endl;
+	cout << "3)Esci" << endl;
+}
+
 float InputFile::power(char binary_op, int result)
 {
 	enum {
@@ -170,16 +179,58 @@ void InputFile::readFile(string str)
 						//readFileValue("FileValue.txt");
 
 						getline(_myfile, tmp, '\n');
-						cout << "Espressione catturata: " << tmp << endl;
+						//cout << "Espressione catturata: " << tmp << endl;
 
 						ExprCircutit.push_back(tmp);		// memorizzo l' expr nel vettore
 
 						//cout << "******Clear expression: " << capture(tmp) << endl << endl;
 						string nuova = capture(tmp);
 
-						cout << "***Result: " << b.parse(nuova) << endl;
+						
+						//cout << "***Result: " << b.parse(nuova) << endl;
+						//cout << " **Consumo totale = " << b.consume << endl << endl;
 
-						cout << " **Consumo totale = " << b.consume << endl << endl;
+
+						int scelta;
+						do {
+							Menu();
+							cin >> scelta;
+							switch (scelta)
+							{
+							case 1:
+							{
+								//Inserire qui comandi di pulizia
+
+								cout << "Verra' avviata la simulazione" << endl;
+								cout << "Espressione catturata: " << tmp << endl;
+								cout << "***Result: " << b.parse(nuova) << endl;
+								break;
+							}
+							case 2:
+								cout << "Verra' avviata l analisi" << endl;
+								cout << " **Consumo totale = " << b.consume << endl << endl;
+								break;
+							case 3:
+								cout << "Uscita" << endl;
+								exit(1);
+								break;
+							case 4:
+								break;
+							default:
+								cout << "Scelta non prevista" << endl;
+							}
+
+						} while (scelta != 4);
+
+
+
+
+
+
+
+
+
+
 
 					}
 					

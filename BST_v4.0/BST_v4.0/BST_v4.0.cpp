@@ -6,10 +6,21 @@
 
 using namespace std;
 
+
+
+void Menu()
+{
+	cout << "Selezionare un' opzione:" << endl;
+	cout << "1)Simulazione" << endl;
+	cout << "2)Analisi" << endl;
+	cout << "3)Esci" << endl;
+}
+
 int main(int argc, char** argv) {
 
 	InputFile file;
-
+	BinaryExpressionBuilder b;
+	int scelta;
 
 	//file.readFilePower("FilePower.txt");
 
@@ -40,26 +51,33 @@ int main(int argc, char** argv) {
 	}
 	*/
 
-	try {
+try {
 		//file.readFilePower("FilePower.txt");
 		file.readFileValue("FileValue.txt");
 		
-
-
+		
 		file.readFile("FileCircuito.txt");
 
-
-
-		
-		
-			
-
+			   	
 		
 	}
 	catch (std::exception & e) {
 		cout << "exception caught: " << e.what() << '\n';
 		//cout << "exception caught: " << '\n';
 	}
+
+
+
+
+	;
+
+
+
+
+
+
+
+
 
 
 

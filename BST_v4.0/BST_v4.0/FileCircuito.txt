@@ -24,7 +24,7 @@ module Circuito2 (
 	
 	
 	assign y = a NAND c
-
+	
 	
 endmodule 
 
