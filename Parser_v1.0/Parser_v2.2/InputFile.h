@@ -33,12 +33,18 @@ private:
 	string _flipname;
 	vector<string> inputChar; //memorizzati tutti i caratteri da sostitire nell'exp
 	vector<int> inputValue ;		//deve leggere i valori dal file
+	
+	
 	vector<int> flipflopValue ;  //Risultati ottenuti dal flip flop di prova
 	vector <int> flipGrades;
 	vector <string> FlipNames;
 	vector <string> CircuitNames;
+	vector <int> flipNeg;
+	string negateConstructor(string tmp);
+	
 	int flipnum = 0;
 
+	
 	int extractIntegerWordsMax(string str);
 
 	int isOperator(char buffer[]);

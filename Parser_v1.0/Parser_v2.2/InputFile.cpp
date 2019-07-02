@@ -9,6 +9,11 @@ InputFile::InputFile()
 InputFile::~InputFile()
 {
 }
+string InputFile::negateConstructor(string tmp)
+{
+	string result = " NOT( "+tmp+" )";
+	return result;
+} 
 int InputFile::extractIntegerWordsMax(string str)
 {
 	stringstream ss;
@@ -77,10 +82,12 @@ int InputFile::isFlipFlop(char buffer[])
 {
 	
 	int flag = 0;
+	int negato = 0;
+	int k = 0;
 	
     if ((buffer[0]=='N'&&buffer[1]=='F'&&buffer[2]=='F')|| (buffer[0] == 'F'&&buffer[1] == 'F'))
 	{
-		int k = 0;
+		
 		if (buffer[0] == 'N')
 			k = 1;
 		for (int i = 2; buffer[i+k] != '\0'; i++)
@@ -95,7 +102,7 @@ int InputFile::isFlipFlop(char buffer[])
 			}
 		}
 		_flipname = buffer;
-	//	cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
+		cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
 		FlipNames.push_back(_flipname);
 	}
 	else
@@ -103,7 +110,15 @@ int InputFile::isFlipFlop(char buffer[])
 		flag = 0;
 	}
 	//Per il flipflop negato
-	
+	if (k == 1)
+	{
+		cout << "Trovato flip flop negato!! inserisco 1 nel flipNeg" << endl;
+		flipNeg.push_back(1);
+	}
+	else
+	{
+		flipNeg.push_back(0);
+	}
 	return flag;
 }
 
@@ -206,6 +221,7 @@ void InputFile::readFile(string str)
 					 string X="X";
 					 int pos;
 					 int gradeflip;
+
 				 }ris;
 				 
 				//flipnum++;
@@ -238,6 +254,7 @@ void InputFile::readFile(string str)
 				 if (flipnum==0)
 				 {
 					 cout << "Eseguo un flipflop semplice." << endl;
+				//	 tmpconv= negateConstructor(tmpconv);
 					 ris.result = b.parse(tmpconv);
 					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
 					 flipflopValue.push_back(ris.result);
@@ -486,15 +503,25 @@ string InputFile::capture(string tmp)
 		 
 			int val = flipflopValue.at(value);
 			int grade = flipGrades.at(value);
+			int neg = flipNeg.at(value);
 			//	int val2 = flipflopValue.at(0);
 				//newString.push_back(val);			//metto val nella newString
-
+			if (neg == 0)
+				val = 0;
 
 			string valore = to_string(val);		//converte il valore trovato in stringa
 
-			tmp.replace(pnt - item.length(), item.length(), valore);
+			
+
+			
+				tmp.replace(pnt - item.length(), item.length(), valore);
+		    
+		   
+
+
 
 			pnt = pnt - item.length() + 1;
+			
 		}
 		else if (count(inputChar.begin(), inputChar.end(), item) > 1) {
 			cerr << "****ERROR Double inizialization: " << item << endl;
@@ -509,7 +536,7 @@ string InputFile::capture(string tmp)
 	}
 
 
-	//cout << "***Tmp sostituita*** " << tmp << endl;
+	cout << "***Tmp sostituita*** " << tmp << endl;
 
 
 	return tmp;
