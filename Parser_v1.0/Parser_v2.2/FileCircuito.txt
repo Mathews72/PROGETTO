@@ -8,7 +8,7 @@ module Circuito (
 );
 	
 	
-	NFF1 = a AND b
+	FF1 = a AND b
 
 	
 	  
