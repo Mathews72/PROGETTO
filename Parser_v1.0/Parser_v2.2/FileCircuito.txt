@@ -1,16 +1,18 @@
 module Circuito (
 
-		input a, pippofddfafsa, b, e, f, g, k, l, o
+		input a, pippofddfafsa, b, e, f, g, k, l, o, p
 		clk
 		input c
 		input d
 		output x   
 );
 	
-	
+	FF0 = l OR o
 	FF1 = a AND b
 	FF2 = FF1 OR d
 	FF3 = FF2 OR f
+	
+
 	
 	  
 	assign x = ( pippofddfafsa AND  FF3)
