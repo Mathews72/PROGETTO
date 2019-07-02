@@ -194,7 +194,7 @@ int InputFile::isOperator(char buffer[])
 
 int InputFile::isKeyword(char buffer[])
 {
-	char keywords[32][10] = { "module","assign","input","output", "endmodule", "FF", "instance" };
+	char keywords[32][10] = { "module","assign","input","output", "endmodule", "FF", "instance","clk"};
 	int i, flag = 0;
 
 	for (i = 0; i < 32; ++i) {
@@ -269,7 +269,7 @@ void InputFile::readFile(string str)
 		exit(1);
 	}
 
-	int k = 0, i = 0, j = 0;
+	int k = 0, i = 0, j = 0, flagclock = 0;
 	while (!_myfile.eof()) {
 
 
@@ -313,6 +313,10 @@ void InputFile::readFile(string str)
 			//Se trova una keyword,allora
 			if (isKeyword(buffer) == 1) {
 				//cout << buffer << " is keyword\n";
+				if (strcmp("clk", buffer) == 0)
+					flagclock=1;
+
+
 				if (strcmp("assign", buffer) == 0) {		//trova l'espressione da prendere
 					//readFileValue("FileValue.txt");
 
@@ -429,7 +433,16 @@ void InputFile::readFile(string str)
 				if (strcmp("endmodule", buffer) == 0) {
 
 					//cout << "Pulisco**" << endl;
-					
+
+					int scelta;
+					do {
+						Menu();
+						cin >> scelta;
+						switch (scelta)
+						{
+						case 1:
+						{
+
 							while (flagValue != 2) {
 
 								if (readFileValue("FileValue.txt") == 1)
@@ -461,7 +474,8 @@ void InputFile::readFile(string str)
 										flipGrades.push_back(ris.gradeflip);
 										int hisgrade = flipGrades.at(flipGrades.size() - 1);
 										cout << "Grado in ingresso" << hisgrade << endl;
-
+										if (flagclock == 0)
+											exit(1);
 										if (flipnum == 0)
 										{
 											cout << "Eseguo un flipflop semplice." << endl;
@@ -519,9 +533,39 @@ void InputFile::readFile(string str)
 							}
 							cout << "****sono uscito" << endl;
 							flagValue = 0;
+							break;
+						}case 2:
+							cout << "Verra' avviata l analisi" << endl;
+							cout << " **Consumo totale = " << b.consume << endl;
+							node* t;		//Stampa il path Minimo, Massimo
+							t = b.TreeStack.top();
+							bst.surfTree(t);
+
+							break;
+
+						case 3:
+							cout << "Uscita" << endl;
+							_fileOutput.close();
+							exit(1);
+							break;
+						case 4:
+							break;
+						default:
+							cout << "Scelta non prevista" << endl;
 
 
 
+
+
+
+
+
+
+
+
+						}
+
+					}while (scelta != 4);
 						
 
 
@@ -538,6 +582,7 @@ void InputFile::readFile(string str)
 				}
 
 				if (strcmp("module", buffer) == 0) {
+					flagclock = 0;
 					clock = 0;
 					ExprCircutit.clear();
 					flipExpression.clear();
@@ -949,6 +994,8 @@ string InputFile::capture(string tmp)
 		{
 			BinaryExpressionBuilder b;
 			b.consume = b.consume + 1800;
+			BST bst;
+
 			auto match = find(FlipNames.begin(), FlipNames.end(), item);		//cerca il valore per restituire la pos
 
 			if (match != FlipNames.end()) {

@@ -1,5 +1,5 @@
 module Circuito (
-
+		clk
 		input a, b, e, pippo
 		input c, var
 		input d
@@ -9,13 +9,13 @@ module Circuito (
 	
     NFF1 = a AND c
 	assign y = a XOR NFF1
-	
+	assign z = a OR c
 
 	
 endmodule 
 
 module Circuito2 (
-
+		clk
 		input a, b, e, pippo
 		input c, var
 		
@@ -26,8 +26,7 @@ module Circuito2 (
 		output x, y, test
 );
 	
-	 NFF1 = a AND c
-	 FF2 =  NFF1 OR pippo
+	 
 	assign y = a NAND c 
 
 endmodule 

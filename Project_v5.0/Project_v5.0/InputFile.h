@@ -93,6 +93,7 @@ private:
 	int extractIntegerWordsMax(string str);
 	int gradeGetter(string tmp);
 	int flipnum = 0;
+	int flagclock = 0;
 
 };
 
