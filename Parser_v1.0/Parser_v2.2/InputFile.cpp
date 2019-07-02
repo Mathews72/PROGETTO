@@ -78,11 +78,14 @@ int InputFile::isFlipFlop(char buffer[])
 	
 	int flag = 0;
 	
-	if (buffer[0]=='F'&&buffer[1]=='F')
+    if ((buffer[0]=='N'&&buffer[1]=='F'&&buffer[2]=='F')|| (buffer[0] == 'F'&&buffer[1] == 'F'))
 	{
-		for (int i = 2; buffer[i] != '\0'; i++)
+		int k = 0;
+		if (buffer[0] == 'N')
+			k = 1;
+		for (int i = 2; buffer[i+k] != '\0'; i++)
 		{
-			if (isdigit(buffer[i]))
+			if (isdigit(buffer[i+k]))
 			{
 				flag = 1;
 			}
@@ -99,6 +102,8 @@ int InputFile::isFlipFlop(char buffer[])
 	{
 		flag = 0;
 	}
+	//Per il flipflop negato
+	
 	return flag;
 }
 
