@@ -26,6 +26,8 @@ public:
 	vector<int> inputValue;		//deve leggere i valori dal file
 	vector<int> flipflopValue;  //Risultati ottenuti dal flip flop di prova
 	vector <string> FlipNames;
+	vector <float> Cons0to1;
+	vector <float> Cons1to0;
 
 	vector <string> inputInstance;
 	

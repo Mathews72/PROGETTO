@@ -9,6 +9,40 @@ InputFile::InputFile()
 InputFile::~InputFile()
 {
 }
+string InputFile::negateConstructor(string tmp)
+{
+	string result = " NOT( "+tmp+" )";
+	return result;
+} 
+int InputFile::extractIntegerWordsMax(string str)
+{
+	stringstream ss;
+	/* Storing the whole string into string stream */
+	ss << str;
+
+	/* Running loop till the end of the stream */
+	string temp;
+	int max = -1;
+	int found;
+	while (!ss.eof()) {
+
+		/* extracting word by word from stream */
+		ss >> temp;
+
+		/* Checking the given word is integer or not */
+		if (stringstream(temp) >> found)
+		{
+			cout << found << " ";
+			if (max < found)
+				max = found;
+		}
+		/* To save from space at the end of string */
+		temp = "";
+	}
+	cout << "Massimo trovato: " << max;
+	return max;
+
+}
 int InputFile::isOperator(char buffer[])
 {
 	char operators[3][5] = { "AND","OR","NOT" };
@@ -48,12 +82,17 @@ int InputFile::isFlipFlop(char buffer[])
 {
 	
 	int flag = 0;
+	int negato = 0;
+	int k = 0;
 	
-	if (buffer[0]=='F'&&buffer[1]=='F')
+    if ((buffer[0]=='N'&&buffer[1]=='F'&&buffer[2]=='F')|| (buffer[0] == 'F'&&buffer[1] == 'F'))
 	{
-		for (int i = 2; buffer[i] != '\0'; i++)
+		
+		if (buffer[0] == 'N')
+			k = 1;
+		for (int i = 2; buffer[i+k] != '\0'; i++)
 		{
-			if (isdigit(buffer[i]))
+			if (isdigit(buffer[i+k]))
 			{
 				flag = 1;
 			}
@@ -63,12 +102,22 @@ int InputFile::isFlipFlop(char buffer[])
 			}
 		}
 		_flipname = buffer;
-	//	cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
+		cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
 		FlipNames.push_back(_flipname);
 	}
 	else
 	{
 		flag = 0;
+	}
+	//Per il flipflop negato
+	if (k == 1)
+	{
+		cout << "Trovato flip flop negato!! inserisco 1 nel flipNeg" << endl;
+		flipNeg.push_back(1);
+	}
+	else
+	{
+		flipNeg.push_back(0);
 	}
 	return flag;
 }
@@ -86,7 +135,7 @@ void InputFile::readFile(string str)
 		exit(1);
 	}
 
-	int k = 0, i = 0, j = 0, clock = -1;
+	int k = 0, i = 0, j = 0, clock = 0;
 	while (!_myfile.eof()) {
 		ch = _myfile.get();			//prendere carattere per carattere
 		
@@ -171,7 +220,10 @@ void InputFile::readFile(string str)
 					 int result;
 					 string X="X";
 					 int pos;
+					 int gradeflip;
+
 				 }ris;
+				 
 				//flipnum++;
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
@@ -182,26 +234,32 @@ void InputFile::readFile(string str)
 				 //Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
 				 string flip = _flipname + tmp;
 				 cout << "Espressione catturata nel flipflop: " << flip << endl;
+				ris.gradeflip= gradeGetter(flip);
 
 				// cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 				 string tmpconv = capture(flip);
 
 				 cout << "Sto passando al parser   " << tmpconv << " Numero flip nell espressione =  "<<flipnum<< endl << endl;
-				 flipGrades.push_back(flipnum);
-				 if (clock == -1)
+				 flipGrades.push_back(ris.gradeflip);
+				 int hisgrade = flipGrades.at(flipGrades.size()-1);
+				 cout << "Grado in ingresso" << hisgrade << endl;
+				 
+				 if (clock == 0)
 				 {
 					 cout << "Errore! clock non trovato" << endl;
 					 exit(1);
 					     
 				 }
-				 if (flipnum == 0)
+				 
+				 if (flipnum==0)
 				 {
 					 cout << "Eseguo un flipflop semplice." << endl;
+				//	 tmpconv= negateConstructor(tmpconv);
 					 ris.result = b.parse(tmpconv);
 					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
 					 flipflopValue.push_back(ris.result);
 				 }
-				 else if(flipnum>0 )
+				 else if(hisgrade<=clock )//condizione da cambiare
 				 {
 					   
 					 cout << "Colpi di clock verificati. Eseguo l espressione  " << endl;
@@ -285,6 +343,92 @@ void InputFile::readFileValue(string str) {
 
 
 
+int InputFile::gradeGetter(string tmp)
+{
+	int grade=0;
+	int pnt = 0;
+	int i = 0;
+	int value;
+	string copy = tmp;
+
+	string newString;
+	do {
+		tmp.erase(tmp.begin() + pnt);		//cancella fino a =
+		//pnt++;
+
+	} while (tmp[pnt] != '=');
+	tmp.erase(tmp.begin() + pnt);
+
+
+	while (pnt < tmp.length())
+	{
+		string item;
+
+		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\0')) {
+			item.push_back(tmp[pnt]);
+			++pnt;
+
+
+		}
+		//cout << "stringa item:  " << item << "*" << endl;
+		if (count(inputChar.begin(), inputChar.end(), item) == 1)
+		{
+			auto match = find(inputChar.begin(), inputChar.end(), item);		//cerca il valore per restituire la pos
+
+			if (match != inputChar.end()) {
+				value = match - inputChar.begin();
+				//cout << "Trovato alla pos: " << value << endl;
+
+			}
+			tmp.replace(pnt - item.length(), item.length(), "0");
+
+			pnt = pnt - item.length() + 1;
+		}
+		else if (count(FlipNames.begin(), FlipNames.end(), item) == 1)
+		{
+			auto match = find(FlipNames.begin(), FlipNames.end(), item);		//cerca il valore per restituire la pos
+
+			if (match != FlipNames.end()) {
+				value = match - FlipNames.begin();
+				//flipnum++;
+
+			}
+			int grade = flipGrades.at(value);
+
+			string valore = to_string(grade);		//converte il valore trovato in stringa
+
+			tmp.replace(pnt - item.length(), item.length(), valore);
+
+			pnt = pnt - item.length() + 1;
+		}
+		else if (count(inputChar.begin(), inputChar.end(), item) > 1) {
+			cerr << "****ERROR Double inizialization: " << item << endl;
+			system("pause");
+		}
+
+
+
+
+		pnt++;
+
+		i++;
+
+
+	}
+
+	cout << "Adesso sto passando in ingresso la seguente stringa,da cui estraero' il grado" << endl;
+	cout << tmp<<endl<<endl<<endl;
+	
+	
+    grade = extractIntegerWordsMax(tmp) + 1;
+	 
+
+	cout << "Il massimo della stringa ricevuta in ingresso e' " << grade << endl;
+
+	//Qui avrò una roba del tipo ( 0 AND 0 AND 1 AND 2 OR 4) e devo trovare il massimo di questa stringa
+	return grade;
+}
+
 string InputFile::capture(string tmp)
 {
 	int pnt = 0;
@@ -359,15 +503,25 @@ string InputFile::capture(string tmp)
 		 
 			int val = flipflopValue.at(value);
 			int grade = flipGrades.at(value);
+			int neg = flipNeg.at(value);
 			//	int val2 = flipflopValue.at(0);
 				//newString.push_back(val);			//metto val nella newString
-
+			if (neg == 0)
+				val = 0;
 
 			string valore = to_string(val);		//converte il valore trovato in stringa
 
-			tmp.replace(pnt - item.length(), item.length(), valore);
+			
+
+			
+				tmp.replace(pnt - item.length(), item.length(), valore);
+		    
+		   
+
+
 
 			pnt = pnt - item.length() + 1;
+			
 		}
 		else if (count(inputChar.begin(), inputChar.end(), item) > 1) {
 			cerr << "****ERROR Double inizialization: " << item << endl;
@@ -382,7 +536,7 @@ string InputFile::capture(string tmp)
 	}
 
 
-	//cout << "***Tmp sostituita*** " << tmp << endl;
+	cout << "***Tmp sostituita*** " << tmp << endl;
 
 
 	return tmp;
@@ -398,12 +552,7 @@ string InputFile::moduleCleaner(string tmp)
 	return tmp;
 }
 
-string InputFile::captureIstance(string tmp)
-{
-	
-	getline(_myfile,tmp,',');
-	return tmp;
-}
+
 
 void InputFile::clear()
 {

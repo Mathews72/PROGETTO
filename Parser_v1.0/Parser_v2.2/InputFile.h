@@ -17,7 +17,8 @@ public:
 	
 	void readFile(string str);
 	void readFileValue(string str);
-	
+
+	int gradeGetter(string tmp);
 	string capture(string tmp);
 	string moduleCleaner(string tmp);//Toglie il ( dopo il nome del circuito
 	string captureIstance(string tmp);//Deve pulire l instance(.a=m,) effettuandone i controlli
@@ -32,16 +33,24 @@ private:
 	string _flipname;
 	vector<string> inputChar; //memorizzati tutti i caratteri da sostitire nell'exp
 	vector<int> inputValue ;		//deve leggere i valori dal file
+	
+	
 	vector<int> flipflopValue ;  //Risultati ottenuti dal flip flop di prova
 	vector <int> flipGrades;
 	vector <string> FlipNames;
 	vector <string> CircuitNames;
+	vector <int> flipNeg;
+	string negateConstructor(string tmp);
+	
 	int flipnum = 0;
 
-
+	
+	int extractIntegerWordsMax(string str);
 
 	int isOperator(char buffer[]);
 	int isKeyword(char buffer[]);
 	int isFlipFlop(char buffer[]);
+
+
 };
 
