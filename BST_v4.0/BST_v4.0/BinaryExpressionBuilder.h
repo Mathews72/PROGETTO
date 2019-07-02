@@ -25,7 +25,7 @@ private:
 	// operandStack is made up of BinaryOperationNodes and NumericElementNode
 	std::stack<int> operandStack;
 
-	std::stack<node*> TreeStack;
+	//std::stack<node*> TreeStack;
 
 	std::list<string> lstOpValid;
 
@@ -59,13 +59,17 @@ public:
 
 
 		}
+
+		
 	protected:
 		/**  Error message.  */
 		std::string msg_;
+		
+		
 	};
-
+	std::stack<node*> TreeStack;
 	float consume = 0;
-
+	
 	int parse(std::string& istr) throw (NotWellFormed);
 };
 

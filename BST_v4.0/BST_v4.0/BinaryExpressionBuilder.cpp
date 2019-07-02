@@ -126,7 +126,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	}
 
 	if (operandStack.size() != 1) {
-		throw NotWellFormed("End eval expr --> operandStack not emty ... expression not valid!!");
+		throw NotWellFormed("End eval expr --> operandStack not empty ... expression not valid!!");
 	}
 
 	/* Stampa L'alber0
@@ -137,10 +137,13 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 		bst.printTree(t, NULL, false);
 		*/
 	int p = operandStack.top();
-	node* t;
-	t = TreeStack.top();
-	bst.surfTree(t);
 
+	/*node* t;
+
+	t = TreeStack.top();
+	
+	bst.surfTree(t);		//ritorno il path min e max
+	*/
 	operandStack.pop();
 	int ret = p >= RESULTTAG ? p - RESULTTAG : p;
 	
@@ -150,6 +153,8 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 
 }
+
+
 
 
 void BinaryExpressionBuilder::processOperator(char op) {

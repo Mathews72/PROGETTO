@@ -11,6 +11,10 @@
 
 
 
+
+
+
+
 using namespace std;
 class InputFile
 {
@@ -31,8 +35,12 @@ public:
 
 
 
-	vector<string> outputChar; //memorizzati tutti i caratteri da sostitire nell'exp
+	stack<string> outputChar; //memorizzati tutti i caratteri da sostitire nell'exp
 	vector<int> outputValue;
+
+	int Result;
+
+
 
 	float cons0to1[10] = { 0.1,0.2,0.3,0.9,0.4,0.56 };
 	float cons1to0[10] = { 1.2,1.5,3.2,0.5,0.22,0.7 };
@@ -51,8 +59,9 @@ public:
 
 
 	void readFile(string str);
-	void readFileValue(string str);
+	int readFileValue(string str);
 	void readFilePower(string str);
+	string filePow;
 
 	void chargeVectPower(char binary_op, float val0to1, float val1to0);
 
@@ -68,9 +77,13 @@ public:
 
 private:
 	ifstream _myfile;
+	ifstream _myfileValue;
+	ofstream _fileOutput;
 	char ch, buffer[15];
 	string _flipname;
+	int flagValue;
 
+	vector <string>flipExpression;
 
 
 };

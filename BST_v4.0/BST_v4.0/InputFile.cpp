@@ -26,6 +26,7 @@ float InputFile::power(char binary_op, int result)
 	};
 	float consume;
 	readFilePower("FilePower.txt");
+	//readFilePower(filePow);
 
 	switch (binary_op) {
 	case OPER_NOT:
@@ -124,6 +125,7 @@ void InputFile::readFile(string str)
 	string tmp;
 	string numVect;
 	BinaryExpressionBuilder b;
+	BST bst;
 	_myfile.open(str);			//apertura file
 	if (!_myfile.is_open()) {			//controllo apertura file
 		cerr << "error while opening the file\n";
@@ -184,14 +186,40 @@ void InputFile::readFile(string str)
 						ExprCircutit.push_back(tmp);		// memorizzo l' expr nel vettore
 
 						//cout << "******Clear expression: " << capture(tmp) << endl << endl;
-						string nuova = capture(tmp);
+
+						//string nuova = capture(tmp);
 
 						
 						//cout << "***Result: " << b.parse(nuova) << endl;
 						//cout << " **Consumo totale = " << b.consume << endl << endl;
 
 
-						int scelta;
+						/*while (flagValue != 2) {
+
+							if (readFileValue("FileValue.txt") == 1) {
+
+								string nuova = capture(tmp);
+								int res = b.parse(nuova);
+
+								cout << "Verra' avviata la simulazione" << endl;
+								cout << "Espressione catturata: " << tmp << endl;
+								cout << "***Result: " << res << endl << endl;
+								flagValue = 0;
+							}
+
+
+
+
+						}
+						cout << "****sono uscito" << endl;
+						flagValue = 0;
+						*/
+
+
+
+
+
+						/*int scelta;
 						do {
 							Menu();
 							cin >> scelta;
@@ -200,18 +228,49 @@ void InputFile::readFile(string str)
 							case 1:
 							{
 								//Inserire qui comandi di pulizia
+								//int res = b.parse(nuova);
+								//cout << "Verra' avviata la simulazione" << endl;
+								//cout << "Espressione catturata: " << tmp << endl;
+								//cout << "***Result: " << res << endl;
+								
 
-								cout << "Verra' avviata la simulazione" << endl;
-								cout << "Espressione catturata: " << tmp << endl;
-								cout << "***Result: " << b.parse(nuova) << endl;
+								while (flagValue != 2) {
+
+									if (readFileValue("FileValue.txt") == 1) {
+										
+										string nuova = capture(tmp);
+										int res = b.parse(nuova);
+
+										cout << "Verra' avviata la simulazione" << endl;
+										cout << "Espressione catturata: " << tmp << endl;
+										cout << "***Result: " << res << endl<<endl;
+										flagValue = 0;
+									}
+									
+								
+								
+									
+								}
+								cout << "****sono uscito" << endl;
+								flagValue = 0;
+
+							
+
+
 								break;
 							}
 							case 2:
 								cout << "Verra' avviata l analisi" << endl;
-								cout << " **Consumo totale = " << b.consume << endl << endl;
+								cout << " **Consumo totale = " << b.consume << endl;
+								node* t;		//Stampa il path Minimo, Massimo
+								t = b.TreeStack.top();
+								bst.surfTree(t);
+						
 								break;
+							
 							case 3:
 								cout << "Uscita" << endl;
+								_fileOutput.close();
 								exit(1);
 								break;
 							case 4:
@@ -220,10 +279,7 @@ void InputFile::readFile(string str)
 								cout << "Scelta non prevista" << endl;
 							}
 
-						} while (scelta != 4);
-
-
-
+						} while (scelta != 4);*/
 
 
 
@@ -237,17 +293,85 @@ void InputFile::readFile(string str)
 					if (strcmp("endmodule", buffer) == 0) {
 
 						//cout << "Pulisco**" << endl;
+
+
+						while (flagValue != 2) {
+
+							if (readFileValue("FileValue.txt") == 1) {
+
+								for (auto i =flipExpression.begin(); i != flipExpression.end(); ++i) {
+									cout << "*****Espressione Presa Dal flip : " << *i << endl;
+
+
+									string nuova = capture(*i);
+									
+									int res = b.parse(nuova);
+									flipflopValue.push_back(res);
+
+									cout << "***Result flip : " << res << endl << endl;
+								}
+
+								for (auto i = ExprCircutit.begin(); i != ExprCircutit.end(); ++i) {
+									cout << "*****Espressione Presa Dal vettore: "<<*i << endl;
+
+
+
+									string nuova = capture(*i);
+									int res = b.parse(nuova);
+
+									cout << "Verra' avviata la simulazione" << endl;
+									//cout << "Espressione catturata: " << tmp << endl;
+									cout << "***Result: " << res << endl;
+									cout << "Verra' avviata l analisi" << endl;
+									cout << " **Consumo totale = " << b.consume << endl;
+									node* t;		//Stampa il path Minimo, Massimo
+									t = b.TreeStack.top();
+									bst.surfTree(t);
+									cout << endl << endl;
+								}
+								flagValue = 0;
+								flipflopValue.clear();
+							}
+
+
+
+
+						}
+						cout << "****sono uscito" << endl;
+						flagValue = 0;
+
+
+
+
+
+
+
+
+
+
+
+
 						inputChar.clear();
 						inputInstance.clear();
+						inputValue.clear();
+						
 					}
 
 					if (strcmp("module", buffer) == 0) {
+						ExprCircutit.clear();
+						flipExpression.clear();
+						//readFileValue("FileValue.txt");
+						/*cout << endl<<  "**Inserire i File Con i Valori: " << endl;
+						string fileVal;
+						cin >> fileVal;
+						readFileValue(fileVal);*/
+						
 
 						//cout << "**Nuovo circuito****" << endl;
 						string nameCircuit;
 						getline(_myfile, nameCircuit, '(');
 
-						cout << "Nome Circuito:" << nameCircuit << endl;
+						cout << endl << "*** " << nameCircuit << " ***"<< endl;
 						CircuitName.push_back(nameCircuit);
 						
 					}
@@ -320,15 +444,16 @@ void InputFile::readFile(string str)
 					getline(_myfile, tmp);
 
 					//Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
-					string flip = _flipname + tmp;
+					string flip = _flipname+" "+ tmp;
 					//	 cout << "Espressione catturata nel flipflop: " << flip << endl;
-					cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
-					string tmpconv = capture(flip);
+					flipExpression.push_back(flip);
+					//cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+				//	string tmpconv = capture(flip);
 					//	 cout << "Sto passando al parser la seguente espressione  " << tmpconv << endl << endl;
-					int ris = b.parse(tmpconv);
+				//	int ris = b.parse(tmpconv);
 
-					cout << "Risultato del flip flop vale     " << ris << endl << endl;
-					flipflopValue.push_back(ris);
+				//	cout << "Risultato del flip flop vale: " << ris << endl << endl;
+				//	flipflopValue.push_back(ris);
 					//cout << "Inserito nel vettore InputValue il valore  " << inputValue.back()<<endl;
 				}
 				else
@@ -355,20 +480,64 @@ void InputFile::readFile(string str)
 }
 
 
-void InputFile::readFileValue(string str) {
+int InputFile::readFileValue(string str) {
 	string temp;
 	string tmp;
-	_myfile.open(str);			//apertura file
-	if (!_myfile.is_open()) {			//controllo apertura file
+	int flagopen = 0;
+	
+	
+				//apertura file
+	if (!_myfileValue.is_open()) {			//controllo apertura file
+		_myfileValue.open(str);
+		//cout << "File Apeto" << endl;
+		flagopen = 1;
+		//cerr << "error while opening the file\n";
+		//system("pause");
+		//exit(1);
+	}
+	/*else if (!_myfileValue.is_open() && (flagopen == 0)) {			//controllo apertura file
+		
 		cerr << "error while opening the file\n";
 		system("pause");
 		exit(1);
+	}*/
+
+	
+
+	if (_myfileValue.is_open() && !_myfileValue.eof()) {
+		//cout << "File GIA aperto" << endl;
+		
+			int pnt = 0;
+			//int flag = 0;
+			getline(_myfileValue, tmp);
+			cout << "Ho letto: " << tmp<< endl;
+	if (tmp.size() == 0) {
+		flagValue = 2;
+		_myfileValue.close();
+		return flagValue;
+		
 	}
 
-	int k = 0, i = 0, j = 0;
-	while (!_myfile.eof()) {
-		ch = _myfile.get();			//prendere carattere per carattere
+			inputValue.clear();
+			while (pnt < tmp.length()) {
+				int number = ((tmp[pnt] == '0') ? 0 : 1);
+				inputValue.push_back(number);
+				//cout << "Ho caricato il vettote Con: " << number << endl;
+				++pnt;
+			}
 
+			flagValue = 1;
+
+			
+		
+
+	}
+	
+
+	/*int k = 0, i = 0, j = 0;
+	while (!_myfileValue.eof()) {
+		ch = _myfileValue.get();			//prendere carattere per carattere
+		
 			if (ch == '0' || ch == '1') {
 				//cout << "*****numero: " << ch << endl;
 				int number = ((ch == '0') ? 0 : 1);
@@ -382,8 +551,10 @@ void InputFile::readFileValue(string str) {
 			}
 		
 
-	}
-	_myfile.close();
+	}*/
+
+	return flagValue;
+	//_myfileValue.close();
 
 
 }
@@ -458,7 +629,6 @@ void InputFile::readFilePower(string str)
 		chargeVectPower(op, val01, val10);
 
 
-		test.push_back(36478);
 
 
 
@@ -537,7 +707,8 @@ string InputFile::capture(string tmp)
 
 	} while (tmp[pnt] != '=');
 
-	outputChar.push_back(tmpPass);
+	//outputChar.push_back(tmpPass);
+	outputChar.push(tmpPass);
 	tmp.erase(tmp.begin() + pnt);
 
 
@@ -624,7 +795,7 @@ string InputFile::capture(string tmp)
 	}
 
 	
-	cout << "***Tmp sostituita*** " << tmp << endl;
+	//cout << "***Tmp sostituita*** " << tmp << endl;
 
 
 	return tmp;
@@ -652,7 +823,7 @@ string InputFile::captureInstance(string tmp)
 
 		} while (tmp[pnt] != '=');
 
-		outputChar.push_back(tmpPass);
+		//outputChar.push_back(tmpPass);
 		tmp.erase(tmp.begin() + pnt);
 
 
@@ -739,7 +910,7 @@ string InputFile::captureInstance(string tmp)
 		}
 
 
-		cout << "***Tmp sostituita*** " << tmp << endl;
+		//cout << "***Tmp sostituita*** " << tmp << endl;
 
 
 		return tmp;

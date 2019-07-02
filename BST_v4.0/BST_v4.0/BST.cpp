@@ -97,12 +97,18 @@ void BST::surfTree(node * root) {
 
 	if (root == NULL)
 		return;
-
+	//int x = root->depthMin;
 
 	//surfTree(root->left);
 	//surfTree(root->right);
 	cout << "Path Max:" << root->depthMax << endl;
 	cout << "Path Min:" << root->depthMin << endl;
+	
+	//PercorsoMax = root->depthMax;
+	//cout << "Path Max:" << PercorsoMax << endl;
+	//PercorsoMin = root->depthMin;
+
+	
 
 	// print token, result, depthMin, depthMax
 
