@@ -293,13 +293,15 @@ void InputFile::readFile(string str)
 					if (strcmp("endmodule", buffer) == 0) {
 
 						//cout << "Pulisco**" << endl;
-
+						
 
 						while (flagValue != 2) {
-
-							if (readFileValue("FileValue.txt") == 1) {
-
+							
+							if (readFileValue("FileValue.txt") == 1)
+							{
+								clock++;
 								for (auto i =flipExpression.begin(); i != flipExpression.end(); ++i) {
+									cout << "clock vale " << clock<<endl;
 									cout << "*****Espressione Presa Dal flip : " << *i << endl;
 
 
@@ -331,6 +333,7 @@ void InputFile::readFile(string str)
 								}
 								flagValue = 0;
 								flipflopValue.clear();
+								
 							}
 
 
@@ -358,6 +361,7 @@ void InputFile::readFile(string str)
 					}
 
 					if (strcmp("module", buffer) == 0) {
+						clock = 0;
 						ExprCircutit.clear();
 						flipExpression.clear();
 						//readFileValue("FileValue.txt");

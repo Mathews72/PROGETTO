@@ -2,13 +2,14 @@ module Circuito (
 
 		input a, b, e, pippo
 		input c, var
-		
+		input d
 
 		output x, y
 );
 	
-    FF1 = a AND c
-	assign x = NOT((a AND FF1))
+    NFF1 = a AND c
+	FF2 = NFF1 OR d
+	assign x = ((a AND NFF1))
 	assign y = a XOR c
 	
 
@@ -22,12 +23,13 @@ module Circuito2 (
 		
 		input mario[2]
 
-		FF3 = a OR b
+		
 
 		output x, y, test
 );
 	
-	
+	 NFF1 = a AND c
+	 FF2 =  NFF1 OR pippo
 	assign y = a NAND c 
 
 endmodule 
