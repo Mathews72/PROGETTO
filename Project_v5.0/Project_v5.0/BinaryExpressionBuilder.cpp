@@ -40,7 +40,7 @@ int BinaryExpressionBuilder::precedence(char op) {
 int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 	char token;
-	consume = 0;
+	
 
 
 	lstOpValid.push_back("AND");

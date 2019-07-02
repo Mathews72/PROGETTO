@@ -8,9 +8,7 @@ module Circuito (
 );
 	
     NFF1 = a AND c
-	FF2 = NFF1 OR d
-	assign x = ((a AND NFF1))
-	assign y = a XOR c
+	assign y = a XOR NFF1
 	
 
 	
