@@ -8,8 +8,9 @@ module Circuito (
 );
 	
     FF1 = a AND c
-	assign y = a XOR FF1
-	assign z = a OR c
+	FF2 = FF1 AND c
+	assign y = b AND FF2 OR var
+	assign z = e AND d
 
 	
 endmodule 
@@ -18,35 +19,20 @@ module Circuito2 (
 		clk
 		input a, b, e, pippo
 		input c, var
-		
-		input mario[2]
+		input d
 
-		
-
-		output x, y, test
+		output x, y, k, z
 );
 	
-	 
-	assign y = a NAND c 
+    FF1 = a AND c
+	
+	assign y = b XOR FF1
+	assign z = e OR d
+	assign k = FF1 NAND b
 
+	
 endmodule 
 
 
-module Circuito3 (
-
-		input f, g
-		input m, n
-	
-		input pino[2]
-		
-		
-);
-	
-	
-	
-
-	assign z = n OR pino[1]
-	
-endmodule 
 
 

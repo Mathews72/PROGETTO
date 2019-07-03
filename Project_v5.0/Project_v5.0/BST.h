@@ -18,6 +18,7 @@
 #define OPER_XOR 'X'
 #define OPER_NAND 'v'
 #define OPER_NOR 'z'
+#define OPER_FF 'F'
 
 #define DIGIT_0 '0'
 #define DIGIT_1 '1'

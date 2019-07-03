@@ -49,7 +49,7 @@ int InputFile::extractIntegerWordsMax(string str)
 		/* To save from space at the end of string */
 		temp = "";
 	}
-	cout << "Massimo trovato: " << max;
+  //	cout << "Massimo trovato: " << max;
 	return max;
 }
 
@@ -126,14 +126,14 @@ int InputFile::gradeGetter(string tmp)
 
 	}
 
-	cout << "Adesso sto passando in ingresso la seguente stringa,da cui estraero' il grado" << endl;
-	cout << tmp << endl << endl << endl;
+	//cout << "Adesso sto passando in ingresso la seguente stringa,da cui estraero' il grado" << endl;
+	//cout << tmp << endl << endl << endl;
 
 
 	grade = extractIntegerWordsMax(tmp) + 1;
 
 
-	cout << "Il massimo della stringa ricevuta in ingresso e' " << grade << endl;
+	//cout << "Grado flipflop:  " << grade << endl;
 
 	//Qui avrò una roba del tipo ( 0 AND 0 AND 1 AND 2 OR 4) e devo trovare il massimo di questa stringa
 	return grade;
@@ -168,6 +168,8 @@ float InputFile::power(char binary_op, int result)
 	case OPER_NOR:
 		consume = ((result == 0) ? cons0to1[pnor] : cons1to0[pnor]);
 		break;
+	case OPER_FF:
+		consume = ((result == 0) ? cons0to1[ff] : cons1to0[ff]);
 	default:
 		consume = ((result == 0) ? cons0to1[ff] : cons1to0[ff]);
 		break;
@@ -244,12 +246,12 @@ int InputFile::isFlipFlop(char buffer[])
 	//Per il flipflop negato
 	if (k == 1)
 	{
-		cout << "Trovato flip flop negato!! inserisco 1 nel flipNeg" << endl;
+	//	cout << "Trovato flip flop negato!! inserisco 1 nel flipNeg" << endl;
 		flipNeg.push_back(1);
 	}
 	if (flag == 1)
 	{
-		cout << "Inserito 0 nel vettore  di neg " << endl;
+	//	cout << "Inserito 0 nel vettore  di neg " << endl;
 		flipNeg.push_back(0);
 	}
 	return flag;
@@ -448,7 +450,10 @@ void InputFile::readFile(string str)
 								if (readFileValue("FileValue.txt") == 1)
 								{
 									clock++;
-									for (auto i = flipExpression.begin(); i != flipExpression.end(); ++i) {
+									for (auto i = flipExpression.begin(); i != flipExpression.end(); ++i) 
+									
+									{
+
 										cout << "clock vale " << clock << endl;
 										cout << "*****Espressione Presa Dal flip : " << *i << endl;
 
@@ -470,9 +475,9 @@ void InputFile::readFile(string str)
 										// cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
 
 
-										cout << "Sto passando al parser   " << nuova << " Numero flip nell espressione =  " << flipnum << endl << endl;
+									//	cout << "Sto passando al parser   " << nuova << " Numero flip nell espressione =  " << flipnum << endl << endl;
 										flipGrades.push_back(ris.gradeflip);
-										int hisgrade = flipGrades.at(flipGrades.size() - 1);
+										 hisgrade = flipGrades.at(flipGrades.size() - 1);
 										cout << "Grado in ingresso" << hisgrade << endl;
 										if (flagclock == 0)
 											exit(1);
@@ -497,8 +502,128 @@ void InputFile::readFile(string str)
 										else
 										{
 											cout << "Devi dargli un altro colpo di clock!!! " << endl;
-											string zero = "0";
-											//b.parse(ris.X);		Da rivedere!!!!!!
+
+											ris.result = 9;
+											cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
+											flipflopValue.push_back(ris.result);
+
+											//b.parse(ris.X);		//Da rivedere!!!!!!
+											cout << "Risultato del del circuito vale X " << endl << endl;
+										}
+										
+									}
+
+									for (auto i = ExprCircutit.begin(); i != ExprCircutit.end(); ++i) {
+										cout << "*****Espressione Presa Dal vettore: " << *i << endl;
+
+
+
+										string nuova = capture(*i);
+										int res = b.parse(nuova);
+
+										cout << "Verra' avviata la simulazione" << endl;
+										//cout << "Espressione catturata: " << tmp << endl;
+										cout << "***Result: " << res << endl<<endl;
+										//cout << "Verra' avviata l analisi" << endl;
+										//cout << " **Consumo totale = " << b.consume + consumeFlip << endl;
+										//b.consume = 0;
+										//consumeFlip = 0;
+
+
+										/*if (flipPresence >= 1) { //***HO BISOGNO DI UN FLAG CHE MI DICA SE CE IL FLIP FLOP
+											node* t;		//Stampa il path Minimo, Massimo del FlipFlop
+											t = b.TreeStack.top();
+											bst.surfTreeFlip(t);
+											cout << endl << endl;
+
+										}
+										else {
+											node* t;		//Stampa il path Minimo, Massimo
+											t = b.TreeStack.top();
+											bst.surfTree(t);
+											cout << endl << endl;
+										}
+										flipPresence = 0;*/
+									}
+
+									flagValue = 0;
+									flipflopValue.clear();
+								//	flipPresence = 0;
+
+								}
+
+
+
+
+							}
+							cout << "****sono uscito" << endl;
+							flagValue = 0;
+							break;
+						}case 2:
+							cout << "Verra' avviata l analisi" << endl;
+							while (flagValue != 2) {
+
+								if (readFileValue("FileValue.txt") == 1)
+								{
+									clock++;
+									for (auto i = flipExpression.begin(); i != flipExpression.end(); ++i)
+
+									{
+
+										cout << "clock vale " << clock << endl;
+										cout << "*****Espressione Presa Dal flip : " << *i << endl;
+
+										flipnum = 0;
+										string nuova = capture(*i);
+
+
+										struct FlipFlop
+										{
+											int result=18;
+											string X = "X";
+											int pos;
+											int gradeflip;
+
+										}ris;
+
+										ris.gradeflip = gradeGetter(*i);
+
+										// cout << "********** FLiFlop Pulito : " << capture(flip) << endl << endl;
+
+
+									//	cout << "Sto passando al parser   " << nuova << " Numero flip nell espressione =  " << flipnum << endl << endl;
+										flipGrades.push_back(ris.gradeflip);
+										hisgrade = flipGrades.at(flipGrades.size() - 1);
+										cout << "Grado in ingresso" << hisgrade << endl;
+										if (flagclock == 0)
+											exit(1);
+										if (flipnum == 0)
+										{
+											cout << "Eseguo un flipflop semplice." << endl;
+											//	 tmpconv= negateConstructor(tmpconv);
+											ris.result = b.parse(nuova);
+											cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
+											flipflopValue.push_back(ris.result);
+										}
+										else if (hisgrade <= clock)//condizione da cambiare
+										{
+
+											cout << "Colpi di clock verificati. Eseguo l espressione  " << endl;
+											ris.result = b.parse(nuova);
+											cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
+											flipflopValue.push_back(ris.result);
+											flipGrades.push_back(0);
+
+										}
+										else
+										{
+											cout << "Devi dargli un altro colpo di clock!!! " << endl;
+
+											ris.result = 9;
+											cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
+											flipflopValue.push_back(ris.result);
+
+											//b.parse(ris.X);		//Da rivedere!!!!!!
 											cout << "Risultato del del circuito vale X " << endl << endl;
 										}
 
@@ -512,20 +637,21 @@ void InputFile::readFile(string str)
 										string nuova = capture(*i);
 										int res = b.parse(nuova);
 
-										cout << "Verra' avviata la simulazione" << endl;
+										cout << "Verra' avviata l' analisi" << endl;
 										//cout << "Espressione catturata: " << tmp << endl;
-										cout << "***Result: " << res << endl;
-										cout << "Verra' avviata l analisi" << endl;
-										cout << " **Consumo totale = " << b.consume + consumeFlip << endl;
+										//cout << "***Result: " << res << endl;
+										
+										cout << " **Consumo totale = " << b.consume + consumeFlip  << endl;
 										b.consume = 0;
 										consumeFlip = 0;
 
 
-										if (clock >= 1) { //***HO BISOGNO DI UN FLAG CHE MI DICA SE CE IL FLIP FLOP
+										if (flipPresence >= 1) { //***HO BISOGNO DI UN FLAG CHE MI DICA SE CE IL FLIP FLOP
 											node* t;		//Stampa il path Minimo, Massimo del FlipFlop
 											t = b.TreeStack.top();
 											bst.surfTreeFlip(t);
 											cout << endl << endl;
+											//flipPresence = 0;
 
 										}
 										else {
@@ -534,10 +660,13 @@ void InputFile::readFile(string str)
 											bst.surfTree(t);
 											cout << endl << endl;
 										}
+										flipPresence = 0;
 									}
+
 									flagValue = 0;
 									flipflopValue.clear();
-									
+									consumeFlip = 0;
+									//	flipPresence = 0;
 
 								}
 
@@ -547,14 +676,7 @@ void InputFile::readFile(string str)
 							}
 							cout << "****sono uscito" << endl;
 							flagValue = 0;
-							break;
-						}case 2:
-							cout << "Verra' avviata l analisi" << endl;
-							cout << " **Consumo totale = " << b.consume << endl;
-							node* t;		//Stampa il path Minimo, Massimo
-							t = b.TreeStack.top();
-							bst.surfTree(t);
-
+							
 							break;
 
 						case 3:
@@ -599,6 +721,7 @@ void InputFile::readFile(string str)
 					flagclock = 0;
 					b.consume = 0;
 					clock = 0;
+					flipPresence = 0;
 					ExprCircutit.clear();
 					flipExpression.clear();
 					flipGrades.clear();
@@ -685,7 +808,8 @@ void InputFile::readFile(string str)
 			}
 			else if (isFlipFlop(buffer) == 1)
 			{
-				cout << buffer << " is FLIPFLOP! \n";
+			
+			//	cout << buffer << " is FLIPFLOP! \n";
 				getline(_myfile, tmp);
 
 				//Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
@@ -827,11 +951,13 @@ void InputFile::readFilePower(string str)
 	lstOp.push_back("NAND");
 	lstOp.push_back("NOR");
 	lstOp.push_back("XOR");
+	lstOp.push_back("FF");
 
-
-	while (!_myfile.eof())
+	int i = 0;
+	while (i<=5)
 	{
 
+		
 		getline(_myfile, tmp, ';');
 
 		//cout << "PowerOP: " << tmp << endl;
@@ -872,12 +998,12 @@ void InputFile::readFilePower(string str)
 
 
 		chargeVectPower(op, val01, val10);
-
+		
 	
 
 
 
-
+		i++;
 	}
 
 	_myfile.close();
@@ -938,6 +1064,7 @@ string InputFile::capture(string tmp)
 	int i = 0;
 	int pos;
 	int value;
+	int val = 8;
 	string valueString;
 	string tmpPass;
 
@@ -963,7 +1090,7 @@ string InputFile::capture(string tmp)
 	while (pnt <= tmp.length()) {
 		string item;
 
-
+		
 
 		while ((tmp[pnt] != ' ') && (tmp[pnt] != '(') && (tmp[pnt] != ')') && (tmp[pnt] != '\0')) {
 			item.push_back(tmp[pnt]);
@@ -974,7 +1101,7 @@ string InputFile::capture(string tmp)
 		//cout << "item operator: *" << item << "*" << endl;
 
 		if (count(inputChar.begin(), inputChar.end(), item) == 1) {
-
+			
 			//la variabile esite--> la sostituisco con il valore 
 			//newString[k] sostituito con il corrispettivo valore dell'item
 			//cout << "*value found.. Substituting *" << item<<" lengh; " <<item.length() << "*" << endl;
@@ -1010,6 +1137,8 @@ string InputFile::capture(string tmp)
 			BinaryExpressionBuilder b;
 			
 			BST bst;
+			
+			
 
 			auto match = find(FlipNames.begin(), FlipNames.end(), item);		//cerca il valore per restituire la pos
 
@@ -1020,13 +1149,14 @@ string InputFile::capture(string tmp)
 
 			}
 
-			consumeFlip = consumeFlip + 17856;
-			//consumeFlip = power('O', 1);
+			//consumeFlip = consumeFlip + 10000;
+			flipPresence++;
 			
-			cout << "*//////////*Consumo del Flip: " << consumeFlip << endl;
 			
-
-				int val = flipflopValue.at(value);
+			//cout << "*//////////*Consumo del Flip: " << consumeFlip << endl;
+			
+			
+			val = flipflopValue.at(value);
 			int grade = flipGrades.at(value);
 			int neg = flipNeg.at(value);
 			//	int val2 = flipflopValue.at(0);
@@ -1035,7 +1165,10 @@ string InputFile::capture(string tmp)
 			{
 				if (val == 1) val = 0; else val = 1;
 			}
+			consumeFlip = consumeFlip+ power('F', val);
 
+			if (grade > clock)
+				val = 9;
 
 			string valore = to_string(val);		//converte il valore trovato in stringa
 
@@ -1057,7 +1190,7 @@ string InputFile::capture(string tmp)
 	}
 
 
-	//cout << "***Tmp sostituita*** " << tmp << endl;
+	cout << "***Tmp sostituita*** " << tmp << endl;
 
 
 	return tmp;
