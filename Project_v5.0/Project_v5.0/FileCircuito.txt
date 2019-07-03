@@ -7,8 +7,8 @@ module Circuito (
 		output x, y
 );
 	
-    NFF1 = a AND c
-	assign y = a XOR NFF1
+    FF1 = a AND c
+	assign y = a XOR FF1
 	assign z = a OR c
 
 	
@@ -43,7 +43,7 @@ module Circuito3 (
 );
 	
 	
-	instance Circuito2 (.a = n, .c = m)
+	
 
 	assign z = n OR pino[1]
 	

@@ -516,14 +516,28 @@ void InputFile::readFile(string str)
 										//cout << "Espressione catturata: " << tmp << endl;
 										cout << "***Result: " << res << endl;
 										cout << "Verra' avviata l analisi" << endl;
-										cout << " **Consumo totale = " << b.consume << endl;
-										node* t;		//Stampa il path Minimo, Massimo
-										t = b.TreeStack.top();
-										bst.surfTree(t);
-										cout << endl << endl;
+										cout << " **Consumo totale = " << b.consume + consumeFlip << endl;
+										b.consume = 0;
+										consumeFlip = 0;
+
+
+										if (clock >= 1) { //***HO BISOGNO DI UN FLAG CHE MI DICA SE CE IL FLIP FLOP
+											node* t;		//Stampa il path Minimo, Massimo del FlipFlop
+											t = b.TreeStack.top();
+											bst.surfTreeFlip(t);
+											cout << endl << endl;
+
+										}
+										else {
+											node* t;		//Stampa il path Minimo, Massimo
+											t = b.TreeStack.top();
+											bst.surfTree(t);
+											cout << endl << endl;
+										}
 									}
 									flagValue = 0;
 									flipflopValue.clear();
+									
 
 								}
 
@@ -583,6 +597,7 @@ void InputFile::readFile(string str)
 
 				if (strcmp("module", buffer) == 0) {
 					flagclock = 0;
+					b.consume = 0;
 					clock = 0;
 					ExprCircutit.clear();
 					flipExpression.clear();
@@ -652,12 +667,12 @@ void InputFile::readFile(string str)
 
 
 					}
-					cout << "Espressione Sostituita" << captureInstance(expression) << endl;
+					/*cout << "Espressione Sostituita" << captureInstance(expression) << endl;
 					string newExpr = captureInstance(expression);
 					cout << "Result " << b.parse(newExpr) << endl;
 					cout << " **Consumo totale = " << b.consume << endl << endl;
 
-
+					*/
 
 
 				}
@@ -858,7 +873,7 @@ void InputFile::readFilePower(string str)
 
 		chargeVectPower(op, val01, val10);
 
-
+	
 
 
 
@@ -993,7 +1008,7 @@ string InputFile::capture(string tmp)
 		else if (count(FlipNames.begin(), FlipNames.end(), item) == 1)
 		{
 			BinaryExpressionBuilder b;
-			b.consume = b.consume + 1800;
+			
 			BST bst;
 
 			auto match = find(FlipNames.begin(), FlipNames.end(), item);		//cerca il valore per restituire la pos
@@ -1005,7 +1020,13 @@ string InputFile::capture(string tmp)
 
 			}
 
-			int val = flipflopValue.at(value);
+			consumeFlip = consumeFlip + 17856;
+			//consumeFlip = power('O', 1);
+			
+			cout << "*//////////*Consumo del Flip: " << consumeFlip << endl;
+			
+
+				int val = flipflopValue.at(value);
 			int grade = flipGrades.at(value);
 			int neg = flipNeg.at(value);
 			//	int val2 = flipflopValue.at(0);

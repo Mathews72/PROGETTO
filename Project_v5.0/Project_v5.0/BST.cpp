@@ -113,6 +113,19 @@ void BST::surfTree(node * root) {
 	// print token, result, depthMin, depthMax
 
 }
+void BST::surfTreeFlip(node * root)
+{
+	if (root == NULL)
+		return;
+	//int x = root->depthMin;
+
+	//surfTree(root->left);
+	//surfTree(root->right);
+	cout << "Path Max:" << root->depthMax+1 << endl;
+	cout << "Path Min:" << root->depthMin+1 << endl;
+
+
+}
 /*
 float BST::power(char binary_op, int result)
 {

@@ -94,6 +94,7 @@ private:
 	int gradeGetter(string tmp);
 	int flipnum = 0;
 	int flagclock = 0;
+	int consumeFlip = 0;
 
 };
 

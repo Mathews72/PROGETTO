@@ -70,6 +70,7 @@ public:
 	node* createNodeRoot(char binary_op, node* left, node* right, int result);
 	void printTree(node* root, Trunk* prev, bool isLeft);
 	void surfTree(node* root);
+	void surfTreeFlip(node* root);
 
 	//float power(char binary_op, int result);
 
