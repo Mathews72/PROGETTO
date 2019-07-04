@@ -14,8 +14,8 @@ void InputFile::Menu()
 	cout << "Selezionare un' opzione:" << endl;
 	cout << "1)Simulazione" << endl;
 	cout << "2)Analisi" << endl;
-	cout << "4)Prossimo Circuito" << endl;
-	cout << "3)Esci" << endl;
+	cout << "3)Prossimo Circuito" << endl;
+	cout << "4)Esci" << endl;
 }
 
 string InputFile::negateConstructor(string tmp)
@@ -590,19 +590,19 @@ void InputFile::readFile(string str)
 
 							break;
 
-						case 3:
+						case 4:
 							cout << "Uscita" << endl;
 							_fileOutput.close();
 							exit(1);
 							break;
-						case 4:
+						case 3:
 							break;
 						default:
 							cout << "Scelta non prevista" << endl;
 
 						}
 
-					} while (scelta != 4);
+					} while (scelta != 3);
 
 					inputChar.clear();
 					inputInstance.clear();
