@@ -41,15 +41,7 @@ static struct node {
 	node* right;
 
 }*rootTree;
-struct Trunk {
-	Trunk* prev;
-	string str;
 
-	Trunk(Trunk* prev, string str) {
-		this->prev = prev;
-		this->str = str;
-	}
-};
 
 using namespace std;
 
@@ -76,11 +68,6 @@ public:
 
 
 private:
-
-
-
-	bool isEmpty() const { return (rootTree == NULL); }
-	bool isleaf() const { return (rootTree->left == NULL && rootTree->right == NULL); }
 
 	node* createLeaf(char token, char result) {         //crea la foglia
 

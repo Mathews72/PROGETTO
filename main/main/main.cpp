@@ -1,6 +1,5 @@
 #include "BinaryExpressionBuilder.h"
 #include "BST.h"
-
 #include "InputFile.h"
 #include <iostream>
 
@@ -17,44 +16,33 @@ void Menu()
 	cout << "3)Esci" << endl;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char *argv[]) {
 
+	vector <string> fileCirc;
 
+	for (int i = 0; i < argc; i++) {
+		fileCirc.push_back(argv[i]);
+		
+	}
+	
+	//fileCirc.at(0);
 	
 	InputFile file;
 	BinaryExpressionBuilder b;
 	BST bst;
-
 	
 
-
-	int scelta;
-
-
-
 	try {
-
-		//file.readFile("FilePower.txt");
-		//file.readFilePower("FilePower.txt");
-
-		/*cout << "Inserire il file del Circuito" << endl;
-		string fileCirc;
-		cin >> fileCirc;*/
-		file.readFile("FileCircuito.txt");
-
-
-
+	
+	
+		file.readFile(fileCirc.at(1));
+		//inserire file con i valori
 
 	}
 	catch (std::exception & e) {
 		cout << "exception caught: " << e.what() << '\n';
-		//cout << "exception caught: " << '\n';
-	}
-
-
-
-
-	;
+	
+	};
 
 
 

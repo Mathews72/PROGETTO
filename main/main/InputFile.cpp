@@ -268,7 +268,7 @@ void InputFile::readFile(string str)
 		exit(1);
 	}
 
-	int k = 0, i = 0, j = 0, flagclock = 0;
+	int k = 0, i = 0, j = 0, flagclock = 0, flagSceltaFile=0;
 	while (!_myfile.eof()) {
 
 
@@ -328,10 +328,34 @@ void InputFile::readFile(string str)
 					do {
 						Menu();
 						cin >> scelta;
+						/*if (scelta != 1) {
+							cout << "NON E' UN NUMERO " << endl;
+							system("pause");
+							exit(1);
+						}*/
+							
+						
+
 						switch (scelta)
 						{
 						case 1:
 						{
+
+							cout << "Memorizzare l'output su file? y/n" << endl;
+							char sceltaFile;
+							cin >> sceltaFile;
+							if (sceltaFile == 'y') {
+								cout << "hai scelto di memorizzarre su file" << endl;
+								flagSceltaFile = 1;
+								if (!_fileOutput.is_open()) {
+									cout << "Inserire il file dove memorizzare" << endl;
+									string fileout;
+									cin >> fileout;
+									_fileOutput.open(fileout);
+								}
+								
+							}
+							
 
 							while (flagValue != 2) {
 
@@ -407,10 +431,24 @@ void InputFile::readFile(string str)
 										int res = b.parse(nuova);
 
 										if (res == 9) {
-											cout << "***Result: " << "X" << endl << endl;
+											if (flagSceltaFile >= 1) {
+												_fileOutput  << " = " << "X"<<endl;
+												cout << "DOVREI STAMAPRE SU FILE" << endl;
+											}
+											else {
+												cout << "***Result: " << "X" << endl << endl;
+											}
+											
 										}
 										else {
-											cout << "***Result: " << res << endl << endl;
+											if (flagSceltaFile >= 1) {
+												_fileOutput << " = " << res << endl;
+												cout << "DOVREI STAMAPRE SU FILE" << endl;
+											}
+											else {
+												cout << "***Result: " << res << endl << endl;
+											}
+											
 										}
 
 								

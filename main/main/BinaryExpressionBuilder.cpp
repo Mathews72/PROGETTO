@@ -49,8 +49,8 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	lstOpValid.push_back("XOR");
 
 	int pnt = 0;
-	while (1) {
-		if DEBUG cout << "token  " << token << endl;
+	while (pnt != str.length()) {
+		
 		if (pnt >=(int) str.length()) break;
 		
 		while ((pnt <(int)str.length()) && (str[pnt] == ' ')) {		//elimino gli spazi
@@ -225,7 +225,7 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 
 void BinaryExpressionBuilder::doBinary(char binary_op) {
 
-	//int p;//*******************
+	
 	InputFile file;
 
 	node* t;

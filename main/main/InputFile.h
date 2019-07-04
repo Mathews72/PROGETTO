@@ -80,12 +80,13 @@ public:
 
 	void AssegnaVal(string tofind, string tosub);
 	void Menu();
-
+	
 
 private:
 	ifstream _myfile;
 	ifstream _myfileValue;
 	ofstream _fileOutput;
+
 	char ch, buffer[15];
 	string _flipname;
 	int flagValue;
