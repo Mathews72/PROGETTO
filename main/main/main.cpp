@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 		
 	}
 	
-	//fileCirc.at(0);
+	
 	
 	InputFile file;
 	BinaryExpressionBuilder b;
@@ -34,7 +34,11 @@ int main(int argc, char *argv[]) {
 
 	try {
 	
-	
+		cout << "Inserire File con i Valori: " << endl;
+		cin >> file.fileValori;
+
+
+
 		file.readFile(fileCirc.at(1));
 		//inserire file con i valori
 

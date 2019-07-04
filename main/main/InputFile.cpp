@@ -359,7 +359,7 @@ void InputFile::readFile(string str)
 
 							while (flagValue != 2) {
 
-								if (readFileValue("FileValue.txt") == 1)
+								if (readFileValue(fileValori) == 1)
 								{
 									clock++;
 									for (auto i = flipExpression.begin(); i != flipExpression.end(); ++i)
@@ -474,7 +474,7 @@ void InputFile::readFile(string str)
 							cout << "Verra' avviata l analisi" << endl;
 							while (flagValue != 2) {
 
-								if (readFileValue("FileValue.txt") == 1)
+								if (readFileValue(fileValori) == 1)
 								{
 									clock++;
 									for (auto i = flipExpression.begin(); i != flipExpression.end(); ++i)
@@ -709,7 +709,7 @@ int InputFile::readFileValue(string str) {
 		//system("pause");
 		//exit(1);
 	}
-	/*else if (!_myfileValue.is_open() && (flagopen == 0)) {			//controllo apertura file
+	/*else if ((!_myfileValue.is_open()) || (flagopen == 0)) {			//controllo apertura file
 
 		cerr << "error while opening the file\n";
 		system("pause");
@@ -764,8 +764,8 @@ void InputFile::readFilePower(string str)
 	char op;
 	BST b;
 
-	_myfile.open(str);			//apertura file
-	if (!_myfile.is_open()) {			//controllo apertura file
+	_myfilePow.open(str);			//apertura file
+	if (!_myfilePow.is_open()) {			//controllo apertura file
 		cerr << "error while opening the file\n" << str << endl;
 		system("pause");
 		exit(1);
@@ -784,7 +784,7 @@ void InputFile::readFilePower(string str)
 	{
 
 
-		getline(_myfile, tmp, ';');
+		getline(_myfilePow, tmp, ';');
 
 		//prendo l'operatore
 		op = tmp[ch];
@@ -807,10 +807,10 @@ void InputFile::readFilePower(string str)
 		ch = 0;
 		item.clear();
 
-		getline(_myfile, tmp, ';');
+		getline(_myfilePow, tmp, ';');
 		val01 = strtof((tmp).c_str(), 0);		//converte la stringa in numero
 
-		getline(_myfile, tmp, '\n');
+		getline(_myfilePow, tmp, '\n');
 		val10 = strtof((tmp).c_str(), 0);
 
 		//carico il vettore con i valori presi dal file
@@ -820,7 +820,7 @@ void InputFile::readFilePower(string str)
 		i++;
 	}
 
-	_myfile.close();
+	_myfilePow.close();
 }
 
 void InputFile::chargeVectPower(char binary_op, float val0to1, float val1to0)

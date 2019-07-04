@@ -80,10 +80,12 @@ public:
 
 	void AssegnaVal(string tofind, string tosub);
 	void Menu();
-	
+	string fileValori;
+	string filePower;
 
 private:
 	ifstream _myfile;
+	ifstream _myfilePow;
 	ifstream _myfileValue;
 	ofstream _fileOutput;
 

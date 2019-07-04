@@ -26,7 +26,6 @@ module Circuito2 (
 );
 	
     FF1 = a AND c
-	
 	assign y = b XOR FF1
 	assign z = e OR d
 	assign k = FF1 NAND b
