@@ -98,7 +98,7 @@ private:
 	int gradeGetter(string tmp);
 	int flipnum = 0;
 	int flagclock = 0;
-	int consumeFlip = 0;
+	float consumeFlip = 0;
 	int flipPresence = 0;
 	int hisgrade = 0;
 

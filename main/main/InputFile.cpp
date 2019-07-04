@@ -328,11 +328,11 @@ void InputFile::readFile(string str)
 					do {
 						Menu();
 						cin >> scelta;
-						/*if (scelta != 1) {
+						if ((scelta != 1) && (scelta != 2)&& (scelta != 3)&& (scelta != 4)) {
 							cout << "NON E' UN NUMERO " << endl;
 							system("pause");
 							exit(1);
-						}*/
+						}
 							
 						
 
@@ -345,7 +345,7 @@ void InputFile::readFile(string str)
 							char sceltaFile;
 							cin >> sceltaFile;
 							if (sceltaFile == 'y') {
-								cout << "hai scelto di memorizzarre su file" << endl;
+								cout << "Hai scelto di memorizzarre su file" << endl;
 								flagSceltaFile = 1;
 								if (!_fileOutput.is_open()) {
 									cout << "Inserire il file dove memorizzare" << endl;
@@ -432,8 +432,8 @@ void InputFile::readFile(string str)
 
 										if (res == 9) {
 											if (flagSceltaFile >= 1) {
-												_fileOutput  << " = " << "X"<<endl;
-												cout << "DOVREI STAMAPRE SU FILE" << endl;
+												_fileOutput  << outputChar.top()<< " = " << "X"<<endl;
+												cout << "Risultati Stamapati su File" << endl;
 											}
 											else {
 												cout << "***Result: " << "X" << endl << endl;
@@ -442,8 +442,8 @@ void InputFile::readFile(string str)
 										}
 										else {
 											if (flagSceltaFile >= 1) {
-												_fileOutput << " = " << res << endl;
-												cout << "DOVREI STAMAPRE SU FILE" << endl;
+												_fileOutput << outputChar.top()<<" = "<< res << endl;
+												cout << "Risultati Stamapati su File" << endl;
 											}
 											else {
 												cout << "***Result: " << res << endl << endl;
@@ -555,6 +555,7 @@ void InputFile::readFile(string str)
 											cout << " **Consumo totale = " << b.consume + consumeFlip << endl;
 
 										}
+
 										b.consume = 0;
 										consumeFlip = 0;
 
@@ -737,9 +738,12 @@ int InputFile::readFileValue(string str) {
 			int number = ((tmp[pnt] == '0') ? 0 : 1);
 			inputValue.push_back(number);
 			cout << " " << number;
+			_fileOutput << " " << number;
 			++pnt;
 		}
 		cout << endl << endl;
+		_fileOutput << " " << endl;
+
 		flagValue = 1;
 
 
