@@ -1,0 +1,37 @@
+module Circuito_6.1 (
+		clk
+		input a, b, c, d
+		output x, y
+);
+FF1 = a AND b
+
+assign x = a AND b OR FF1
+assign y = c AND NOT d
+assign z = a AND c NAND b XOR d	
+
+endmodule 
+
+
+module Circuito_6.2 (
+		clk
+		input e, f, g
+		output x, y
+);
+FF2= e OR f AND g
+assign x  = NOT FF2
+assign y  = f NAND g
+
+endmodule 
+
+
+module Circuito_6.3 (
+		clk
+		input h, i, p
+		input j, k
+		output x, y
+);
+FF3= h OR i AND j OR p
+assign x  =  h XOR i
+assign y  =  j NOR k
+
+endmodule 

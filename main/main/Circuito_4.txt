@@ -1,0 +1,49 @@
+module Circuito_4.1 (
+		input a, b, c, d
+		input r[2]
+		output x, y, z
+);
+
+assign x = r[0] AND a OR d
+assign y = c AND NOT r[1]
+assign z = a AND c NAND b XOR (r[1] NAND c)
+ 
+endmodule 
+
+
+module Circuito_4.2 (
+		input e, f, g
+		input vect[3]
+		output x, y
+);
+
+assign x  = NOT e AND vect[0] OR vect[1]
+assign y  = ((e OR vect[2]) AND g) XOR f
+
+endmodule 
+
+
+module Circuito_4.3 (
+		input h, i
+		input j, k
+		output x, y
+);
+
+assign x  =  h XOR i
+assign y  =  j NOR k
+
+endmodule 
+
+
+module Circuito_4.4 (
+		input g, i, o, u, t
+		input r[4]
+		output x, y
+);
+
+assign x  =  o AND NOT r[0]
+assign y  =  i XOR (t NAND r[3]) OR g AND o
+
+endmodule 
+
+

@@ -1,0 +1,42 @@
+module Circuito_err.1 (
+		clk
+		input a, b, c, d[2]
+		output x, y
+);
+FF0 = a AND b
+FF1 = FF0 OR c
+NFF2 = FF1 OR d[0]
+
+assign x = a AND b OR FF1)
+assign y = c AND NOT d[1]
+assign z = a AND c NAND b 
+
+endmodule 
+
+
+module Circuito_err.2 (
+		clk
+		input e, f, g , pop
+		output x, y
+);
+
+FF2 = e OR f ANDE g
+NFF3 = FF2 OR pop
+assign x  = NOT e
+assign y  = f NANDR NFF3
+
+endmodule 
+
+
+module Circuito_err.3 (
+		
+		input h, i[2]
+		input j, k, k
+		output x, y
+);
+FF3 = h OR i[0] AND i[1]
+NFF4 = i[2] XOR FF3)
+assign x  =  h XOR NFF4
+assign y  =  j NOR k
+
+endmodule 

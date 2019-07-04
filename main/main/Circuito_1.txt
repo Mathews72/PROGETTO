@@ -1,0 +1,57 @@
+module Circuito_1.1 (
+		input a, b
+		output x
+);
+
+assign x  = a AND b
+
+endmodule 
+
+
+module Circuito_1.2 (
+		input c, d
+		output x
+);
+
+assign x  = c OR d
+
+endmodule 
+
+
+module Circuito_1.3 (
+		input e
+		output x
+);
+
+assign x  = NOT e
+
+endmodule 
+
+module Circuito_1.4 (
+		input f, g 
+		output x
+);
+
+assign x  = f NAND g
+
+endmodule 
+
+
+module Circuito_1.5 (
+		input h, i
+		output x
+);
+
+assign x  =  h XOR i
+
+endmodule 
+
+
+module Circuito_1.6 (
+		input j, k
+		output x
+);
+
+assign x  =  j NOR k
+
+endmodule 

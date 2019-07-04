@@ -1,0 +1,43 @@
+module Circuito_5.1 (
+		clk
+		input a, b, c, d
+		input r[2]
+		output x, y, z
+);
+NFF1 = a OR b
+NFF2 = d OR NFF1
+assign x = r[0] AND a OR NFF1
+assign y = c AND NOT r[1]
+assign z = a AND c NAND b XOR (r[1] NAND c)
+ 
+endmodule 
+
+
+module Circuito_5.2 (
+		clk
+		input e, f, g
+		input vect[3]
+		output x, y
+);
+FF0 = e OR f
+FF1 = g AND g
+assign x  = NOT e AND vect[0] OR vect[1] AND FF1
+assign y  = ((e OR vect[2]) AND g) XOR f
+
+endmodule 
+
+
+module Circuito_5.3 (
+		
+		input h, i
+		input j, k
+		output x, y
+);
+FF6 = h OR i
+assign x  =  h XOR i
+assign y  =  j NOR k
+
+endmodule 
+
+
+

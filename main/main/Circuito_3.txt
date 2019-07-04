@@ -1,0 +1,33 @@
+module Circuito_3.1 (
+		input a, b, c, d
+		output x, y
+);
+
+assign x = a AND b OR c
+assign y = c AND NOT d
+assign z = a AND c NAND b XOR d	
+
+endmodule 
+
+
+module Circuito_3.2 (
+		input e, f, g
+		output x, y
+);
+
+assign x  = NOT e
+assign y  = f NAND g
+
+endmodule 
+
+
+module Circuito_3.3 (
+		input h, i
+		input j, k
+		output x, y
+);
+
+assign x  =  h XOR i
+assign y  =  j NOR k
+
+endmodule 
