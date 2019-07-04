@@ -9,10 +9,11 @@ module Circuito (
 
 FF1 = a NAND b
 FF2 = FF1 XOR d 
-assign x = e[0] AND FF2
+FF3 = FF2 NAND b
+assign x = e[0] AND FF3
 
 
- endmodule 
+endmodule 
 
 
 module Circuito2 (
@@ -32,6 +33,23 @@ module Circuito2 (
 
 	
 endmodule 
+
+module Circuito33 (
+		clk
+		input a, b, e, pippo
+		input c, var
+		input d
+
+		output x, y, k, z
+);
+	
+    FF1 = a AND c
+	
+	assign y = b XOR FF1 NAND b OR var
+
+	
+endmodule 
+
 
 
 

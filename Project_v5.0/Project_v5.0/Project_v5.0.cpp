@@ -32,7 +32,11 @@ int main(int argc, char** argv) {
 	try {
 
 		//file.readFile("FilePower.txt");
-	//	file.readFilePower("FilePower.txt");
+		//file.readFilePower("FilePower.txt");
+
+		/*cout << "Inserire il file del Circuito" << endl;
+		string fileCirc;
+		cin >> fileCirc;*/
 		file.readFile("FileCircuito.txt");
 	
 

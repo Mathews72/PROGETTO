@@ -660,12 +660,6 @@ void InputFile::readFile(string str)
 											flipPresence = 0;*/
 
 
-
-
-
-
-
-
 										}
 										else
 										{
@@ -877,19 +871,9 @@ void InputFile::readFile(string str)
 						default:
 							cout << "Scelta non prevista" << endl;
 
-
-
-
-
-
-
-
-
-
-
 						}
 
-					}while (scelta != 4);
+					}while (scelta !=4);
 						
 
 
