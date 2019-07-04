@@ -151,7 +151,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 }
 
-//controlla la precedenza degli operatori
+//esegue l
 void BinaryExpressionBuilder::processOperator(char op) {
 
 	while ((!operatorStack.empty()) && (operatorStack.top() != '(' && (precedence(op) <= precedence(operatorStack.top())))) {
@@ -176,12 +176,12 @@ int BinaryExpressionBuilder::BinaryOperationNode(char binary_op, int leftVal, in
 
 	leftVal = ((leftVal >= RESULTTAG) ? (leftVal - RESULTTAG) : leftVal);
 	rightVal = ((rightVal >= RESULTTAG) ? (rightVal - RESULTTAG) : rightVal);
-	if DEBUG cout << "---- rightVal " << rightVal << " leftVal " << leftVal << " operator " << binary_op << endl;
+	
 	if (binary_op == OPER_NOT) {
 		result = !(leftVal);
 	}
 	else {
-		if DEBUG cout << "rightVal " << rightVal << " leftVal " << leftVal << endl;
+		
 		switch (binary_op) {
 		case OPER_AND:
 

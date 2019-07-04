@@ -38,9 +38,8 @@ int main(int argc, char *argv[]) {
 		cin >> file.fileValori;
 
 
-
 		file.readFile(fileCirc.at(1));
-		//inserire file con i valori
+	
 
 	}
 	catch (std::exception & e) {
