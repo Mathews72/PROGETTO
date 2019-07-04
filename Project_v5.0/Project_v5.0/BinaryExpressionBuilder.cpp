@@ -249,7 +249,7 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 
 void BinaryExpressionBuilder::doBinary(char binary_op) {
 
-	int p = -1;
+	//int p;//*******************
 	InputFile file;
 
 	node* t;
@@ -260,6 +260,7 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	int rightValue = operandStack.top();
 	operandStack.pop();
+
 	if (binary_op == OPER_NOT) {
 		p = BinaryOperationNode(binary_op, rightValue, rightValue);
 		//consume = bst.power(binary_op, p) + consume;//**********************************************
@@ -290,26 +291,26 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		
 		if((binary_op == 'A')&&( (leftValue == 9 && rightValue == 0) || (leftValue == 0 && rightValue == 9)))
 		{
-			cout << "eseguito p=0" << endl;
+			//cout << "eseguito p=0" << endl;
 			p = 0;
 		}
 		else if ((binary_op == 'O') && ((leftValue == 9 && rightValue == 1) || (leftValue == 1 && rightValue == 9)))
 		{
-			cout << "eseguito p=1" << endl;
+			//cout << "eseguito p=1" << endl;
 			p = 1;
 		}
 		else if ( (leftValue == 9 && rightValue == 0) || (leftValue == 0 && rightValue == 9) || (leftValue == 9 && rightValue == 9) || (leftValue == 9 && rightValue == 1) || (leftValue == 1 && rightValue == 9))
 		{
-			p = 50000122;
-			cout << "IL Circuito fa X" << endl;
-			system("pause");
-			exit(2);
+			p = 9;
+			//cout << "IL Circuito fa X" << endl;
+			//system("pause");
+			//exit(2);
 		}
 		else if ((leftValue == 0 && rightValue == 1) || (leftValue == 1 && rightValue == 0) || (leftValue == 0 && rightValue == 0) || (leftValue == 1 && rightValue == 1)) {
 			p = BinaryOperationNode(binary_op, leftValue, rightValue);
 			//consume = bst.power(binary_op, p) + consume;			//********************************************
 			consume = file.power(binary_op, p) + consume;
-			cout << "Ho fatto questo" << endl;
+			//cout << "Ho fatto questo" << endl;
 		}
 		
 		

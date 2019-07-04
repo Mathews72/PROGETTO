@@ -30,6 +30,7 @@ private:
 	std::list<string> lstOpValid;
 
 	BST bst;
+	int p;
 
 
 	void processOperator(char op);

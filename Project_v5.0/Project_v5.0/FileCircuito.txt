@@ -1,19 +1,19 @@
 module Circuito (
 		clk
-		input a, b, e, pippo
+		input a, b
+		input d, e[2], pippo
 		input c, var
-		input d
 
 		output x, y
 );
-	
-    FF1 = a AND c
-	FF2 = FF1 AND c
-	assign y = b AND FF2 OR var
-	assign z = e AND d
 
-	
-endmodule 
+FF1 = a NAND b
+FF2 = FF1 XOR d 
+assign x = e[0] AND FF2
+
+
+ endmodule 
+
 
 module Circuito2 (
 		clk
