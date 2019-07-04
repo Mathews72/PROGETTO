@@ -102,7 +102,7 @@ int InputFile::isFlipFlop(char buffer[])
 			}
 		}
 		_flipname = buffer;
-		cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
+		//cout << "Quindi il FLIPFLOP si chiama: " << _flipname<<endl<<endl;
 		FlipNames.push_back(_flipname);
 	}
 	else
@@ -115,8 +115,9 @@ int InputFile::isFlipFlop(char buffer[])
 		cout << "Trovato flip flop negato!! inserisco 1 nel flipNeg" << endl;
 		flipNeg.push_back(1);
 	}
-	else
-	{
+	if(flag==1)
+	{	
+		cout << "Inserito 0 nel vettore  di neg " << endl;
 		flipNeg.push_back(0);
 	}
 	return flag;
@@ -214,6 +215,7 @@ void InputFile::readFile(string str)
 		
 			else if (isFlipFlop(buffer) == 1)
 			 {
+				 
 				 flipnum = 0;
 				 struct FlipFlop
 				 {
@@ -228,11 +230,11 @@ void InputFile::readFile(string str)
 				 cout << buffer << " is FLIPFLOP! \n";
 				 getline(_myfile, tmp);
 				 
-				 ris.pos=_myfile.tellg();//Indica la posizione del flipflop
+				// ris.pos=_myfile.tellg();//Indica la posizione del flipflop
 
 				// cout << "Posizione del flip flop :  " << ris.pos << endl;
 				 //Metodo orribile alternativo,si prende la stringa letta e la si unisce qui
-				 string flip = _flipname + tmp;
+				 string flip = _flipname+" "+ tmp;
 				 cout << "Espressione catturata nel flipflop: " << flip << endl;
 				ris.gradeflip= gradeGetter(flip);
 
@@ -266,7 +268,7 @@ void InputFile::readFile(string str)
 					 ris.result = b.parse(tmpconv);
 					 cout << "Risultato del flip flop vale  " << ris.result << endl << endl;
 					 flipflopValue.push_back(ris.result);
-					 flipGrades.push_back(0);
+				//	 flipGrades.push_back(0);
 					 
 				 }
 				 else 
@@ -506,8 +508,10 @@ string InputFile::capture(string tmp)
 			int neg = flipNeg.at(value);
 			//	int val2 = flipflopValue.at(0);
 				//newString.push_back(val);			//metto val nella newString
-			if (neg == 0)
-				val = 0;
+			if (neg == 1)
+			{
+				if (val == 1) val = 0; else val = 1;
+			}
 
 			string valore = to_string(val);		//converte il valore trovato in stringa
 

@@ -8,8 +8,8 @@ module Circuito (
 );
 	
 	NFF1 = a AND b
-
-	assign x = ( pippofddfafsa AND  NFF1)
+	FF2 = NFF1 OR d
+	assign x = ( c AND  FF2)
 	
 endmodule
 
