@@ -238,9 +238,20 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 	operandStack.pop();
 
 	if (binary_op == OPER_NOT) {
+
+
+	if ((rightValue == 9 ))
+	{
+		p = 9;
+	}
+	else if(rightValue != 9){
+
 		p = BinaryOperationNode(binary_op, rightValue, rightValue);
-		
+
 		consume = file.power(binary_op, p) + consume;  //calcola il consumo di potenza degli operatori
+
+	}
+		
 
 		//creazione dell'abero 
 		//uso resulttag per capire se l'operatore deriva da un operazione precedente

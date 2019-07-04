@@ -10,7 +10,7 @@ module Circuito (
 FF1 = a NAND b
 FF2 = FF1 XOR d 
 FF3 = FF2 NAND b
-assign x = e[0] AND FF3
+assign x = e[0] AND  NOT FF3
 assign y = a OR var
 
 endmodule 
