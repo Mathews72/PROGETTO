@@ -69,16 +69,15 @@ public:
 	node* createNodeLeafLeft(char binary_op, int leftValue, node* right, int result);
 	node* createNodeLeafRight(char binary_op, node* left, int rightValue, int result);
 	node* createNodeRoot(char binary_op, node* left, node* right, int result);
-	void printTree(node* root, Trunk* prev, bool isLeft);
 	void surfTree(node* root);
 	void surfTreeFlip(node* root);
 
-	//float power(char binary_op, int result);
+	
 
 
 private:
 
-	void showTrunks(Trunk* p);
+
 
 	bool isEmpty() const { return (rootTree == NULL); }
 	bool isleaf() const { return (rootTree->left == NULL && rootTree->right == NULL); }

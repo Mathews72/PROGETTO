@@ -15,25 +15,18 @@
 
 using namespace std;
 
-
-
 class BinaryExpressionBuilder {
 
 private:
-	// operatorStack 
-	std::stack<char> operatorStack;
-	// operandStack is made up of BinaryOperationNodes and NumericElementNode
-	std::stack<int> operandStack;
 
-	//std::stack<node*> TreeStack;
+	stack<char> operatorStack;
 
-	std::list<string> lstOpValid;
+	stack<int> operandStack;
+
+	list<string> lstOpValid;
 
 	BST bst;
 	int p;
-
-
-
 
 	void processOperator(char op);
 	void processRightParenthesis();
@@ -41,24 +34,19 @@ private:
 	int precedence(char op);
 	int BinaryOperationNode(char op, int l, int r);
 	
-
-
-
 public:
 
-	class NotWellFormed : public std::exception {
+	class NotWellFormed : public exception {
 	public:
 		explicit NotWellFormed() {}
 
-		explicit NotWellFormed(const std::string& message) :
+		explicit NotWellFormed(const string& message) :
 			msg_(message)
 		{}
 		virtual ~NotWellFormed() throw () {}
 		virtual const char* what() const throw () {
 
 			string msgout;
-			//msgout = "The expression is not valid";
-			//msgout.append(msg_.c_str());
 			return msg_.c_str();
 
 
@@ -66,15 +54,15 @@ public:
 
 
 	protected:
-		/**  Error message.  */
-		std::string msg_;
+		/** Messaggio di errore  */
+		string msg_;
 
 
 	};
-	std::stack<node*> TreeStack;
+	stack<node*> TreeStack;
 	float consume = 0;
 
-	int parse(std::string& istr) throw (NotWellFormed);
+	int parse(string& istr) throw (NotWellFormed);
 
 };
 

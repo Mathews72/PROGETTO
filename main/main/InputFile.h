@@ -18,6 +18,11 @@
 using namespace std;
 class InputFile
 {
+
+
+
+
+
 public:
 	InputFile();
 	~InputFile();
@@ -43,8 +48,6 @@ public:
 	vector<int> outputValue;
 
 	int Result;
-
-
 
 	float cons0to1[10];
 	float cons1to0[10];

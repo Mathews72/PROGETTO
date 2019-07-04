@@ -2,10 +2,6 @@
 #include "BinaryExpressionBuilder.h"
 #include"InputFile.h"
 
-
-
-
-
 int BinaryExpressionBuilder::precedence(char op) {
 	enum {
 		lowest, lower, mid, hight, highest, super
@@ -36,7 +32,7 @@ int BinaryExpressionBuilder::precedence(char op) {
 		return lowest;
 	}
 }
-
+//funzione principale per il parser
 int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 	char token;
@@ -56,13 +52,15 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	while (1) {
 		if DEBUG cout << "token  " << token << endl;
 		if (pnt >=(int) str.length()) break;
-		while ((pnt <(int)str.length()) && (str[pnt] == ' ')) {
-			//cout << "----token: *" << str[pnt] << "*" << endl;
+		
+		while ((pnt <(int)str.length()) && (str[pnt] == ' ')) {		//elimino gli spazi
 			++pnt;
 		}
+
 		if (pnt >= (int)str.length()) break;
+
 		token = str[pnt];
-		//cout << "----char: " << str[pnt] << endl;
+		//controllo se il token preso sia uguale all'iniziale di un operatore
 		if ((token == OPER_AND) || (token == OPER_OR) ||
 			(token == OPER_NOT) || (token == OPER_XOR)) {
 			string item;
@@ -70,14 +68,14 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 				item.push_back(str[pnt]);
 				++pnt;
 			}
-			if DEBUG cout << "item operator: *" << item << "*" << endl;
+	
+			//controllo che l'operatore sia valido e compaia nella lista
 			if (count(lstOpValid.begin(), lstOpValid.end(), item) > 0) {
 				if (item.compare("NAND") == 0)
 					token = 'v';
 
 				if (item.compare("NOR") == 0)
 					token = 'z';
-
 
 
 				processOperator(token);
@@ -89,15 +87,16 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 			}
 		}
 		else if (token == ')') {
-			//cout << "start  processRightParenthesis " <<endl;
+			//comincio le operazioni della parentesi
 			processRightParenthesis();
 			++pnt;
-			//cout << "end  processRightParenthesis " <<endl;
+
 		}
 		else if (token == '(') {
 			operatorStack.push(token);
 			++pnt;
 		}
+		//controllo che il token sia uguale ad un numero
 		else if ((token == '0') || (token == '1') || (token == '9')) {
 			string item;
 			while ((pnt < (int)str.length()) && (str[pnt] != ' ') && (str[pnt] != '(') && (str[pnt] != ')')) {
@@ -109,7 +108,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 				msg.append(item);
 				throw NotWellFormed(msg);
 			}
-			//int number = ((token == DIGIT_0) ? 0 : 1);
+			//conversione del carattere 0,1,9 in numero
 			int number = 0;
 			if (token == DIGIT_0) {
 				number = 0;
@@ -121,14 +120,8 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 				number = 1;
 			}
 
-
-
-
 			operandStack.push(number);
 		}
-
-
-
 
 		else {
 			string msg = "token not recognized: ";
@@ -147,24 +140,10 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 		throw NotWellFormed("End eval expr --> operandStack not empty ... expression not valid!!");
 	}
 
-	/* Stampa L'alber0
-		cout << "---------------------------------------------------------------" << endl;
-		cout << "|| print Tree -- stack size " << TreeStack.size() << " |||||||||||||||||||||||||||" << endl;
-		node* t;
-		t = TreeStack.top();
-		bst.printTree(t, NULL, false);
-		*/
 	int p = operandStack.top();
 
-	/*node* t;
-
-	t = TreeStack.top();
-
-	bst.surfTree(t);		//ritorno il path min e max
-	*/
 	operandStack.pop();
 	int ret = p >= RESULTTAG ? p - RESULTTAG : p;
-
 	//file.outputValue.push_back(ret);		//metto il risultato nel vettore
 
 	return (ret);
@@ -172,9 +151,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 
 }
 
-
-
-
+//controlla la precedenza degli operatori
 void BinaryExpressionBuilder::processOperator(char op) {
 
 	while ((!operatorStack.empty()) && (operatorStack.top() != '(' && (precedence(op) <= precedence(operatorStack.top())))) {
@@ -183,7 +160,6 @@ void BinaryExpressionBuilder::processOperator(char op) {
 		int opPrecedence_aux;
 		opPrecedence = precedence(op);
 		opPrecedence_aux = precedence(operatorStack.top());
-		//cout << " ** operatore precedenza => "<<"operatore in call funzione "<<op<<"("<<opPrecedence<< ") -- operartore in stack "<< operatorStack.top()<<" ("<<precedence(operatorStack.top())<<")" <<endl;
 		doBinary(operatorStack.top());
 		operatorStack.pop();
 	}
@@ -191,6 +167,8 @@ void BinaryExpressionBuilder::processOperator(char op) {
 	operatorStack.push(op);
 
 }
+
+//prende in ingresso i valori, restituisce il risultato delle operazioni
 
 int BinaryExpressionBuilder::BinaryOperationNode(char binary_op, int leftVal, int rightVal) {
 
@@ -223,8 +201,6 @@ int BinaryExpressionBuilder::BinaryOperationNode(char binary_op, int leftVal, in
 			break;
 		}
 	}
-
-	//cout << "=== BinaryOperationNode ....." << leftVal << " " << binary_op << " " << rightVal << " = " << result << endl;
 
 	return result;
 }
@@ -263,10 +239,11 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	if (binary_op == OPER_NOT) {
 		p = BinaryOperationNode(binary_op, rightValue, rightValue);
-		//consume = bst.power(binary_op, p) + consume;//**********************************************
-		consume = file.power(binary_op, p) + consume;
+		
+		consume = file.power(binary_op, p) + consume;  //calcola il consumo di potenza degli operatori
 
-
+		//creazione dell'abero 
+		//uso resulttag per capire se l'operatore deriva da un operazione precedente
 		if (rightValue >= RESULTTAG) {
 			node* tright;
 			tright = TreeStack.top();
@@ -291,86 +268,65 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 		if ((binary_op == 'A') && ((leftValue == 9 && rightValue == 0) || (leftValue == 0 && rightValue == 9)))
 		{
-			//cout << "eseguito p=0" << endl;
 			p = 0;
 		}
 		else if ((binary_op == 'O') && ((leftValue == 9 && rightValue == 1) || (leftValue == 1 && rightValue == 9)))
 		{
-			//cout << "eseguito p=1" << endl;
 			p = 1;
 		}
 		else if ((leftValue == 9 && rightValue == 0) || (leftValue == 0 && rightValue == 9) || (leftValue == 9 && rightValue == 9) || (leftValue == 9 && rightValue == 1) || (leftValue == 1 && rightValue == 9))
 		{
 			p = 9;
-			//cout << "IL Circuito fa X" << endl;
-			//system("pause");
-			//exit(2);
 		}
 		else if ((leftValue == 0 && rightValue == 1) || (leftValue == 1 && rightValue == 0) || (leftValue == 0 && rightValue == 0) || (leftValue == 1 && rightValue == 1)) {
 			p = BinaryOperationNode(binary_op, leftValue, rightValue);
-			//consume = bst.power(binary_op, p) + consume;			//********************************************
 			consume = file.power(binary_op, p) + consume;
-			//cout << "Ho fatto questo" << endl;
 		}
 
-
-
-
-
-		//cout <<"=== Evaluated ....."<<leftValue<<" "<<binary_op<<" "<<rightValue<<" = "<<p<<endl;
 		if (leftValue < RESULTTAG and rightValue < RESULTTAG) {
-			// create node leaf and push in stack
+			// creato node leaf e messo nello stack
+		
 			t = bst.createNodeLeaf(binary_op, leftValue, rightValue, p);
 			TreeStack.push(t);
-			//cout << "Created leaf node " << TreeStack.size() << endl;
+
 		}
 		else if (leftValue >= RESULTTAG and rightValue >= RESULTTAG) {
-			// create node with leaf and rigth as pointers 
+
 			node* tleft;
 			node* tright;
+
 			tright = TreeStack.top();
 			TreeStack.pop();
 			tleft = TreeStack.top();
 			TreeStack.pop();
-			//bst.printTree(tright, NULL, false);
-			//bst.printTree(tleft, NULL, false);
-			t = bst.createNodeRoot(binary_op, tleft, tright, p);
+			t = bst.createNodeRoot(binary_op, tleft, tright, p);		//creato nodo root
 			TreeStack.push(t);
-			//cout << "Created root node " << TreeStack.size() << endl;
+			//Creato root node
 		}
 		else if (leftValue < RESULTTAG and rightValue >= RESULTTAG) {
-			// create node with leaf as left and rigth as pointers 
+
+			//creato nodo con foglia a sinista e a destra come un puntatore
 			node* tright;
 			tright = TreeStack.top();
 			TreeStack.pop();
 			t = bst.createNodeLeafLeft(binary_op, leftValue, tright, p);
 			TreeStack.push(t);
-			//cout << "Created root node left as leaf " << TreeStack.size() << endl;
+
 		}
 		else if (leftValue >= RESULTTAG and rightValue < RESULTTAG) {
 			// create node with leaf as pointer and right as leaf
+			//creato nodo con puntatore a sinistra e foglia a destra
 			node* tleft;
 			tleft = TreeStack.top();
 			TreeStack.pop();
 			t = bst.createNodeLeafRight(binary_op, tleft, rightValue, p);
-			TreeStack.push(t);
-			//cout << "Created root node right as leaf " << TreeStack.size() << endl;
+			TreeStack.push(t);;
 		}
 		else {
-			cout << "Error scenario not compliant  " << TreeStack.size() << endl;
+			cout << "Error  " << TreeStack.size() << endl;
 		}
-		//bst.printTree(t, NULL, false);
 
-	}
-	if (DEBUG) {
-		cout << "*Start Print stack ********************************************" << endl;
-		for (stack<node*> t = TreeStack; !t.empty(); t.pop()) {
-			node* subTree;
-			cout << "Item " << endl;
-			subTree = t.top();
-			bst.printTree(subTree, NULL, false);
-		}
-		cout << "=End Print stack=============================================" << endl;
+
 	}
 
 	operandStack.push(p + RESULTTAG);

@@ -1,9 +1,9 @@
-
 #include "BinaryExpressionBuilder.h"
 #include "BST.h"
 
 #include "InputFile.h"
 #include <iostream>
+
 
 using namespace std;
 
@@ -19,10 +19,13 @@ void Menu()
 
 int main(int argc, char** argv) {
 
+
+	
 	InputFile file;
 	BinaryExpressionBuilder b;
 	BST bst;
 
+	
 
 
 	int scelta;
