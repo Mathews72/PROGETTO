@@ -25,12 +25,14 @@ public:
 	vector<string> inputChar; //memorizzati tutti i caratteri da sostitire nell'exp
 	vector<int> inputValue;		//deve leggere i valori dal file
 	vector<int> flipflopValue;  //Risultati ottenuti dal flip flop di prova
+	vector<int> flipNeg;
+	vector<int> flipGrades;
 	vector <string> FlipNames;
 	vector <float> Cons0to1;
 	vector <float> Cons1to0;
 
 	vector <string> inputInstance;
-	
+
 
 	vector<string> CircuitName;
 	vector<string> ExprCircutit;
@@ -44,8 +46,8 @@ public:
 
 
 
-	float cons0to1[10] = { 0.1,0.2,0.3,0.9,0.4,0.56 };
-	float cons1to0[10] = { 1.2,1.5,3.2,0.5,0.22,0.7 };
+	float cons0to1[10];
+	float cons1to0[10];
 
 	float power(char binary_op, int result);
 
@@ -87,6 +89,14 @@ private:
 
 	vector <string>flipExpression;
 	int clock = 0;
+	string negateConstructor(string tmp);
+	int extractIntegerWordsMax(string str);
+	int gradeGetter(string tmp);
+	int flipnum = 0;
+	int flagclock = 0;
+	int consumeFlip = 0;
+	int flipPresence = 0;
+	int hisgrade = 0;
 
 };
 

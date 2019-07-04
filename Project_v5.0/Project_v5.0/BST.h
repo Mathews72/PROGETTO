@@ -18,6 +18,7 @@
 #define OPER_XOR 'X'
 #define OPER_NAND 'v'
 #define OPER_NOR 'z'
+#define OPER_FF 'F'
 
 #define DIGIT_0 '0'
 #define DIGIT_1 '1'
@@ -62,7 +63,7 @@ public:
 		rootTree = NULL;
 	}
 
-	
+
 
 	node* createNodeLeaf(char binary_op, int leftValue, int rightValue, int result);
 	node* createNodeLeafLeft(char binary_op, int leftValue, node* right, int result);
@@ -70,9 +71,10 @@ public:
 	node* createNodeRoot(char binary_op, node* left, node* right, int result);
 	void printTree(node* root, Trunk* prev, bool isLeft);
 	void surfTree(node* root);
+	void surfTreeFlip(node* root);
 
 	//float power(char binary_op, int result);
-	
+
 
 private:
 

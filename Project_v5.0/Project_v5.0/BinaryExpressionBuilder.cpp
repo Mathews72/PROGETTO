@@ -42,7 +42,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	char token;
 	consume = 0;
 
-	
+
 	lstOpValid.push_back("AND");
 
 	lstOpValid.push_back("OR");
@@ -98,7 +98,7 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 			operatorStack.push(token);
 			++pnt;
 		}
-		else if ((token == '0') || (token == '1')) {
+		else if ((token == '0') || (token == '1') || (token == '9')) {
 			string item;
 			while ((pnt < str.length()) && (str[pnt] != ' ') && (str[pnt] != '(') && (str[pnt] != ')')) {
 				item.push_back(str[pnt]);
@@ -109,9 +109,27 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 				msg.append(item);
 				throw NotWellFormed(msg);
 			}
-			int number = ((token == DIGIT_0) ? 0 : 1);
+			//int number = ((token == DIGIT_0) ? 0 : 1);
+			int number= 0;
+			if (token == DIGIT_0) {
+				 number = 0;
+			}
+			else if (token == '9') {
+				number = 9;
+			}
+			else {
+				number = 1;
+			}
+				
+
+
+			
 			operandStack.push(number);
 		}
+		
+
+
+
 		else {
 			string msg = "token not recognized: ";
 			msg.push_back(token);
@@ -141,12 +159,12 @@ int BinaryExpressionBuilder::parse(std::string& str) throw (NotWellFormed) {
 	/*node* t;
 
 	t = TreeStack.top();
-	
+
 	bst.surfTree(t);		//ritorno il path min e max
 	*/
 	operandStack.pop();
 	int ret = p >= RESULTTAG ? p - RESULTTAG : p;
-	
+
 	//file.outputValue.push_back(ret);		//metto il risultato nel vettore
 
 	return (ret);
@@ -188,6 +206,7 @@ int BinaryExpressionBuilder::BinaryOperationNode(char binary_op, int leftVal, in
 		if DEBUG cout << "rightVal " << rightVal << " leftVal " << leftVal << endl;
 		switch (binary_op) {
 		case OPER_AND:
+			
 			result = leftVal && rightVal;
 			break;
 		case OPER_NAND:
@@ -230,7 +249,7 @@ void BinaryExpressionBuilder::processRightParenthesis() {
 
 void BinaryExpressionBuilder::doBinary(char binary_op) {
 
-	int p;
+	//int p;//*******************
 	InputFile file;
 
 	node* t;
@@ -241,10 +260,12 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 
 	int rightValue = operandStack.top();
 	operandStack.pop();
+
 	if (binary_op == OPER_NOT) {
 		p = BinaryOperationNode(binary_op, rightValue, rightValue);
 		//consume = bst.power(binary_op, p) + consume;//**********************************************
 		consume = file.power(binary_op, p) + consume;
+		
 
 		if (rightValue >= RESULTTAG) {
 			node* tright;
@@ -266,10 +287,35 @@ void BinaryExpressionBuilder::doBinary(char binary_op) {
 		}
 		int leftValue = operandStack.top();
 		operandStack.pop();
-		p = BinaryOperationNode(binary_op, leftValue, rightValue);
-		//consume = bst.power(binary_op, p) + consume;			//********************************************
-		consume = file.power(binary_op, p) + consume;
+	
 		
+		if((binary_op == 'A')&&( (leftValue == 9 && rightValue == 0) || (leftValue == 0 && rightValue == 9)))
+		{
+			//cout << "eseguito p=0" << endl;
+			p = 0;
+		}
+		else if ((binary_op == 'O') && ((leftValue == 9 && rightValue == 1) || (leftValue == 1 && rightValue == 9)))
+		{
+			//cout << "eseguito p=1" << endl;
+			p = 1;
+		}
+		else if ( (leftValue == 9 && rightValue == 0) || (leftValue == 0 && rightValue == 9) || (leftValue == 9 && rightValue == 9) || (leftValue == 9 && rightValue == 1) || (leftValue == 1 && rightValue == 9))
+		{
+			p = 9;
+			//cout << "IL Circuito fa X" << endl;
+			//system("pause");
+			//exit(2);
+		}
+		else if ((leftValue == 0 && rightValue == 1) || (leftValue == 1 && rightValue == 0) || (leftValue == 0 && rightValue == 0) || (leftValue == 1 && rightValue == 1)) {
+			p = BinaryOperationNode(binary_op, leftValue, rightValue);
+			//consume = bst.power(binary_op, p) + consume;			//********************************************
+			consume = file.power(binary_op, p) + consume;
+			//cout << "Ho fatto questo" << endl;
+		}
+		
+		
+		
+
 
 		//cout <<"=== Evaluated ....."<<leftValue<<" "<<binary_op<<" "<<rightValue<<" = "<<p<<endl;
 		if (leftValue < RESULTTAG and rightValue < RESULTTAG) {

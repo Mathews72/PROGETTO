@@ -52,9 +52,16 @@ int main(int argc, char** argv) {
 	*/
 
 try {
+	
+
+
+
+
 		//file.readFilePower("FilePower.txt");
-		file.readFileValue("FileValue.txt");
-		
+		//file.readFileValue("FileValue.txt");
+	
+
+	
 		
 		file.readFile("FileCircuito.txt");
 

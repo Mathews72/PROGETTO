@@ -103,14 +103,28 @@ void BST::surfTree(node * root) {
 	//surfTree(root->right);
 	cout << "Path Max:" << root->depthMax << endl;
 	cout << "Path Min:" << root->depthMin << endl;
-	
+
 	//PercorsoMax = root->depthMax;
 	//cout << "Path Max:" << PercorsoMax << endl;
 	//PercorsoMin = root->depthMin;
 
-	
+
 
 	// print token, result, depthMin, depthMax
+
+}
+void BST::surfTreeFlip(node * root)
+{
+	InputFile file;
+	if (root == NULL)
+		return;
+	//int x = root->depthMin;
+
+	//surfTree(root->left);
+	//surfTree(root->right);
+	cout << "Path Max:" << root->depthMax + 1 << endl;
+	cout << "Path Min:" << root->depthMin << endl;
+
 
 }
 /*
@@ -144,7 +158,7 @@ float BST::power(char binary_op, int result)
 		break;
 	}
 	cout << "**consumo op: " << binary_op << " " << consume<<endl ;
-	
+
 	return consume;
 }*/
 

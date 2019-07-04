@@ -30,18 +30,22 @@ private:
 	std::list<string> lstOpValid;
 
 	BST bst;
-	
+	int p;
+
+
+
 
 	void processOperator(char op);
 	void processRightParenthesis();
 	void doBinary(char op);
 	int precedence(char op);
 	int BinaryOperationNode(char op, int l, int r);
+	
 
 
 
 public:
-	
+
 	class NotWellFormed : public std::exception {
 	public:
 		explicit NotWellFormed() {}
@@ -60,16 +64,17 @@ public:
 
 		}
 
-		
+
 	protected:
 		/**  Error message.  */
 		std::string msg_;
-		
-		
+
+
 	};
 	std::stack<node*> TreeStack;
 	float consume = 0;
-	
+
 	int parse(std::string& istr) throw (NotWellFormed);
+
 };
 
